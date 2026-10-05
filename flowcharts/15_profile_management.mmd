@@ -1,9 +1,0 @@
-flowchart TD
-    A([Semua User]) --> B[Menu Profile]
-    B --> C{Aksi}
-    C -->|Edit| D[Update Nama + Username]
-    C -->|Avatar| E{Upload / Hapus?}
-    E -->|Upload| F[Simpan File + Hapus Lama]
-    E -->|Hapus| G[Hapus File + Set null]
-    C -->|Hapus Akun| H[Konfirmasi Password]
-    H --> I[Logout + Delete User]

@@ -1,9 +1,0 @@
-flowchart TD
-    A([Admin]) --> B[Menu Tahun Ajaran]
-    B --> C[Daftar Tahun Ajaran]
-    C --> D{Aksi}
-    D -->|Tambah| E[Input: Nama, Tgl Mulai/Selesai Gasal dan Genap]
-    E --> F[Simpan ke Database]
-    D -->|Edit| G[Update Data Tahun Ajaran]
-    D -->|Aktifkan| H[Set semua is_active = false]
-    H --> I[Set target is_active = true]
