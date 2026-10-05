@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Flowmap Sistem Presensi Manual (Sistem yang Berjalan)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#fff;display:flex;flex-direction:column;align-items:center;padding:30px 10px}
+h1{font-size:14pt;font-weight:700;margin-bottom:4px;text-align:center}
+p.sub{font-size:10pt;color:#444;margin-bottom:14px;text-align:center}
+.legend-box{width:960px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:9pt;padding:8px 14px;border:1px solid #bbb;margin-bottom:14px;background:#fafafa}
+.legend-box svg{flex-shrink:0}
+</style>
+</head>
+<body>
+<h1>Flowmap Sistem Presensi Siswa yang Sedang Berjalan (Manual)</h1>
+<p class="sub">Alur Proses Presensi Manual — Admin, Wali Kelas, Kepala Sekolah</p>
+
+<div class="legend-box">
+<strong>Keterangan Simbol:</strong>
+<span><svg width="40" height="22"><rect x="1" y="1" width="38" height="20" rx="10" fill="#fff" stroke="#000" stroke-width="1.2"/></svg> Terminator</span>
+<span><svg width="40" height="22"><rect x="1" y="1" width="38" height="20" fill="#fff" stroke="#000" stroke-width="1.2"/></svg> Proses</span>
+<span><svg width="24" height="24"><polygon points="12,1 23,12 12,23 1,12" fill="#fff" stroke="#000" stroke-width="1.2"/></svg> Keputusan</span>
+<span><svg width="40" height="26"><path d="M1,1 H39 V18 Q30,28 20,18 Q10,8 1,18 Z" fill="#fff" stroke="#000" stroke-width="1.2"/></svg> Dokumen</span>
+<span><svg width="44" height="22"><polygon points="5,1 39,1 44,21 0,21" fill="#fff" stroke="#000" stroke-width="1.2"/></svg> Proses Manual</span>
+<span><svg width="40" height="26"><polygon points="20,1 39,25 1,25" fill="#fff" stroke="#000" stroke-width="1.2"/><line x1="5" y1="18" x2="35" y2="18" stroke="#000" stroke-width="1"/></svg> Arsip</span>
+</div>
+
+<svg id="fm" width="960" height="1780" xmlns="http://www.w3.org/2000/svg" style="border:2px solid #000">
+<!-- Background & Structure drawn by JS -->
+</svg>
+
+<script>
+const S = document.getElementById('fm');
+const ns = 'http://www.w3.org/2000/svg';
+// Column centers
+const C1=160, C2=480, C3=800;
+
+// ---- SVG helpers ----
+function el(tag,attrs){const e=document.createElementNS(ns,tag);for(let k in attrs)e.setAttribute(k,attrs[k]);return e}
+function addTo(parent,...children){children.forEach(c=>parent.appendChild(c))}
+function textLines(cx,cy,lines,size){
+    const g=el('g',{});
+    const total=lines.length;
+    const lh=(size||11)*1.35;
+    const startY=cy-((total-1)*lh)/2;
+    lines.forEach((t,i)=>{
+        const txt=el('text',{'x':cx,'y':startY+i*lh,'text-anchor':'middle','dominant-baseline':'central','font-family':'Inter,sans-serif','font-size':size||11,'fill':'#000'});
+        txt.textContent=t;
+        g.appendChild(txt);
+    });
+    return g;
+}
+
+// ---- Shape drawing functions ----
+function terminator(cx,cy,w,h,lines){
+    const g=el('g',{});
+    g.appendChild(el('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:h/2,fill:'#fff',stroke:'#000','stroke-width':'1.5'}));
+    addTo(g,textLines(cx,cy,lines));
+    S.appendChild(g);
+    return {cx,cy,t:cy-h/2,b:cy+h/2,l:cx-w/2,r:cx+w/2};
+}
+
+function process(cx,cy,w,h,lines){
+    const g=el('g',{});
+    g.appendChild(el('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,fill:'#fff',stroke:'#000','stroke-width':'1.5'}));
+    addTo(g,textLines(cx,cy,lines));
+    S.appendChild(g);
+    return {cx,cy,t:cy-h/2,b:cy+h/2,l:cx-w/2,r:cx+w/2};
+}
+
+function document_(cx,cy,w,h,lines){
+    const g=el('g',{});
+    const x=cx-w/2, y=cy-h/2;
+    const wave=10;
+    // Rectangle with wavy bottom
+    const d=`M${x},${y} H${x+w} V${y+h-wave} Q${x+w*0.75},${y+h+wave*0.6} ${x+w/2},${y+h-wave} Q${x+w*0.25},${y+h-wave*2.6} ${x},${y+h-wave} Z`;
+    g.appendChild(el('path',{d:d,fill:'#fff',stroke:'#000','stroke-width':'1.5'}));
+    addTo(g,textLines(cx,cy-4,lines));
+    S.appendChild(g);
+    return {cx,cy,t:y,b:y+h-wave+2,l:x,r:x+w};
+}
+
+function manualProcess(cx,cy,w,h,lines){
+    // Trapezoid: wider at top
+    const g=el('g',{});
+    const offset=12;
+    const pts=`${cx-w/2-offset},${cy-h/2} ${cx+w/2+offset},${cy-h/2} ${cx+w/2},${cy+h/2} ${cx-w/2},${cy+h/2}`;
+    g.appendChild(el('polygon',{points:pts,fill:'#fff',stroke:'#000','stroke-width':'1.5'}));
+    addTo(g,textLines(cx,cy,lines));
+    S.appendChild(g);
+    return {cx,cy,t:cy-h/2,b:cy+h/2,l:cx-w/2-offset,r:cx+w/2+offset};
+}
+
+function decision(cx,cy,size,lines){
+    const g=el('g',{});
+    const s=size/2;
+    const pts=`${cx},${cy-s} ${cx+s},${cy} ${cx},${cy+s} ${cx-s},${cy}`;
+    g.appendChild(el('polygon',{points:pts,fill:'#fff',stroke:'#000','stroke-width':'1.5'}));
+    addTo(g,textLines(cx,cy,lines,10));
+    S.appendChild(g);
+    return {cx,cy,t:cy-s,b:cy+s,l:cx-s,r:cx+s};
+}
+
+function archive(cx,cy,w,h,lines){
+    // Inverted triangle with horizontal line
+    const g=el('g',{});
+    const pts=`${cx-w/2},${cy-h/2} ${cx+w/2},${cy-h/2} ${cx},${cy+h/2}`;
+    g.appendChild(el('polygon',{points:pts,fill:'#fff',stroke:'#000','stroke-width':'1.5'}));
+    // Horizontal line near top
+    const lineY=cy-h/2+h*0.3;
+    const dx=w/2*(1-0.3);
+    g.appendChild(el('line',{x1:cx-dx,y1:lineY,x2:cx+dx,y2:lineY,stroke:'#000','stroke-width':'1'}));
+    addTo(g,textLines(cx,cy-2,lines,10));
+    S.appendChild(g);
+    return {cx,cy,t:cy-h/2,b:cy+h/2,l:cx-w/2,r:cx+w/2};
+}
+
+// ---- Arrow functions ----
+function arrowHead(x,y,angle){
+    const len=8,a1=angle-Math.PI/6,a2=angle+Math.PI/6;
+    S.appendChild(el('polygon',{points:`${x},${y} ${x-len*Math.cos(a1)},${y-len*Math.sin(a1)} ${x-len*Math.cos(a2)},${y-len*Math.sin(a2)}`,fill:'#000'}));
+}
+function line_(x1,y1,x2,y2){S.appendChild(el('line',{x1,y1,x2,y2,stroke:'#000','stroke-width':'1.5'}))}
+
+function arrowDown(a,b){line_(a.cx,a.b,b.cx,b.t);arrowHead(b.cx,b.t,Math.PI/2)}
+function arrowRight(a,b){line_(a.r,a.cy,b.l,b.cy);arrowHead(b.l,b.cy,0)}
+function arrowLeft(a,b){line_(a.l,a.cy,b.r,b.cy);arrowHead(b.r,b.cy,Math.PI)}
+
+function polyArrow(pts){
+    for(let i=0;i<pts.length-1;i++) line_(pts[i][0],pts[i][1],pts[i+1][0],pts[i+1][1]);
+    const L=pts.length,p=pts[L-2],q=pts[L-1];
+    arrowHead(q[0],q[1],Math.atan2(q[1]-p[1],q[0]-p[0]));
+}
+
+function label(x,y,text,anchor){
+    const t=el('text',{x,y,'text-anchor':anchor||'start','font-family':'Inter,sans-serif','font-size':'11','fill':'#000'});
+    t.textContent=text;S.appendChild(t);
+}
+
+// =============== DRAW STRUCTURE ===============
+// Title bar
+S.appendChild(el('rect',{x:0,y:0,width:960,height:36,fill:'#f0f0f0',stroke:'#000','stroke-width':'1.5'}));
+addTo(S,textLines(480,18,['Sistem Presensi Siswa Manual (Sistem yang Berjalan)'],11));
+
+// Column headers
+const hdrY=36;
+S.appendChild(el('rect',{x:0,y:hdrY,width:320,height:30,fill:'#f8f8f8',stroke:'#000','stroke-width':'1.5'}));
+S.appendChild(el('rect',{x:320,y:hdrY,width:320,height:30,fill:'#f8f8f8',stroke:'#000','stroke-width':'1.5'}));
+S.appendChild(el('rect',{x:640,y:hdrY,width:320,height:30,fill:'#f8f8f8',stroke:'#000','stroke-width':'1.5'}));
+addTo(S,textLines(C1,hdrY+15,['Admin'],12));
+addTo(S,textLines(C2,hdrY+15,['Wali Kelas'],12));
+addTo(S,textLines(C3,hdrY+15,['Kepala Sekolah'],12));
+
+// Lane dividers
+S.appendChild(el('line',{x1:320,y1:66,x2:320,y2:1780,stroke:'#000','stroke-width':'1.5'}));
+S.appendChild(el('line',{x1:640,y1:66,x2:640,y2:1780,stroke:'#000','stroke-width':'1.5'}));
+
+// =============== DRAW NODES ===============
+const PW=174,PH=52; // process size
+const DW=164,DH=60; // document size
+const TW=140,TH=44; // terminator size
+const MW=170,MH=52; // manual process size
+
+// -- ADMIN column --
+const a0 = terminator(C1, 110, TW, TH, ['Mulai']);
+const a1 = process(C1, 200, PW, PH, ['Buat Daftar','Kelas & Siswa']);
+const a2 = document_(C1, 300, DW, DH, ['Daftar Kelas &','Data Siswa']);
+const a3 = process(C1, 405, PW, PH, ['Serahkan Daftar','ke Wali Kelas']);
+
+// Admin lower section (staggered BELOW wali's serahkan)
+const a4 = process(C1, 1210, PW, PH, ['Terima Rekap','Presensi Bulanan']);
+const a5 = manualProcess(C1, 1320, MW, MH, ['Arsipkan','Dokumen Rekap']);
+const a6 = archive(C1, 1430, 150, 70, ['Buku Arsip','Presensi']);
+const a7 = terminator(C1, 1540, TW, TH, ['Selesai']);
+
+// -- WALI KELAS column --
+const w0 = process(C2, 405, PW, PH, ['Terima Daftar','Siswa']);
+const w1 = document_(C2, 505, DW, DH, ['Formulir','Absensi Harian']);
+const w2 = manualProcess(C2, 610, MW, MH, ['Isi Presensi','Manual per Siswa']);
+const w3 = decision(C2, 720, 106, ['Sudah','Lengkap?']);
+const w4 = document_(C2, 840, DW, DH, ['Rekap Presensi','Harian']);
+const w5 = process(C2, 940, PW, PH, ['Buat Rekap','Bulanan Manual']);
+const w6 = document_(C2, 1040, DW, DH, ['Rekap Presensi','Bulanan']);
+const w7 = process(C2, 1140, 192, PH, ['Serahkan Rekap ke','Admin & Kepsek']);
+
+// -- KEPALA SEKOLAH column (staggered BELOW wali's serahkan)
+const k0 = process(C3, 1210, PW, PH, ['Terima Laporan','Rekap Presensi']);
+const k1 = process(C3, 1320, PW, PH, ['Periksa &','Evaluasi Rekap']);
+const k2 = decision(C3, 1430, 106, ['ACC?']);
+const k3 = process(C3, 1550, PW, PH, ['Tanda Tangan','& Setujui']);
+const k4 = document_(C3, 1650, DW, DH, ['Laporan Presensi','Final']);
+const k5 = terminator(C3, 1740, TW, TH, ['Selesai']);
+
+// =============== DRAW ARROWS ===============
+
+// ADMIN internal (upper)
+arrowDown(a0, a1);
+arrowDown(a1, a2);
+arrowDown(a2, a3);
+
+// ADMIN internal (lower)
+arrowDown(a4, a5);
+arrowDown(a5, a6);
+arrowDown(a6, a7);
+
+// ADMIN -> WALI cross-lane (same row, clean horizontal)
+arrowRight(a3, w0);
+
+// WALI internal
+arrowDown(w0, w1);
+arrowDown(w1, w2);
+arrowDown(w2, w3);
+
+// Decision "Tidak" loop -> back to w2 (wide loop to avoid overlap)
+polyArrow([[w3.l, w3.cy],[w3.l-40, w3.cy],[w3.l-40, w2.cy],[w2.l, w2.cy]]);
+label(w3.l-44, w3.cy-6, 'Tidak', 'end');
+
+// Decision "Ya" -> w4
+arrowDown(w3, w4);
+label(w3.cx+8, w3.b+16, 'Ya');
+
+arrowDown(w4, w5);
+arrowDown(w5, w6);
+arrowDown(w6, w7);
+
+// WALI -> ADMIN cross-lane: L-shape down then left, arrive at TOP of a4
+polyArrow([[w7.l, w7.cy],[C1, w7.cy],[C1, a4.t]]);
+
+// WALI -> KEPSEK cross-lane: L-shape down then right, arrive at TOP of k0
+polyArrow([[w7.r, w7.cy],[C3, w7.cy],[C3, k0.t]]);
+
+// KEPSEK internal
+arrowDown(k0, k1);
+arrowDown(k1, k2);
+
+// Decision "Tidak" loop -> back to k1 (wide loop)
+polyArrow([[k2.r, k2.cy],[k2.r+40, k2.cy],[k2.r+40, k1.cy],[k1.r, k1.cy]]);
+label(k2.r+44, k2.cy-6, 'Tidak');
+
+// Decision "Ya" -> k3
+arrowDown(k2, k3);
+label(k2.cx+8, k2.b+16, 'Ya');
+
+arrowDown(k3, k4);
+arrowDown(k4, k5);
+</script>
+
+<!-- Download Buttons -->
+<div style="margin-top:20px;display:flex;gap:12px">
+    <button onclick="downloadAs('png')" style="padding:10px 24px;background:#065F46;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:10pt;cursor:pointer">⬇ Download PNG</button>
+    <button onclick="downloadAs('jpg')" style="padding:10px 24px;background:#1e40af;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:10pt;cursor:pointer">⬇ Download JPG</button>
+</div>
+
+<script>
+function downloadAs(format) {
+    const svgEl = document.getElementById('fm');
+    const scale = 2; // 2x resolution for crisp output
+    const svgW = svgEl.width.baseVal.value;
+    const svgH = svgEl.height.baseVal.value;
+
+    // Title & subtitle heights
+    const headerH = 80;
+    const totalW = svgW * scale;
+    const totalH = (svgH + headerH) * scale;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = totalW;
+    canvas.height = totalH;
+    const ctx = canvas.getContext('2d');
+
+    // White background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, totalW, totalH);
+
+    // Draw title text
+    ctx.scale(scale, scale);
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 15pt Inter, sans-serif';
+    ctx.fillText('Flowmap Sistem Presensi Siswa yang Sedang Berjalan (Manual)', svgW / 2, 30);
+    ctx.font = '10pt Inter, sans-serif';
+    ctx.fillStyle = '#444';
+    ctx.fillText('Alur Proses Presensi Manual — Admin, Wali Kelas, Kepala Sekolah', svgW / 2, 55);
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // reset
+
+    // Serialize SVG to image
+    const svgData = new XMLSerializer().serializeToString(svgEl);
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.onload = function () {
+        ctx.drawImage(img, 0, headerH * scale, totalW, svgH * scale);
+        URL.revokeObjectURL(url);
+
+        // Convert to desired format
+        const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
+        const quality = format === 'jpg' ? 0.95 : undefined;
+        canvas.toBlob(function (blob) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'flowmap_sistem_berjalan_manual.' + format;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }, mime, quality);
+    };
+    img.src = url;
+}
+</script>
+</body>
+</html>

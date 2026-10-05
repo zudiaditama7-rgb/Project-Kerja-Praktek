@@ -1,0 +1,51 @@
+flowchart TD
+    %% Mulai
+    Start([Mulai: Buka Aplikasi Presensi]) --> Login{Validasi Username\n& Password}
+    Login -->|Kredensial Salah| Start
+    Login -->|Kredensial Benar| Role{Cek Hak Akses\n(Role User)}
+    
+    %% Alur Admin
+    Role -->|Role: Admin| Admin[Halaman Dashboard Admin]
+    Admin --> KelolaMaster[Menu Data Master:\nTambah, Edit, Hapus Data Siswa,\nKelas, & Tahun Ajaran]
+    Admin --> CekTugas{Apakah Ada Pengajuan\nGuru Pengganti\ndari Wali Kelas?}
+    CekTugas -->|Ada Pengajuan| AssignTugas[Admin Memilih &\nMenugaskan Guru Pengganti]
+    
+    %% Alur Wali Kelas
+    Role -->|Role: Wali Kelas| Wali[Halaman Dashboard Wali Kelas]
+    Wali --> MenuWali{Pilih Menu Operasional}
+    MenuWali -->|Menu Presensi| PresensiWali{Pilih Metode Presensi}
+    PresensiWali -->|Menggunakan Kamera| ScanWali[/Arahkan Kamera HP/Webcam\nke QR Code Kartu Siswa/]
+    PresensiWali -->|Tanpa Kamera| InputWali[/Input Manual Status Siswa:\nHadir, Izin, Sakit, Alpha/]
+    
+    MenuWali -->|Berhalangan Hadir| IzinWali[/Isi Form Tanggal & Alasan\nUntuk Minta Guru Pengganti/]
+    IzinWali -->|Kirim Notifikasi ke Admin| CekTugas
+    
+    MenuWali -->|Laporan Akhir| RekapWali[/Pilih Periode & Ajukan\nRekap Presensi Bulanan/Semester/]
+    
+    %% Alur Guru Mapel
+    Role -->|Role: Guru Mapel| Mapel[Halaman Dashboard Guru Mapel]
+    Mapel --> PilihMapel[Pilih Kelas Tujuan\n& Ketik Nama Mata Pelajaran]
+    PilihMapel --> PresensiMapel[/Input Kehadiran Khusus Siswa\nPada Mata Pelajaran Tersebut/]
+    
+    %% Alur Guru Pengganti
+    Role -->|Role: Guru Pengganti| GP[Halaman Dashboard Guru Pengganti]
+    AssignTugas -->|Menerima Tugas Baru| GP
+    GP --> CekKelasGP[Lihat Daftar Tugas\nMenggantikan Wali Kelas]
+    CekKelasGP --> PresensiGP[/Input Presensi Harian Kelas\nSebagai Guru Pengganti/]
+    
+    %% Pusat Database
+    ScanWali --> DB[(Sistem Menyimpan Data\nKe Dalam Database Presensi)]
+    InputWali --> DB
+    PresensiMapel --> DB
+    PresensiGP --> DB
+    
+    %% Alur Kepala Sekolah
+    Role -->|Role: Kepala Sekolah| Kepsek[Halaman Dashboard Kepala Sekolah]
+    Kepsek --> Monitor[Lihat Grafik & Statistik\nKehadiran Secara Real-time]
+    DB -->|Sistem Menyuplai Data Harian| Monitor
+    
+    Kepsek --> CekRekap{Apakah Ada Permintaan\nValidasi Laporan Rekap?}
+    RekapWali -->|Kirim Notifikasi Pengajuan| CekRekap
+    CekRekap -->|Ada Permintaan| AccRekap[Kepsek Memeriksa Laporan\nLalu Klik Setujui / Approve]
+    AccRekap --> CetakPDF[Sistem Otomatis Mengubah\nData Menjadi Dokumen PDF]
+    CetakPDF --> End([Selesai: Dokumen PDF Resmi\nSiap Diunduh Wali Kelas])

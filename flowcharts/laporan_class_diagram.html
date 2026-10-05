@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Diagram Sistem Presensi</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                primaryTextColor: '#000000',
+                primaryBorderColor: '#000000',
+                lineColor: '#000000',
+                fontFamily: 'arial, sans-serif',
+                fontSize: '20px',
+                classFontSize: '20px'
+            },
+            class: {
+                hideEmptyMembersBox: true,
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif; 
+            background-color: white;
+            color: black;
+            padding: 20px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1, h2, h3 { text-align: center; }
+        .diagram-container { margin-bottom: 60px; }
+        .diagram-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .mermaid {
+            display: block;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 50px;
+            border-radius: 8px;
+            overflow-x: auto; /* Bisa scroll horizontal */
+            overflow-y: visible;
+        }
+
+        /* Label relasi */
+        .mermaid .edgeLabel {
+            font-size: 16px !important;
+            font-weight: normal !important;
+        }
+        
+        /* Deskripsi di bawah diagram */
+        .description {
+            margin-top: 25px;
+            text-align: justify;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .description p {
+            margin-bottom: 12px;
+        }
+        .legend-table {
+            width: 100%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        .legend-table th, .legend-table td {
+            border: 1px solid black;
+            padding: 10px 14px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 16px;
+        }
+        .legend-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Class Diagram Sistem Presensi</h1>
+    <p style="text-align: center; margin-bottom: 40px; font-size: 18px;">
+        Dokumentasi struktur Class Diagram berdasarkan entitas pada database sistem presensi Madrasah Ibtidaiyah.
+    </p>
+
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.12 Class Diagram Sistem Presensi</div>
+        <div class="mermaid">
+classDiagram
+    direction TB
+    
+    class User {
+        +id: int
+        +name: String
+        +username: String
+        +password: String
+        +avatar: String
+        +login() bool
+        +logout() void
+        +updateProfile() bool
+    }
+
+    class Admin {
+        +kelolaDataSiswa() void
+        +assignPengganti() void
+        +cetakIDCardQR() PDF
+    }
+    class KepalaSekolah {
+        +approveRekap() bool
+        +lihatLaporan() void
+    }
+    class WaliKelas {
+        +ajukanRekap() void
+        +inputPresensi() void
+    }
+    class GuruMapel {
+        +scanQRPresensi() void
+        +ajukanPengganti() void
+    }
+    class GuruPengganti {
+        +terimaPenugasan() void
+        +downloadModul() File
+    }
+
+    class Siswa {
+        +id: int
+        +nis: String
+        +nama_siswa: String
+        +status: String
+        +getRiwayat() Array
+    }
+
+    class Kelas {
+        +id: int
+        +nama_kelas: String
+        +semester: String
+        +getDaftarSiswa() Array
+    }
+
+    class Presensi {
+        +id: int
+        +tanggal: Date
+        +status_kehadiran: String
+        +nama_pengganti: String
+        +nama_mapel: String
+        +rekamKehadiran() bool
+    }
+
+    class PengajuanRekap {
+        +id: int
+        +tipe_rekap: String
+        +bulan: String
+        +tahun: String
+        +status_approval: String
+        +acc_date: Date
+        +generatePDF() File
+    }
+
+    class TugasPengganti {
+        +id: int
+        +tanggal_tugas: Date
+        +alasan_izin: String
+        +document_path: String
+        +status_pengajuan: String
+        +ubahStatus() void
+    }
+
+    User <|-- Admin
+    User <|-- KepalaSekolah
+    User <|-- WaliKelas
+    User <|-- GuruMapel
+    User <|-- GuruPengganti
+
+    Kelas o-- Siswa : 1..* (menampung)
+    WaliKelas --> Kelas : 1..1 (membina)
+    Siswa *-- Presensi : 1..* (memiliki)
+    GuruMapel --> Presensi : 1..* (mencatat)
+    WaliKelas --> PengajuanRekap : 1..* (membuat)
+    KepalaSekolah --> PengajuanRekap : 1..* (menyetujui)
+    GuruMapel --> TugasPengganti : 1..* (memohon)
+    Admin --> TugasPengganti : 1..* (memvalidasi)
+    GuruPengganti --> TugasPengganti : 1..* (menjalankan)
+        </div>
+    </div>
+
+    <!-- DESKRIPSI LENGKAP DI BAWAH DIAGRAM -->
+    <div class="description">
+        <p>
+            <strong>Deskripsi Gambar 4.12:</strong> Class Diagram di atas menggambarkan struktur objek utama beserta relasi antar entitas pada Sistem Presensi Madrasah Ibtidaiyah. Diagram ini terdiri dari <strong>10 class (kelas objek)</strong> yang saling berelasi membentuk arsitektur data sistem secara keseluruhan.
+        </p>
+
+        <p><strong>Penjelasan Struktur Pewarisan (Inheritance):</strong></p>
+        <p>
+            Class <strong>User</strong> merupakan class induk (<em>superclass</em>) yang memiliki atribut umum seperti <em>id, name, username, password,</em> dan <em>avatar</em>, serta method dasar seperti <em>login()</em>, <em>logout()</em>, dan <em>updateProfile()</em>. Class ini diturunkan (<em>inheritance</em>) menjadi 5 subclass sesuai dengan peran pengguna dalam sistem, yaitu:
+        </p>
+        <ul>
+            <li><strong>Admin</strong> — Mengelola data master siswa, memproses pengajuan tugas pengganti, dan mencetak kartu QR.</li>
+            <li><strong>Kepala Sekolah</strong> — Menyetujui (<em>approve</em>) rekapitulasi presensi bulanan dan memantau laporan kehadiran.</li>
+            <li><strong>Wali Kelas</strong> — Mengajukan rekap presensi ke Kepala Sekolah dan menginput presensi harian secara manual.</li>
+            <li><strong>Guru Mapel</strong> — Melakukan scan QR untuk presensi siswa dan mengajukan permohonan tugas pengganti saat berhalangan.</li>
+            <li><strong>Guru Pengganti</strong> — Menerima penugasan dari Admin dan mengunduh modul/materi yang dititipkan guru utama.</li>
+        </ul>
+
+        <p><strong>Penjelasan Relasi Antar Class:</strong></p>
+        <table class="legend-table">
+            <tr>
+                <th>No</th>
+                <th>Relasi</th>
+                <th>Jenis</th>
+                <th>Kardinalitas</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>User → Admin, KepalaSekolah, WaliKelas, GuruMapel, GuruPengganti</td>
+                <td>Inheritance</td>
+                <td>—</td>
+                <td>Setiap subclass mewarisi seluruh atribut dan method dari class User</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Kelas ◇— Siswa</td>
+                <td>Agregasi</td>
+                <td>1 : *</td>
+                <td>Satu kelas menampung banyak siswa</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>WaliKelas → Kelas</td>
+                <td>Asosiasi</td>
+                <td>1 : 1</td>
+                <td>Satu Wali Kelas membina tepat satu kelas</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Siswa ◆— Presensi</td>
+                <td>Komposisi</td>
+                <td>1 : *</td>
+                <td>Satu siswa memiliki banyak catatan presensi</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>GuruMapel → Presensi</td>
+                <td>Asosiasi</td>
+                <td>1 : *</td>
+                <td>Satu guru mencatat banyak data presensi</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>WaliKelas → PengajuanRekap</td>
+                <td>Asosiasi</td>
+                <td>1 : *</td>
+                <td>Wali kelas membuat banyak pengajuan rekap bulanan</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>KepalaSekolah → PengajuanRekap</td>
+                <td>Asosiasi</td>
+                <td>1 : *</td>
+                <td>Kepala Sekolah menyetujui banyak pengajuan rekap</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>GuruMapel → TugasPengganti</td>
+                <td>Asosiasi</td>
+                <td>1 : *</td>
+                <td>Guru membuat banyak permohonan pengganti</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Admin → TugasPengganti</td>
+                <td>Asosiasi</td>
+                <td>1 : *</td>
+                <td>Admin memvalidasi dan menugaskan guru pengganti</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>GuruPengganti → TugasPengganti</td>
+                <td>Asosiasi</td>
+                <td>1 : *</td>
+                <td>Guru pengganti menjalankan banyak penugasan</td>
+            </tr>
+        </table>
+
+        <p><strong>Keterangan Simbol:</strong></p>
+        <ul>
+            <li><strong>Segitiga kosong (▷)</strong> = Inheritance / Pewarisan — subclass mewarisi atribut dan method dari superclass.</li>
+            <li><strong>Belah ketupat kosong (◇)</strong> = Agregasi — hubungan "memiliki" dimana objek anak bisa berdiri sendiri.</li>
+            <li><strong>Belah ketupat penuh (◆)</strong> = Komposisi — hubungan "bergantung penuh" dimana objek anak tidak bisa ada tanpa induknya.</li>
+            <li><strong>Panah biasa (→)</strong> = Asosiasi terarah — menunjukkan hubungan interaksi antar objek.</li>
+            <li><strong>Tanda (+)</strong> = Visibilitas <em>public</em> — atribut/method dapat diakses dari luar class.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

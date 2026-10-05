@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowmap Master - Sistem Presensi Terintegrasi</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0fdf4; color: #1a1a2e; padding: 20px; }
+        .container {
+            max-width: 1400px; margin: 0 auto; background: white; border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #065F46 0%, #047857 50%, #059669 100%);
+            color: white; padding: 30px 40px; text-align: center;
+        }
+        .header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .legend {
+            background: #f8fafc; padding: 15px 30px; border-bottom: 1px solid #e2e8f0;
+            display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: #334155; }
+        .box { width: 24px; height: 16px; border: 1px solid #333; }
+        .box.process { background: #e2e8f0; border-radius: 4px; }
+        .box.doc { background: #fff; transform: skewX(-10deg); }
+        .box.db { background: #cbd5e1; border-radius: 4px 4px 50% 50%; }
+        .box.decision { background: #fde047; transform: rotate(45deg); width: 16px; margin: 0 4px; }
+        .flowmap-wrapper { padding: 30px; overflow-x: auto; background: #fafafa; }
+        .print-btn {
+            display: block; margin: 20px auto; background: #065F46; color: white;
+            border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;
+            font-weight: 700; font-size: 1rem; transition: 0.3s;
+        }
+        .print-btn:hover { background: #047857; }
+        @media print {
+            .print-btn { display: none; }
+            body { padding: 0; background: white; }
+            .container { box-shadow: none; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🗺️ Master Flowmap Sistem Presensi</h1>
+        <p>Alur Kerja Terintegrasi Seluruh Aktor (Admin, Wali Kelas, Guru Mapel, Guru Pengganti, Kepala Sekolah)</p>
+    </div>
+    
+    <div class="legend">
+        <div class="legend-item"><div class="box process"></div> Proses / Aksi</div>
+        <div class="legend-item"><div class="box doc"></div> Input / Dokumen</div>
+        <div class="legend-item"><div class="box decision"></div> Keputusan</div>
+        <div class="legend-item"><div class="box db"></div> Database / Sistem</div>
+    </div>
+
+    <div class="flowmap-wrapper">
+        <pre class="mermaid">
+flowchart TD
+    %% Konfigurasi style
+    classDef process fill:#e2e8f0,stroke:#333,stroke-width:1px;
+    classDef doc fill:#fff,stroke:#333,stroke-width:1px;
+    classDef db fill:#059669,stroke:#333,stroke-width:1px,color:#fff;
+    classDef decision fill:#fde047,stroke:#333,stroke-width:1px;
+    classDef startend fill:#1e293b,stroke:#fff,stroke-width:2px,color:#fff;
+
+    %% Trik untuk memaksa Mermaid menyejajarkan kolom (swimlane) secara horizontal
+    A_Start ~~~ W_Start
+    W_Start ~~~ GM_Start
+    GM_Start ~~~ GP_Start
+    GP_Start ~~~ KS_Start
+
+    subgraph Admin ["ADMIN"]
+        direction TB
+        A_Start([Mulai Set Data]):::startend
+        A1[Kelola Data Master:\nSiswa, Kelas, TA]:::process
+        A2[Evaluasi Pengajuan\nGuru Pengganti]:::process
+        A3{Setuju?}:::decision
+        A4[Assign Guru Pengganti]:::process
+
+        A_Start --> A1
+        A2 --> A3
+        A3 -->|Ya| A4
+        A3 -->|Tidak| A2
+    end
+
+    subgraph Wali_Kelas ["WALI KELAS"]
+        direction TB
+        W_Start([Akses Dashboard]):::startend
+        W1[Buka Kelas Aktif]:::process
+        W2[/Input Presensi Harian/]:::doc
+        W3[/Ajukan Guru Pengganti/]:::doc
+        W4[/Ajukan Rekap Laporan/]:::doc
+        W5[/Download PDF Rekap/]:::doc
+
+        W_Start --> W1
+        W1 --> W2
+        W1 --> W3
+        W1 --> W4
+        W4 --> W5
+    end
+
+    subgraph Guru_Mapel ["GURU MAPEL"]
+        direction TB
+        GM_Start([Akses Mapel]):::startend
+        GM1[Pilih Kelas & Mapel]:::process
+        GM2[/Input Presensi Mapel/]:::doc
+
+        GM_Start --> GM1
+        GM1 --> GM2
+    end
+
+    subgraph Guru_Pengganti ["GURU PENGGANTI"]
+        direction TB
+        GP_Start([Cek Tugas]):::startend
+        GP1[Terima Tugas Kelas]:::process
+        GP2[/Input Presensi Pengganti/]:::doc
+
+        GP_Start --> GP1
+        GP1 --> GP2
+    end
+
+    subgraph Kepala_Sekolah ["KEPALA SEKOLAH"]
+        direction TB
+        KS_Start([Monitoring]):::startend
+        KS1[Evaluasi Pengajuan Rekap]:::process
+        KS2{Setuju?}:::decision
+        KS3[Approve Rekap]:::process
+        KS4[Lihat Laporan Global]:::process
+
+        KS_Start --> KS1
+        KS1 --> KS2
+        KS2 -->|Ya| KS3
+        KS2 -->|Tidak| KS1
+    end
+
+    %% Garis Penghubung Lintas Aktor (Cross-Lane)
+    %% Menggunakan garis putus-putus atau panah agar tidak merusak layout utama vertikal
+    A1 -.->|Sinkronisasi Data| W1
+    A1 -.->|Sinkronisasi Data| GM1
+    
+    W3 -->|Kirim Pengajuan| A2
+    A4 -->|Tugas Baru| GP1
+    
+    W4 -->|Kirim Pengajuan| KS1
+    KS3 -.->|Generate PDF| W5
+    
+    W2 -.->|Data Masuk| KS4
+    GM2 -.->|Data Masuk| KS4
+    GP2 -.->|Data Masuk| KS4
+    
+        </pre>
+    </div>
+    
+    <button class="print-btn" onclick="window.print()">🖨️ Cetak Flowmap Utama (PDF)</button>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#f1f5f9',
+            primaryTextColor: '#1e293b',
+            primaryBorderColor: '#64748b',
+            lineColor: '#475569',
+            fontFamily: 'Inter'
+        },
+        flowchart: {
+            curve: 'stepAfter', /* Membuat garis siku-siku rapi layaknya flowmap arsitektur */
+            padding: 20,
+            nodeSpacing: 40,
+            rankSpacing: 60
+        }
+    });
+</script>
+
+</body>
+</html>

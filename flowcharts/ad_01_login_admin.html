@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Diagram - Login Admin</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; padding: 20px; display: flex; justify-content: center; }
+  svg { background: #fff; }
+  .border { fill: none; stroke: #000; stroke-width: 1.5; }
+  .node { fill: #fff; stroke: #000; stroke-width: 1.5; }
+  .text { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px; text-anchor: middle; dominant-baseline: middle; }
+  .title { font-size: 15px; font-weight: bold; }
+  .edge { fill: none; stroke: #000; stroke-width: 1.5; marker-end: url(#arrow); }
+  .edge-text { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 600 650" width="600" height="650" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+  
+  <rect x="1" y="1" width="598" height="648" class="border"/>
+  <line x1="300" y1="1" x2="300" y2="649" class="border"/>
+  <line x1="1" y1="50" x2="599" y2="50" class="border"/>
+  <text x="150" y="25" class="text title">Admin</text>
+  <text x="450" y="25" class="text title">Sistem</text>
+  
+  <text x="150" y="70" class="text">Start</text>
+  <circle cx="150" cy="100" r="15" fill="#000"/>
+  
+  <rect x="50" y="140" width="200" height="50" rx="10" class="node"/>
+  <text x="150" y="165" class="text">Membuka website</text>
+  <path d="M150,115 L150,140" class="edge"/>
+  
+  <rect x="350" y="140" width="200" height="50" rx="10" class="node"/>
+  <text x="450" y="165" class="text">Menampilkan halaman form login</text>
+  <path d="M250,165 L350,165" class="edge"/>
+  
+  <rect x="50" y="230" width="200" height="50" rx="10" class="node"/>
+  <text x="150" y="255" class="text">Mengisi username &amp; password</text>
+  <path d="M450,190 L450,210 L150,210 L150,230" class="edge"/>
+  
+  <rect x="350" y="230" width="200" height="50" rx="10" class="node"/>
+  <text x="450" y="255" class="text">Validasi data login</text>
+  <path d="M250,255 L350,255" class="edge"/>
+  
+  <polygon points="450,310 500,340 450,370 400,340" class="node"/>
+  <path d="M450,280 L450,310" class="edge"/>
+  
+  <path d="M400,340 L150,340 L150,280" class="edge"/>
+  <text x="360" y="330" class="edge-text">Tidak</text>
+  
+  <rect x="350" y="420" width="200" height="50" rx="10" class="node"/>
+  <text x="450" y="445" class="text">Menampilkan halaman Dashboard</text>
+  <path d="M450,370 L450,420" class="edge"/>
+  <text x="465" y="395" class="edge-text">Ya</text>
+  
+  <rect x="50" y="500" width="200" height="50" rx="10" class="node"/>
+  <text x="150" y="525" class="text">Melihat halaman dashboard</text>
+  <path d="M350,445 L320,445 L320,525 L250,525" class="edge"/>
+  
+  <circle cx="150" cy="590" r="18" fill="#fff" stroke="#000" stroke-width="2"/>
+  <circle cx="150" cy="590" r="10" fill="#000"/>
+  <path d="M150,550 L150,572" class="edge"/>
+  
+</svg>
+</body>
+</html>

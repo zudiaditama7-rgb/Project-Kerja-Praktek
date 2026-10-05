@@ -1,0 +1,9 @@
+flowchart TD
+    A([Kepala Sekolah]) --> B[Dashboard: Statistik Hari Ini]
+    B --> C{Menu}
+    C -->|Monitoring| D[Filter: Tanggal + Kelas]
+    D --> E[Data Presensi Real-time]
+    C -->|Laporan| F[Filter: Range Tanggal + Kelas]
+    F --> G[Rekap + Pagination]
+    C -->|Approval| H[Daftar Pengajuan Rekap]
+    H --> I[Setujui / Tolak]

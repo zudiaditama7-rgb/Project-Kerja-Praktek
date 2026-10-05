@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERD Database Sistem Presensi</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                primaryTextColor: '#000000',
+                primaryBorderColor: '#000000',
+                lineColor: '#000000',
+                fontFamily: 'arial, sans-serif',
+                fontSize: '16px'
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif; 
+            background-color: white;
+            color: black;
+            padding: 20px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1 { text-align: center; }
+        .diagram-container { margin-bottom: 60px; }
+        .diagram-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .mermaid {
+            display: block;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 50px;
+            border-radius: 8px;
+            overflow-x: auto;
+            text-align: center;
+        }
+        
+        .description {
+            margin-top: 25px;
+            text-align: justify;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .description p {
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Entity Relationship Diagram (ERD)</h1>
+    <p style="text-align: center; margin-bottom: 40px; font-size: 18px;">
+        Dokumentasi struktur tabel relasional database pada Sistem Presensi Madrasah Ibtidaiyah.
+    </p>
+
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.13 Entity Relationship Diagram (ERD)</div>
+        <div class="mermaid">
+erDiagram
+    USERS ||--o{ PRESENSIS : mencatat
+    USERS ||--o{ PENGAJUAN_PRESENSIS : mengajukan
+    USERS ||--o{ KELAS : wali_kelas
+    USERS ||--o{ TUGAS_PENGGANTIS : "wali / guru"
+    SISWAS ||--o{ PRESENSIS : memiliki
+    SISWAS ||--o{ ROMBELS : terdaftar
+    SISWAS ||--o{ RIWAYAT_SISWAS : riwayat
+    KELAS ||--o{ ROMBELS : berisi
+
+    USERS {
+        int id PK
+        string name
+        string username
+        string password
+        string role
+        string avatar
+    }
+    SISWAS {
+        int id PK
+        string nis
+        string nama_siswa
+        string status
+    }
+    KELAS {
+        int id PK
+        string nama_kelas
+        int wali_kelas_id FK
+        string semester
+    }
+    ROMBELS {
+        int id PK
+        int siswa_id FK
+        int kelas_id FK
+        string semester
+    }
+    PRESENSIS {
+        int id PK
+        int siswa_id FK
+        int user_id FK
+        date tanggal
+        string status
+        string nama_pengganti
+        string nama_mapel
+        string document_path
+    }
+    PENGAJUAN_PRESENSIS {
+        int id PK
+        int user_id FK
+        string kelas
+        string tipe
+        string bulan
+        string tahun
+        string status
+        int acc_by FK
+        date acc_date
+    }
+    TUGAS_PENGGANTIS {
+        int id PK
+        int wali_kelas_id FK
+        int guru_pengganti_id FK
+        string kelas
+        date tanggal
+        string alasan
+        string status
+        string document_path
+    }
+    RIWAYAT_SISWAS {
+        int id PK
+        int siswa_id FK
+        string tahun_ajaran
+        string kelas_asal
+        string kelas_tujuan
+        string status
+    }
+    TAHUN_AJARANS {
+        int id PK
+        string nama_tahun
+        boolean is_active
+        date tanggal_mulai
+        date tanggal_selesai
+    }
+        </div>
+    </div>
+
+    <div class="description">
+        <p>
+            <strong>Deskripsi Gambar 4.13:</strong> Diagram ERD (Entity Relationship Diagram) di atas memodelkan rancangan basis data sistem presensi yang dibuat menggunakan notasi baku <strong>Crow's Foot (Kaki Gagak)</strong>. Model ini sangat direkomendasikan pada pengembangan perangkat lunak modern karena mampu menampilkan atribut tabel (termasuk Primary Key/PK dan Foreign Key/FK) secara bersamaan dengan relasi antar tabel.
+        </p>
+        <p>
+            <strong>Keterangan Simbol Relasi (Crow's Foot):</strong>
+        </p>
+        <ul>
+            <li><code>||--o{</code> : Relasi <em>One-to-Many</em> (Satu ke Banyak). Contohnya satu entitas <strong>USERS</strong> dapat terhubung dengan banyak (atau nol) catatan di tabel <strong>PRESENSIS</strong>.</li>
+            <li><strong>PK (Primary Key)</strong>: Menandakan atribut kunci utama yang unik untuk setiap baris data (misal: <code>id</code>).</li>
+            <li><strong>FK (Foreign Key)</strong>: Menandakan kunci tamu yang menghubungkan entitas tersebut dengan Primary Key di tabel lain (misal: <code>user_id</code>).</li>
+        </ul>
+    </div>
+
+</body>
+</html>

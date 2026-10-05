@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequence Diagram Sistem Presensi Lengkap</title>
+    <!-- Load Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        // Konfigurasi Mermaid untuk memperbesar ukuran teks agar lebih jelas di laporan
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                fontSize: '16px', // Ukuran font diperbesar
+                fontFamily: 'arial, sans-serif'
+            },
+            sequence: {
+                actorMargin: 70,
+                messageMargin: 50,
+                boxMargin: 15,
+                messageFontSize: '15px', // Teks pesan (panah)
+                noteFontSize: '15px',    // Teks catatan
+                actorFontSize: '16px',   // Teks nama aktor
+                actorFontWeight: 'bold'
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif; /* Sesuai standar skripsi/laporan */
+            background-color: white;
+            color: black;
+            padding: 20px;
+            max-width: 1000px; /* Diperlebar sedikit agar diagram besar muat */
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .diagram-container {
+            margin-bottom: 60px;
+            page-break-inside: avoid; /* Mencegah terpotong saat diprint/PDF */
+        }
+        .diagram-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px; /* Judul gambar diperbesar */
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            background-color: #fcfcfc;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto; /* Agar bisa scroll horizontal jika kebesaran di layar kecil */
+        }
+        /* Memperbesar SVG agar lebih jelas saat dirender */
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .description {
+            margin-top: 15px;
+            text-align: justify;
+            font-size: 16px; /* Deskripsi diperbesar */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Daftar Lengkap Sequence Diagram Sistem</h1>
+    <p style="text-align: center; margin-bottom: 40px; font-size: 16px;">Kumpulan Sequence Diagram untuk seluruh aktor dan proses bisnis pada Sistem Presensi Madrasah.</p>
+
+    <!-- 1. Diagram Login -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.1 Sequence Diagram Melakukan Login (Semua User)</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Pengguna
+    participant ViewLogin as Halaman Login
+    participant Controller as AuthController
+    participant Database as Database (users)
+
+    Pengguna->>ViewLogin: 1. Input Username & Password
+    ViewLogin->>Controller: 2. Submit Data Kredensial
+    Controller->>Database: 3. Query Cek Kredensial (Username)
+    Database-->>Controller: 4. Kembalikan Data User (Hash)
+    
+    alt Kredensial Valid
+        Controller->>Controller: 5. Verifikasi Hash Password (Sesuai)
+        Controller->>Controller: 6. Set Session Login & Role
+        Controller-->>ViewLogin: 7. Redirect ke Dashboard sesuai Role
+        ViewLogin-->>Pengguna: 8. Tampilkan Dashboard
+    else Kredensial Tidak Valid
+        Controller->>Controller: 5. Verifikasi Hash Password (Gagal)
+        Controller-->>ViewLogin: 6. Redirect Back dengan Error
+        ViewLogin-->>Pengguna: 7. Tampilkan Pesan "Login Gagal"
+    end
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Diagram mewakili proses autentikasi untuk semua peran (Admin, Wali Kelas, Guru Mapel, Guru Pengganti, Kepala Sekolah). Sistem memvalidasi kredensial dan mengarahkan pengguna ke dashboard berdasarkan hak akses (Role).
+        </div>
+    </div>
+
+    <!-- 2. Admin: Kelola Data Siswa -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.2 Sequence Diagram Admin Mengelola Data Siswa (CRUD)</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Admin
+    participant View as Modul Data Siswa
+    participant Controller as SiswaController
+    participant Database as Database (siswa)
+
+    Admin->>View: 1. Buka Form Tambah/Edit Data Siswa
+    Admin->>View: 2. Isi Data (NIS, Nama, Kelas, dll)
+    Admin->>View: 3. Klik "Simpan"
+    View->>Controller: 4. Request POST Data Siswa
+    
+    Controller->>Controller: 5. Validasi Input (NIS Unik, Required)
+    
+    alt Validasi Sukses
+        Controller->>Database: 6. Query Insert / Update Data
+        Database-->>Controller: 7. Return Sukses
+        Controller-->>View: 8. Redirect ke Tabel Master
+        View-->>Admin: 9. Tampilkan "Data Berhasil Disimpan"
+    else Validasi Gagal (Misal NIS Kembar)
+        Controller-->>View: 6. Redirect Back with Errors
+        View-->>Admin: 7. Tampilkan Peringatan "NIS Sudah Digunakan"
+    end
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Perwakilan dari alur CRUD (Create, Read, Update, Delete). Alur ini mirip dengan modul pengelolaan master data lainnya seperti kelola Kelas, kelola User, atau kelola Tahun Ajaran.
+        </div>
+    </div>
+
+    <!-- 3. Admin: Cetak Kartu QR -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.3 Sequence Diagram Admin Mencetak Kartu QR Siswa</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Admin
+    participant View as Data Siswa
+    participant Controller as CetakQRController
+    participant PDFEngine as Library PDF/QR
+    participant Database as Database (siswa)
+
+    Admin->>View: 1. Pilih Kelas / Centang Nama Siswa
+    Admin->>View: 2. Klik "Cetak Kartu QR"
+    View->>Controller: 3. Request Cetak Berdasarkan ID
+    Controller->>Database: 4. Ambil Data Siswa (NIS, Nama, Foto)
+    Database-->>Controller: 5. Kembalikan Data Siswa
+    Controller->>PDFEngine: 6. Generate QR Code dari NIS
+    Controller->>PDFEngine: 7. Render Template HTML ke PDF
+    PDFEngine-->>Controller: 8. File PDF Siap
+    Controller-->>View: 9. Stream/Download File PDF
+    View-->>Admin: 10. File PDF ID Card Terunduh
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Admin melakukan generate ID Card yang dilengkapi dengan QR Code. QR Code dihasilkan secara dinamis berdasarkan Nomor Induk Siswa (NIS) untuk keperluan scan presensi harian.
+        </div>
+    </div>
+
+    <!-- 4. Wali/Guru: Scan Presensi QR -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.4 Sequence Diagram Presensi Harian via Scan QR Code</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Guru as Wali / Guru Mapel
+    participant View as Halaman Scan QR
+    participant Controller as PresensiController
+    participant DB_Siswa as Database (siswa)
+    participant DB_Presensi as Database (presensi)
+
+    Guru->>View: 1. Buka Kamera Scanner QR
+    Guru->>View: 2. Arahkan Kartu QR Siswa ke Kamera
+    View->>Controller: 3. Kirim Data NIS dari QR (AJAX)
+    Controller->>DB_Siswa: 4. Cek Validitas NIS Siswa
+    
+    alt Siswa Ditemukan
+        DB_Siswa-->>Controller: 5. Kembalikan Data Siswa
+        Controller->>DB_Presensi: 6. Cek Status Presensi Hari Ini
+        
+        alt Belum Presensi
+            DB_Presensi-->>Controller: 7. Status Kosong
+            Controller->>DB_Presensi: 8. Insert Presensi (Status: Hadir)
+            Controller-->>View: 9. Response Success (Bawa Data Profil)
+            View-->>Guru: 10. Tampilkan Notif "Presensi NIS... Berhasil"
+        else Sudah Presensi
+            DB_Presensi-->>Controller: 7. Status Sudah Ada
+            Controller-->>View: 8. Response Warning
+            View-->>Guru: 9. Tampilkan Notif "Siswa Sudah Terabsen"
+        end
+    else Siswa Tidak Ditemukan
+        DB_Siswa-->>Controller: 5. Data Null
+        Controller-->>View: 6. Response Error
+        View-->>Guru: 7. Tampilkan Notif "QR Code Tidak Valid"
+    end
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Alur utama pencatatan kehadiran menggunakan kamera device guru untuk men-scan QR Code siswa. Sistem memvalidasi agar tidak terjadi absen ganda di hari yang sama.
+        </div>
+    </div>
+
+    <!-- 5. Wali/Guru: Presensi Manual -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.5 Sequence Diagram Input Presensi Manual (Sakit/Izin/Alpa)</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Guru as Wali / Guru Mapel
+    participant View as Tabel Presensi Manual
+    participant Controller as PresensiController
+    participant Database as Database (presensi)
+
+    Guru->>View: 1. Buka Menu Presensi Manual Kelas
+    View->>Controller: 2. Request Data Siswa & Status Hari Ini
+    Controller->>Database: 3. Fetch Data Siswa + Presensi
+    Database-->>Controller: 4. Return Data
+    Controller-->>View: 5. Tampilkan Tabel Daftar Siswa
+    
+    Guru->>View: 6. Pilih Status (Sakit/Izin/Alpa) pd Siswa Tertentu
+    Guru->>View: 7. Klik "Simpan Presensi"
+    View->>Controller: 8. Submit Array Data Presensi
+    Controller->>Database: 9. Update/Insert Data Status Presensi
+    Database-->>Controller: 10. Berhasil Tersimpan
+    Controller-->>View: 11. Redirect with Success Message
+    View-->>Guru: 12. Tampilkan "Presensi Manual Disimpan"
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Digunakan apabila scanner QR tidak berfungsi, siswa lupa membawa kartu, atau guru harus menginputkan keterangan Sakit, Izin, atau Alpa secara manual melalui tabel daftar siswa.
+        </div>
+    </div>
+
+    <!-- 6. Guru: Pengajuan Tugas Pengganti -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.6 Sequence Diagram Pengajuan Tugas Pengganti (Oleh Guru)</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Guru as Guru (Berhalangan)
+    participant View as Form Pengajuan
+    participant Controller as TugasController
+    participant Database as Database (tugas_pengganti)
+
+    Guru->>View: 1. Buka Form Pengajuan
+    Guru->>View: 2. Isi Alasan, Tanggal & Upload Modul PDF
+    View->>Controller: 3. Submit Data & File
+    Controller->>Controller: 4. Validasi File Modul/Surat
+    
+    alt Validasi Berhasil
+        Controller->>Database: 5. Insert Data (Status: Pending)
+        Database-->>Controller: 6. Data Tersimpan
+        Controller-->>View: 7. Redirect ke Riwayat
+        View-->>Guru: 8. Tampilkan "Pengajuan Berhasil Dikirim"
+    else Validasi Gagal
+        Controller-->>View: 5. Return Error (File kebesaran/Salah format)
+        View-->>Guru: 6. Tampilkan Pesan Error Validasi
+    end
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Alur yang dilakukan guru ketika berhalangan hadir. Guru mengisi form pengajuan agar kelasnya dicarikan guru pengganti, beserta mengunggah file materi/modul pembelajaran sementara.
+        </div>
+    </div>
+
+    <!-- 7. Admin: Memproses Tugas Pengganti -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.7 Sequence Diagram Admin Menugaskan Guru Pengganti</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Admin
+    participant View as Panel Approval
+    participant Controller as AdminTugasController
+    participant Database as Database (tugas_pengganti)
+
+    Admin->>View: 1. Buka Notifikasi Pengajuan Masuk
+    View->>Controller: 2. Request Detail Pengajuan
+    Controller->>Database: 3. Ambil Data Tugas & Modul
+    Database-->>Controller: 4. Kembalikan Data
+    Controller-->>View: 5. Tampilkan Detail ke Admin
+    
+    Admin->>View: 6. Pilih Guru Pengganti dari Dropdown
+    Admin->>View: 7. Klik "Assign / Setujui"
+    View->>Controller: 8. Submit (ID Pengajuan & ID Guru Pengganti)
+    Controller->>Database: 9. Update Status = 'Approved' & Set Guru ID
+    Database-->>Controller: 10. Konfirmasi Update
+    
+    Controller->>Database: 11. Trigger Notifikasi Sistem untuk Guru Pengganti
+    Controller-->>View: 12. Redirect dengan Success
+    View-->>Admin: 13. Tampilkan "Berhasil Menugaskan Guru"
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Admin mengevaluasi pengajuan dari guru yang tidak hadir, lalu memilih dan menetapkan (assign) guru pengganti yang sedang kosong jadwalnya untuk mengajar kelas tersebut.
+        </div>
+    </div>
+
+    <!-- 8. Guru Pengganti: Menerima Tugas -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.8 Sequence Diagram Guru Pengganti Menerima Tugas & Modul</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor GuruP as Guru Pengganti
+    participant View as Menu Tugas Kelas
+    participant Controller as TugasController
+    participant Database as Database (tugas_pengganti)
+
+    GuruP->>View: 1. Buka Menu "Tugas Kelas Titipan"
+    View->>Controller: 2. Request Data Penugasan (Berdasarkan ID Guru)
+    Controller->>Database: 3. Ambil Data Penugasan yang Approved
+    Database-->>Controller: 4. Return Data (Termasuk Path File Modul)
+    Controller-->>View: 5. Tampilkan Daftar Kelas Titipan
+    
+    GuruP->>View: 6. Klik "Download Modul Materi"
+    View->>Controller: 7. Request Download File
+    Controller->>Controller: 8. Verifikasi Hak Akses File
+    Controller-->>View: 9. Stream File PDF
+    View-->>GuruP: 10. Modul Terunduh ke Perangkat
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Guru yang telah ditunjuk oleh Admin akan menerima notifikasi, masuk ke menu Tugas Kelas Titipan, dan mengunduh materi/modul pembelajaran yang ditinggalkan oleh guru utama.
+        </div>
+    </div>
+
+    <!-- 9. Wali Kelas: Pengajuan Rekap -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.9 Sequence Diagram Wali Kelas Mengajukan Rekap Presensi</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Wali as Wali Kelas
+    participant View as Menu Rekap
+    participant Controller as RekapController
+    participant Database as Database (rekap_presensi)
+
+    Wali->>View: 1. Pilih Bulan & Tahun Rekap
+    Wali->>View: 2. Klik "Kalkulasi & Ajukan ke Kepsek"
+    View->>Controller: 3. Request Pengajuan Rekap
+    
+    Controller->>Database: 4. Query Count (Total Hadir/Izin/Sakit) per Siswa
+    Database-->>Controller: 5. Return Data Agregat Bulanan
+    
+    Controller->>Database: 6. Insert Log Pengajuan (Status: Menunggu)
+    Database-->>Controller: 7. Tersimpan di Database
+    Controller->>Database: 8. Trigger Notifikasi ke Kepala Sekolah
+    
+    Controller-->>View: 9. Response Success
+    View-->>Wali: 10. Tampilkan Status "Menunggu Persetujuan Kepsek"
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Di akhir bulan, Wali Kelas diwajibkan mengajukan perhitungan rekapitulasi kehadiran siswa di kelasnya kepada Kepala Sekolah secara sistem untuk proses pengesahan.
+        </div>
+    </div>
+
+    <!-- 10. Kepala Sekolah: Approval Rekap -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.10 Sequence Diagram Approval Laporan (Oleh Kepala Sekolah)</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Kepsek as Kepala Sekolah
+    participant View as Dashboard Kepsek
+    participant Controller as KepsekController
+    participant Database as Database (rekap_presensi)
+
+    Kepsek->>View: 1. Buka Notifikasi Pengajuan Rekap Wali Kelas
+    View->>Controller: 2. Request Data Rekap Detail
+    Controller->>Database: 3. Ambil Detail Rekapitulasi (Tabel Siswa)
+    Database-->>Controller: 4. Kembalikan Data
+    Controller-->>View: 5. Render Tabel Rekap di Layar
+    
+    Kepsek->>View: 6. Tinjau Data dan Klik "Setujui Laporan"
+    View->>Controller: 7. Request Update Approval
+    Controller->>Database: 8. Update Status = 'Disetujui', Catat Tanggal
+    Database-->>Controller: 9. Konfirmasi Update
+    
+    Controller->>Database: 10. Kirim Notif Balasan ke Wali Kelas
+    Controller-->>View: 11. Success Response
+    View-->>Kepsek: 12. Tampilkan "Laporan Kelas ... Telah Disetujui"
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Kepala sekolah mengecek tabel rekapitulasi per kelas. Apabila data sudah benar, Kepala Sekolah memberikan persetujuan (approval) secara digital di dalam sistem.
+        </div>
+    </div>
+
+    <!-- 11. Cetak Laporan (Wali/Admin) -->
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.11 Sequence Diagram Cetak / Download Rekap (PDF)</div>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor User as Wali Kelas / Admin
+    participant View as Menu Rekap Disetujui
+    participant Controller as CetakLaporanController
+    participant PDFEngine as DOMPDF Library
+    participant Database as Database
+
+    User->>View: 1. Klik Tombol "Cetak / Unduh PDF"
+    View->>Controller: 2. Request Cetak Laporan ID Rekap
+    Controller->>Database: 3. Ambil Data Agregat + TTD Kepsek Digital
+    Database-->>Controller: 4. Return Data
+    
+    Controller->>PDFEngine: 5. Load Template View HTML Laporan Resmi
+    Controller->>PDFEngine: 6. Inject Data & Render to PDF Format
+    PDFEngine-->>Controller: 7. File PDF Selesai Dirender
+    
+    Controller-->>View: 8. Return HTTP Download Header (PDF)
+    View-->>User: 9. Browser Mengunduh File Dokumen Laporan
+        </div>
+        <div class="description">
+            <strong>Deskripsi:</strong> Laporan bulanan yang sudah disetujui Kepala Sekolah dapat diunduh menjadi file PDF berekstensi yang memuat format cetak resmi ber-Kop Surat untuk diarsipkan (hardcopy).
+        </div>
+    </div>
+
+</body>
+</html>

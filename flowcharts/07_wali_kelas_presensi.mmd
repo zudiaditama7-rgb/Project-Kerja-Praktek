@@ -1,0 +1,16 @@
+flowchart TD
+    A([Wali Kelas]) --> B[Menu Presensi]
+    B --> C[Ambil Siswa Kelas via Rombel]
+    C --> D[Cek Presensi Hari Ini]
+    D --> E{Sudah Ada?}
+    E -->|Oleh Guru Pengganti| F[Info Guru Pengganti - Terkunci]
+    E -->|Oleh Guru Mapel| F2[Info Guru Mapel + Mata Pelajaran]
+    E -->|Belum| G[Form: Set Status Tiap Siswa]
+    G --> H[Hadir / Izin / Sakit / Alpha]
+    H --> I{Izin atau Sakit?}
+    I -->|Ya| J[Upload Dokumen Pendukung]
+    I -->|Tidak| K[Lanjut]
+    J --> K
+    K --> L{Semua Siswa Terisi?}
+    L -->|Tidak| M[Error: Harus Lengkap] --> G
+    L -->|Ya| N[Simpan via updateOrCreate]

@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant WK as Wali Kelas
+    participant SYS as Sistem
+    participant ADM as Admin
+    participant GP as Guru Pengganti
+
+    WK->>SYS: Ajukan Guru Pengganti (tanggal, alasan, dokumen)
+    SYS->>SYS: Simpan status pending
+    ADM->>SYS: Lihat daftar pengajuan
+    alt Disetujui
+        ADM->>SYS: Assign Guru + status disetujui
+        SYS->>GP: Tugas muncul di dashboard
+        GP->>SYS: Input presensi kelas
+        SYS->>SYS: Simpan + tugas selesai
+    else Ditolak
+        ADM->>SYS: Tolak + keterangan
+        SYS->>WK: Status ditolak
+    end

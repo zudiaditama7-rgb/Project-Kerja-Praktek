@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Pembayaran dan Tanya Panitia</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Format laporan akademik */
+            background-color: #fff;
+            color: #000;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .document-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Layout Wireframe Wrapper */
+        .wireframe-wrapper {
+            border: 2px solid #000;
+            padding: 0;
+            margin-bottom: 10px;
+            background-color: #fcfcfc;
+            border-radius: 4px 4px 0 0;
+        }
+        .browser-header {
+            border-bottom: 2px solid #000;
+            padding: 5px 10px;
+            display: flex;
+            gap: 5px;
+            background-color: #e0e0e0;
+        }
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        
+        /* Laporan text styling */
+        h2.report-heading {
+            font-size: 14pt;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .figure-caption {
+            text-align: center;
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .wireframe-description {
+            font-size: 11pt;
+            text-align: justify;
+            margin-bottom: 60px;
+            padding: 0 10px;
+        }
+        .wireframe-description p {
+            margin-bottom: 5px;
+        }
+        .wireframe-description ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+
+        /* --- DASHBOARD LAYOUT STYLES --- */
+        .dashboard-layout {
+            display: flex;
+            height: 450px;
+        }
+        .sidebar {
+            width: 180px;
+            border-right: 2px solid #000;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 10px;
+            box-sizing: border-box;
+        }
+        .sidebar-logo-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar-logo-box {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            margin: 0 auto 5px auto;
+            background-color: #eee;
+        }
+        .sidebar-logo-text {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .menu-label {
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .sidebar-menu {
+            flex: 1;
+        }
+        .menu-item {
+            padding: 8px 10px;
+            font-size: 11px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .menu-item.active {
+            background-color: #e0e0e0;
+            border: 1px solid #000;
+            font-weight: bold;
+        }
+        .sidebar-profile {
+            border-top: 1px dashed #000;
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .profile-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .profile-info {
+            font-size: 10px;
+        }
+        
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+        }
+        .topbar {
+            height: 50px;
+            border-bottom: 1px solid #000;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-weight: bold;
+            font-size: 14px;
+            background-color: #fafafa;
+        }
+        .content-area {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* --- PEMBAYARAN STYLES --- */
+        .status-card {
+            border: 1px solid #000;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f2f2f2;
+        }
+        .status-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .status-icon {
+            width: 45px;
+            height: 45px;
+            border: 1px solid #000;
+            border-radius: 8px;
+            background-color: #ddd;
+        }
+        .status-text h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+        .status-text p {
+            margin: 0;
+            font-size: 10px;
+            color: #555;
+        }
+        .btn-cetak {
+            border: 1px solid #000;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .history-card {
+            border: 1px solid #000;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 2px 2px 0px #e0e0e0;
+        }
+        .history-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border-left: 3px solid #000;
+            padding-left: 10px;
+        }
+        .table-history {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+        .table-history th {
+            text-align: left;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #000;
+            color: #555;
+        }
+        .table-history td {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        .badge-status {
+            border: 1px solid #000;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 9px;
+            background-color: #eee;
+            font-weight: bold;
+        }
+
+        /* --- TANYA PANITIA STYLES --- */
+        .chat-container {
+            border: 1px solid #000;
+            border-radius: 12px;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #e0e0e0;
+            border-bottom: 1px solid #000;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .chat-header-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            border-radius: 8px;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-header-info h4 {
+            margin: 0 0 3px 0;
+            font-size: 14px;
+        }
+        .chat-header-info p {
+            margin: 0;
+            font-size: 10px;
+            color: #333;
+        }
+        .chat-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fafafa;
+        }
+        .empty-chat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1px dashed #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            background-color: #eee;
+            font-size: 24px;
+        }
+        .chat-body h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+        .chat-body p {
+            margin: 0;
+            font-size: 10px;
+            color: #555;
+            text-align: center;
+            max-width: 250px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        
+        <h2 class="report-heading">Lampiran: Desain Antarmuka (Wireframe) Fitur Lanjutan Siswa</h2>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 30px;">
+            Berikut adalah rancangan antarmuka pengguna (User Interface Wireframe) untuk Halaman Pembayaran/Daftar Ulang dan Halaman Tanya Panitia (Live Chat) pada Dashboard Calon Siswa.
+        </p>
+
+        <!-- GAMBAR 1: PEMBAYARAN / DAFTAR ULANG -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            
+            <div class="dashboard-layout">
+                <div class="sidebar">
+                    <div class="sidebar-logo-area">
+                        <div class="sidebar-logo-box">Logo</div>
+                        <div class="sidebar-logo-text">SMP Muhammadiyah<br>Kaliwiro</div>
+                    </div>
+                    <div class="menu-label">MAIN MENU</div>
+                    <div class="sidebar-menu">
+                        <div class="menu-item">🏠 Dashboard</div>
+                        <div class="menu-item">📄 Formulir Biodata</div>
+                        <div class="menu-item active">💳 Pembayaran /<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Daftar Ulang</div>
+                        <div class="menu-item">💬 Tanya Panitia</div>
+                    </div>
+                    <div class="sidebar-profile">
+                        <div class="profile-avatar">L</div>
+                        <div class="profile-info"><strong>Lestari Tari</strong><br>Siswa</div>
+                    </div>
+                </div>
+                
+                <div class="main-area">
+                    <div class="topbar">Daftar Ulang & Administrasi Keuangan</div>
+                    <div class="content-area">
+                        
+                        <div class="status-card">
+                            <div class="status-info">
+                                <div class="status-icon"></div>
+                                <div class="status-text">
+                                    <h4>STATUS: LUNAS / TERDAFTAR</h4>
+                                    <p>Selamat! Administrasi pendaftaran ulang Anda telah lunas.</p>
+                                </div>
+                            </div>
+                            <div class="btn-cetak">🖨️ Cetak Kuitansi Resmi</div>
+                        </div>
+
+                        <div class="history-card">
+                            <div class="history-title">Riwayat Pembayaran</div>
+                            <table class="table-history">
+                                <thead>
+                                    <tr>
+                                        <th>TANGGAL</th>
+                                        <th>METODE</th>
+                                        <th>JUMLAH</th>
+                                        <th>STATUS</th>
+                                        <th>AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>17 Jul 2026</td>
+                                        <td><strong>MIDTRANS - BNI VIRTUAL ACCOUNT</strong></td>
+                                        <td><strong>Rp 450.000</strong></td>
+                                        <td><span class="badge-status">Lunas</span></td>
+                                        <td>--</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 1. Wireframe Halaman Pembayaran dan Daftar Ulang
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Kartu Status (Status Card):</strong> Menampilkan kotak informasi utama di bagian atas terkait status administrasi siswa. Kotak ini memberikan indikasi visual bahwa pembayaran telah "LUNAS / TERDAFTAR" serta menyediakan tombol pintasan untuk "Cetak Kuitansi Resmi".</li>
+                <li><strong>Tabel Riwayat Pembayaran:</strong> Menampilkan daftar transaksi yang pernah dilakukan oleh siswa. Tabel ini terstruktur dengan kolom Tanggal, Metode Pembayaran (misalnya melalui Virtual Account Midtrans), Jumlah Nominal, Status Transaksi (badge), dan kolom Aksi.</li>
+            </ul>
+        </div>
+
+
+        <!-- GAMBAR 2: TANYA PANITIA -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            
+            <div class="dashboard-layout">
+                <div class="sidebar">
+                    <div class="sidebar-logo-area">
+                        <div class="sidebar-logo-box">Logo</div>
+                        <div class="sidebar-logo-text">SMP Muhammadiyah<br>Kaliwiro</div>
+                    </div>
+                    <div class="menu-label">MAIN MENU</div>
+                    <div class="sidebar-menu">
+                        <div class="menu-item">🏠 Dashboard</div>
+                        <div class="menu-item">📄 Formulir Biodata</div>
+                        <div class="menu-item">💳 Pembayaran / Daftar Ulang</div>
+                        <div class="menu-item active">💬 Tanya Panitia</div>
+                    </div>
+                    <div class="sidebar-profile">
+                        <div class="profile-avatar">T</div>
+                        <div class="profile-info"><strong>Tri Lestari</strong><br>Siswa</div>
+                    </div>
+                </div>
+                
+                <div class="main-area">
+                    <div class="topbar">Tanya Panitia PPDB</div>
+                    <div class="content-area">
+                        
+                        <div class="chat-container">
+                            <div class="chat-header">
+                                <div class="chat-header-icon">💬</div>
+                                <div class="chat-header-info">
+                                    <h4>Panitia PPDB</h4>
+                                    <p>● Online | Siap Membantu</p>
+                                </div>
+                            </div>
+                            <div class="chat-body">
+                                <div class="empty-chat-icon">💬</div>
+                                <h4>Belum Ada Percakapan</h4>
+                                <p>Silakan ketik pertanyaan Anda di bawah ini, tim panitia PPDB akan segera membalasnya.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 2. Wireframe Halaman Tanya Panitia (Fitur Chat)
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Bilah Judul Chat (Chat Header):</strong> Bagian atas antarmuka chat menampilkan ikon profil lawan bicara ("Panitia PPDB") beserta indikator status (Online). Bagian ini didesain menonjol untuk memperjelas konteks percakapan.</li>
+                <li><strong>Area Percakapan (Chat Body):</strong> Menampilkan status *empty state* (keadaan kosong) jika belum ada riwayat chat sebelumnya. Terdapat ikon ilustrasi pesan, teks pemberitahuan "Belum Ada Percakapan", dan teks petunjuk yang mengarahkan pengguna untuk memulai percakapan dengan panitia.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

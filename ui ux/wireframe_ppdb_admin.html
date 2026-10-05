@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Dashboard Admin</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #fff;
+            color: #000;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .document-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Layout Wireframe */
+        .wireframe-wrapper {
+            border: 2px solid #000;
+            padding: 0;
+            margin-bottom: 10px;
+            background-color: #fcfcfc;
+            border-radius: 4px 4px 0 0;
+        }
+        .browser-header {
+            border-bottom: 2px solid #000;
+            padding: 5px 10px;
+            display: flex;
+            gap: 5px;
+            background-color: #e0e0e0;
+        }
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        .wireframe-content {
+            display: flex;
+            min-height: 400px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            border-right: 2px solid #000;
+            padding: 15px;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-group {
+            margin-bottom: 15px;
+        }
+        .menu-title {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .menu-item {
+            font-size: 12px;
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-item.active {
+            border: 1px solid #000;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .menu-icon {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+        }
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px dashed #000;
+            padding-top: 15px;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .user-info {
+            font-size: 11px;
+        }
+        .user-name {
+            font-weight: bold;
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #000;
+            background-color: #fff;
+            text-align: center;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .page-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .date-info {
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Banner */
+        .banner {
+            border: 2px solid #000;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #eee;
+            margin-bottom: 20px;
+        }
+        .banner-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .banner-subtitle {
+            font-size: 12px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stats-grid.five-cols {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .stat-card {
+            border: 1px solid #000;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 2px 2px 0px #ccc;
+        }
+        .stat-card.dark {
+            background-color: #333;
+            color: #fff;
+        }
+        .stat-icon {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .stat-card.dark .stat-icon {
+            border-color: #fff;
+        }
+        .stat-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Charts / Complex sections */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+        .chart-card {
+            border: 1px solid #000;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 150px;
+        }
+        .chart-header {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .chart-badge {
+            font-size: 9px;
+            padding: 2px 8px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            font-weight: normal;
+        }
+
+        /* Table Area */
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+        }
+        .tab {
+            padding: 5px 15px;
+            border: 1px solid #000;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        .tab.active {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+        .filter-input {
+            border: 1px solid #000;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .btn {
+            border: 1px solid #000;
+            padding: 5px 15px;
+            font-size: 12px;
+            border-radius: 4px;
+            background-color: #eee;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn.dark {
+            background-color: #333;
+            color: #fff;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th, td {
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            font-weight: bold;
+            color: #555;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+        .status-badge {
+            padding: 3px 8px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+
+        /* Dual Column (Pembagian Kelas) */
+        .dual-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .col-card {
+            border: 1px solid #000;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .col-header {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            flex: 1;
+        }
+        
+        /* Laporan text styling */
+        h2.report-heading {
+            font-size: 14pt;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .figure-caption {
+            text-align: center;
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .wireframe-description {
+            font-size: 11pt;
+            text-align: justify;
+            margin-bottom: 60px;
+            padding: 0 10px;
+        }
+        .wireframe-description p {
+            margin-bottom: 5px;
+        }
+        .wireframe-description ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        
+        <h2 class="report-heading">Lampiran: Desain Antarmuka (Wireframe) Administrator</h2>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 30px;">
+            Berikut adalah rancangan antarmuka pengguna (User Interface Wireframe) untuk Dashboard Administrator pada Sistem Penerimaan Peserta Didik Baru (PPDB), yang mencakup tampilan ringkasan data, pengelolaan pendaftar, pembagian kelas, dan pencatatan keuangan daftar ulang.
+        </p>
+
+        <!-- BAGIAN 1: DASHBOARD UTAMA -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-box">Logo</div>
+                        SMP Muhammadiyah<br>Kaliwiro
+                    </div>
+                    <div class="menu-group">
+                        <div class="menu-title">Main Menu</div>
+                        <div class="menu-item active">
+                            <div class="menu-icon"></div> Dashboard
+                        </div>
+                    </div>
+                    <div class="menu-group">
+                        <div class="menu-title">Pendaftaran</div>
+                        <div class="menu-item"><div class="menu-icon"></div> Kelola Pendaftar</div>
+                        <div class="menu-item"><div class="menu-icon"></div> Pembagian Kelas</div>
+                        <div class="menu-item"><div class="menu-icon"></div> Keuangan & Daftar...</div>
+                    </div>
+                    <div class="sidebar-bottom">
+                        <div class="user-profile">
+                            <div class="avatar">A</div>
+                            <div class="user-info">
+                                <div class="user-name">Administrator</div>
+                                <div>Admin</div>
+                            </div>
+                        </div>
+                        <div class="btn-logout">Logout</div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Dashboard Admin</div>
+                        <div class="date-info">Minggu, 19 Juli 2026</div>
+                    </div>
+                    
+                    <div class="banner">
+                        <div class="banner-title">Selamat Datang, Administrator!</div>
+                        <div class="banner-subtitle">Pantau dan kelola pendaftaran siswa baru dengan mudah melalui panel ini.</div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-title">Total Pendaftar</div>
+                            <div class="stat-value">6</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Menunggu</div>
+                            <div class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Diterima</div>
+                            <div class="stat-value">6</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Ditolak</div>
+                            <div class="stat-value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                Tren Pendaftaran
+                                <span class="chart-badge">7 HARI TERAKHIR</span>
+                            </div>
+                            <div style="border-left:1px solid #000; border-bottom:1px solid #000; height:80px; margin-top:20px; position:relative;">
+                                <div style="position:absolute; bottom:20px; left:20px; width:150px; border-bottom:2px dashed #666; transform: rotate(-15deg);"></div>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                Top 5 Asal Sekolah
+                            </div>
+                            <div style="width:80px; height:80px; border:1px solid #000; border-radius:50%; margin: 0 auto; display:flex; align-items:center; justify-content:center; font-size:10px;">Pie Chart</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 1. Wireframe Dashboard Utama Administrator
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Bilah Samping (Sidebar):</strong> Menu navigasi vertikal di sebelah kiri, mencakup akses ke Dashboard, Kelola Pendaftar, Pembagian Kelas, Keuangan, serta Manajemen Konten. Di bagian bawah terdapat profil pengguna dan tombol Logout.</li>
+                <li><strong>Banner Sapaan:</strong> Kotak sambutan dinamis untuk admin beserta tanggal hari ini.</li>
+                <li><strong>Kartu Statistik:</strong> Empat kotak yang merangkum jumlah keseluruhan pendaftar, pendaftar yang menunggu verifikasi, diterima, dan ditolak.</li>
+                <li><strong>Visualisasi Data (Grafik):</strong> Tersedia area untuk menampilkan grafik garis tren pendaftaran dan diagram lingkaran (pie chart) asal sekolah siswa.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 2: KELOLA PENDAFTAR -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified for wireframe view) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Data Pendaftar</div>
+                    </div>
+                    
+                    <div class="banner" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div class="banner-title" style="font-size:16px;">Daftar Calon Siswa Baru</div>
+                            <div class="banner-subtitle">Kelola dan verifikasi status pendaftaran calon siswa.</div>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div class="btn">Export PDF</div>
+                            <div class="btn">Export CSV</div>
+                        </div>
+                    </div>
+
+                    <div class="tabs" style="margin-bottom:15px;">
+                        <div class="tab active">Semua Pendaftar (6)</div>
+                        <div class="tab">Jalur Reguler (4)</div>
+                        <div class="tab">Jalur Prestasi (2)</div>
+                    </div>
+
+                    <div class="table-toolbar">
+                        <div class="filters">
+                            <input type="text" class="filter-input" placeholder="Cari nama siswa / no..." style="width: 200px;">
+                            <select class="filter-input">
+                                <option>Semua Status Lulus</option>
+                            </select>
+                        </div>
+                        <div class="btn dark">Cari</div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No Registrasi</th>
+                                <th>Calon Siswa</th>
+                                <th>Asal Sekolah</th>
+                                <th>Status Lulus</th>
+                                <th>Daftar Ulang</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PPDB-2026-0006</td>
+                                <td>
+                                    <strong>Nur Hikmah</strong><br>
+                                    <span style="font-size:10px; color:#666;">REGULER</span>
+                                </td>
+                                <td>SD N Selomanik</td>
+                                <td><span class="status-badge">Diterima</span></td>
+                                <td><span class="status-badge">Lunas</span></td>
+                                <td><span class="btn" style="padding: 3px 8px;">Detail</span></td>
+                            </tr>
+                            <tr>
+                                <td>PPDB-2026-0005</td>
+                                <td>
+                                    <strong>Ahmad Fauzi</strong><br>
+                                    <span style="font-size:10px; color:#666;">PRESTASI</span>
+                                </td>
+                                <td>SD N 1 Kaliwiro</td>
+                                <td><span class="status-badge">Menunggu</span></td>
+                                <td><span class="status-badge" style="border-style:dashed;">Belum</span></td>
+                                <td><span class="btn" style="padding: 3px 8px;">Detail</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 2. Wireframe Halaman Kelola Pendaftar
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Navigasi Tab:</strong> Memungkinkan administrator untuk menyaring data siswa berdasarkan jalur pendaftaran secara cepat (Semua, Reguler, Prestasi).</li>
+                <li><strong>Bilah Pencarian & Filter:</strong> Input teks dan <em>dropdown</em> untuk melakukan pencarian spesifik.</li>
+                <li><strong>Tabel Data Pendaftar:</strong> Menampilkan informasi krusial seperti nomor registrasi, nama calon siswa, asal sekolah, status kelulusan, dan status daftar ulang. Kolom "Aksi" menyediakan tombol untuk melihat detail profil pendaftar.</li>
+                <li><strong>Tombol Ekspor:</strong> Disediakan tombol untuk mengekspor data ke dalam format PDF atau CSV.</li>
+            </ul>
+        </div>
+
+        <!-- BAGIAN 3: PEMBAGIAN KELAS -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Pembagian Kelas Siswa</div>
+                    </div>
+                    
+                    <div class="banner" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div class="banner-title" style="font-size:16px;">Plotting Rombongan Belajar</div>
+                            <div class="banner-subtitle">Bagi siswa yang telah lulus dan melunasi daftar ulang ke dalam kelas.</div>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div style="border:1px solid #000; padding:10px; text-align:center; border-radius:4px;"><div style="font-size:10px;">SISWA ANTRE</div><strong>4</strong></div>
+                            <div style="border:1px solid #000; padding:10px; text-align:center; border-radius:4px;"><div style="font-size:10px;">TOTAL KELAS</div><strong>1</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="dual-columns">
+                        <!-- Left Column -->
+                        <div class="col-card">
+                            <div class="col-header">
+                                Siswa Menunggu Kelas
+                                <span class="chart-badge">4 Orang</span>
+                            </div>
+                            <p style="font-size:11px; margin-bottom:15px; color:#555;">Pilih siswa di bawah ini, ketik nama kelas, lalu klik "Masukkan ke Kelas".</p>
+                            
+                            <div class="input-group">
+                                <input type="text" class="filter-input" placeholder="Nama Kelas (Contoh: 7A)">
+                                <div class="btn dark">Masukkan</div>
+                            </div>
+                            
+                            <div style="border-top:1px solid #ccc; padding-top:10px; font-size:12px;">
+                                <div style="display:flex; gap:10px; margin-bottom:10px; font-weight:bold;">
+                                    <input type="checkbox"> Pilih Semua
+                                </div>
+                                <div style="display:flex; justify-content:space-between; border:1px solid #eee; padding:10px; margin-bottom:5px; align-items:center;">
+                                    <div><input type="checkbox"> <strong>Siswa A</strong> <br><span style="font-size:10px;">Laki-laki</span></div>
+                                    <span class="status-badge">Lunas</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; border:1px solid #eee; padding:10px; margin-bottom:5px; align-items:center;">
+                                    <div><input type="checkbox"> <strong>Siswa B</strong> <br><span style="font-size:10px;">Perempuan</span></div>
+                                    <span class="status-badge">Lunas</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-card">
+                            <div class="col-header">
+                                Daftar Rombel
+                            </div>
+                            <p style="font-size:11px; margin-bottom:15px; color:#555;">Klik pada nama kelas untuk melihat daftar siswa atau mencetak PDF.</p>
+                            
+                            <div style="border:1px solid #000; border-radius:6px; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+                                <div style="display:flex; align-items:center; gap:15px;">
+                                    <div style="width:40px; height:40px; border:1px solid #000; border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:bold; background:#eee;">7A</div>
+                                    <div>
+                                        <div style="font-weight:bold;">KELAS 7A</div>
+                                        <div style="font-size:11px;">1 Siswa Terdaftar</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex; gap:5px;">
+                                    <div class="btn" style="padding: 5px;">Print</div>
+                                    <div class="btn" style="padding: 5px;">v</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 3. Wireframe Halaman Pembagian Kelas (Plotting Rombel)
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Tata Letak Dua Kolom:</strong> Antarmuka dibagi menjadi panel sebelah kiri untuk memproses siswa yang belum mendapat kelas, dan panel sebelah kanan untuk menampilkan daftar kelas (rombel) yang sudah terbentuk.</li>
+                <li><strong>Panel "Siswa Menunggu Kelas":</strong> Menyediakan kotak centang (<em>checkbox</em>) untuk memilih beberapa siswa sekaligus secara massal (<em>bulk action</em>), memasukkan nama kelas tujuan pada kolom input, dan menekan tombol "Masukkan".</li>
+                <li><strong>Panel "Daftar Rombel":</strong> Menampilkan daftar kelas yang berhasil dibuat, lengkap dengan statistik jumlah siswa di dalamnya dan opsi untuk mencetak daftar absensi atau mengekspansi daftar siswa dalam kelas tersebut.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 4: KEUANGAN & DAFTAR ULANG -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Keuangan & Daftar Ulang</div>
+                    </div>
+                    
+                    <div class="stats-grid five-cols">
+                        <div class="stat-card">
+                            <div class="stat-title">Siswa Diterima</div>
+                            <div class="stat-value">6</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Lunas (Aktif)</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Pending Verif</div>
+                            <div class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Belum D.Ulang</div>
+                            <div class="stat-value">1</div>
+                        </div>
+                        <div class="stat-card dark">
+                            <div class="stat-title" style="font-size:9px;">Uang Terkumpul</div>
+                            <div class="stat-value" style="font-size:14px;">Rp 2.1 Jt</div>
+                        </div>
+                    </div>
+
+                    <div class="banner" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; background-color:#333; color:#fff;">
+                        <div>
+                            <div class="banner-title" style="font-size:16px;">Data Pembayaran Daftar Ulang</div>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div class="btn" style="color:#000;">PDF Belum Lunas</div>
+                            <div class="btn" style="color:#000;">CSV Belum Lunas</div>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Calon Siswa</th>
+                                <th>Metode</th>
+                                <th>Tgl Konfirmasi</th>
+                                <th>Nominal</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>Nur Hikmah</strong></td>
+                                <td>Transfer Bank</td>
+                                <td>19/07/2026</td>
+                                <td>Rp 1.050.000</td>
+                                <td><span class="status-badge">Lunas</span></td>
+                                <td><span class="btn" style="padding: 3px 8px;">Detail</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 4. Wireframe Halaman Keuangan dan Daftar Ulang
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Kartu Metrik (5 Kolom):</strong> Menampilkan ikhtisar status pembayaran dan verifikasi, dari total siswa diterima, yang sudah lunas, pending verifikasi, belum bayar, hingga total akumulasi dana (Uang Terkumpul) dalam kotak dengan desain khusus (warna gelap).</li>
+                <li><strong>Tabel Data Pembayaran:</strong> Mencatat riwayat transaksi pendaftar mencakup metode bayar, tanggal konfirmasi, nominal pembayaran, dan status (seperti Lunas). Disediakan tombol khusus untuk mengunduh laporan siswa yang belum melunasi daftar ulang.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 5: MANAJEMEN KONTEN WEBSITE -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Manajemen Konten Website</div>
+                    </div>
+                    
+                    <div class="banner" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div class="banner-title" style="font-size:16px;">Daftar Konten Publik</div>
+                            <div class="banner-subtitle">Kelola teks dan gambar untuk seluruh halaman utama website.</div>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div class="btn dark">+ Tambah Konten Baru</div>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:15%;">Tipe</th>
+                                <th style="width:70%;">Konten</th>
+                                <th style="width:15%;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="status-badge" style="background:#f0f0f0;">Prestasi</span><br>
+                                    <span style="font-size:10px; color:#666;">Ada Gambar</span>
+                                </td>
+                                <td>
+                                    <strong>Juara 3 Pidato Bahasa Indonesia</strong><br>
+                                    <span style="font-size:11px; color:#555;">Festival Santri Muhammadiyah Tingkat Kabupaten</span>
+                                </td>
+                                <td>
+                                    <span class="btn" style="padding: 3px 8px;">Edit</span>
+                                    <span class="btn" style="padding: 3px 8px;">Hapus</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="status-badge" style="background:#f0f0f0;">Prestasi</span><br>
+                                    <span style="font-size:10px; color:#666;">Ada Gambar</span>
+                                </td>
+                                <td>
+                                    <strong>Juara 3 Tahfidz Qur'an</strong><br>
+                                    <span style="font-size:11px; color:#555;">Festival Santri Muhammadiyah Tingkat Kabupaten</span>
+                                </td>
+                                <td>
+                                    <span class="btn" style="padding: 3px 8px;">Edit</span>
+                                    <span class="btn" style="padding: 3px 8px;">Hapus</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="status-badge" style="background:#f0f0f0;">Prestasi</span><br>
+                                    <span style="font-size:10px; color:#666;">Ada Gambar</span>
+                                </td>
+                                <td>
+                                    <strong>Bulu Tangkis U-15 Putri</strong><br>
+                                    <span style="font-size:11px; color:#555;">PORDES Selomanik 2025 Prestasi membanggakan...</span>
+                                </td>
+                                <td>
+                                    <span class="btn" style="padding: 3px 8px;">Edit</span>
+                                    <span class="btn" style="padding: 3px 8px;">Hapus</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 5. Wireframe Halaman Manajemen Konten Website
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Header Pengelolaan Konten:</strong> Memuat judul fitur dan sebuah tombol utama (CTA) untuk "Tambah Konten Baru" guna memperbarui profil atau informasi pada situs publik.</li>
+                <li><strong>Tabel Daftar Konten:</strong> Mengelompokkan publikasi berdasarkan "Tipe" (misalnya Prestasi atau Berita), dilengkapi ringkasan teks atau judul konten, dan label ketersediaan media gambar.</li>
+                <li><strong>Kolom Aksi:</strong> Menyediakan akses cepat untuk mengedit atau menghapus masing-masing baris konten.</li>
+            </ul>
+        </div>
+
+        </div>
+
+        <!-- BAGIAN 6: PENGATURAN PPDB -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Pengaturan Sistem PPDB</div>
+                    </div>
+                    
+                    <div class="banner">
+                        <div class="banner-title" style="font-size:16px;">Konfigurasi PPDB</div>
+                        <div class="banner-subtitle">Atur kuota dan jadwal pendaftaran untuk tahun ajaran ini.</div>
+                    </div>
+
+                    <div style="margin-top:20px;">
+                        <h3 style="font-size:12px; text-transform:uppercase; color:#333; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:20px;">Jadwal & Kuota PPDB</h3>
+                        
+                        <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+                            <div style="flex:1; padding-right:20px;">
+                                <div style="font-weight:bold; font-size:12px;">STATUS PENDAFTARAN</div>
+                                <div style="font-size:10px; color:#666;">Update secara berkala sesuai kebijakan sekolah.</div>
+                            </div>
+                            <div style="flex:2;">
+                                <div style="border:1px solid #ccc; padding:10px; border-radius:6px; font-size:14px; font-weight:bold;">open</div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+                            <div style="flex:1; padding-right:20px;">
+                                <div style="font-weight:bold; font-size:12px;">TOTAL KUOTA (SELURUH GELOMBANG)</div>
+                                <div style="font-size:10px; color:#666;">Update secara berkala sesuai kebijakan sekolah.</div>
+                            </div>
+                            <div style="flex:2;">
+                                <div style="border:1px solid #ccc; padding:10px; border-radius:6px; font-size:14px; font-weight:bold;">200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 6. Wireframe Halaman Pengaturan Sistem PPDB
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Header & Banner:</strong> Menginformasikan bahwa halaman ini berfungsi untuk mengubah konfigurasi mendasar sistem PPDB.</li>
+                <li><strong>Form Konfigurasi:</strong> Formulir yang disusun rapi untuk mengatur nilai-nilai penting dalam pendaftaran, seperti membuka/menutup status pendaftaran (<em>Status Pendaftaran</em>) dan mengatur batas maksimal siswa baru yang akan diterima (<em>Total Kuota</em>).</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 7: MANAJEMEN FAQ -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Manajemen FAQ</div>
+                    </div>
+                    
+                    <div class="banner" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div class="banner-title" style="font-size:16px;">Daftar Tanya Jawab Umum</div>
+                            <div class="banner-subtitle">Kelola pertanyaan yang sering diajukan untuk ditampilkan di landing page.</div>
+                        </div>
+                        <div>
+                            <div class="btn dark">+ TAMBAH FAQ</div>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:10%; text-align:center;">Urutan</th>
+                                <th style="width:35%;">Pertanyaan</th>
+                                <th style="width:40%;">Jawaban</th>
+                                <th style="width:15%; text-align:center;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center;">
+                                    <span style="background:#eee; padding:5px 15px; border-radius:15px; font-weight:bold;">1</span>
+                                </td>
+                                <td>
+                                    <strong>bagaimana cara mendaftarnya</strong>
+                                </td>
+                                <td style="color:#666;">
+                                    panduan lengkap di informasi pendaftaran
+                                </td>
+                                <td style="text-align:center;">
+                                    <span class="btn" style="padding: 3px 8px;">Edit</span>
+                                    <span class="btn" style="padding: 3px 8px;">Hapus</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 7. Wireframe Halaman Manajemen FAQ
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Tombol Tambah FAQ:</strong> Disediakan tombol aksi untuk menambahkan item pertanyaan dan jawaban baru ke dalam sistem yang akan langsung dimunculkan di halaman utama bagi publik.</li>
+                <li><strong>Tabel Tanya Jawab:</strong> Menyajikan daftar pasangan pertanyaan dan jawaban (FAQ). Tabel ini menyertakan kolom <em>Urutan</em> untuk mengatur tata letak tampilannya, isi teks FAQ, serta tombol aksi untuk mengubah atau menghapus data.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 8: PESAN MASUK -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Pesan dari Pendaftar</div>
+                    </div>
+                    
+                    <div class="banner">
+                        <div class="banner-title" style="font-size:16px;">Daftar Pertanyaan Masuk</div>
+                        <div class="banner-subtitle">Pantau dan balas pesan serta konsultasi dari calon pendaftar.</div>
+                    </div>
+
+                    <div style="border:1px dashed #ccc; padding:40px; text-align:center; margin-top:20px; border-radius:8px; color:#888; font-style:italic;">
+                        Belum ada pesan yang masuk.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 8. Wireframe Halaman Pesan Masuk
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Banner Informasi:</strong> Judul halaman yang memandu admin bahwa ini adalah modul untuk memantau konsultasi pendaftar.</li>
+                <li><strong>Status Kosong (Empty State):</strong> Visualisasi ketika tidak ada antrean pesan dari calon siswa, direpresentasikan dengan teks informatif bernada ramah (seperti "Belum ada pesan yang masuk").</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

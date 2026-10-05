@@ -1,0 +1,13 @@
+flowchart TD
+    A([User Akses Sistem]) --> B{Sudah Login?}
+    B -->|Tidak| C[Halaman Login]
+    C --> D[Input Username & Password]
+    D --> E{Validasi Kredensial}
+    E -->|Gagal| F[Tampilkan Error] --> C
+    E -->|Berhasil| G{Cek Role User}
+    G -->|admin| H[Admin Dashboard]
+    G -->|wali_kelas| I[Wali Kelas Dashboard]
+    G -->|kepala_sekolah| J[Kepsek Dashboard]
+    G -->|guru_pengganti| K[Guru Pengganti Dashboard]
+    G -->|guru_mapel| L[Guru Mapel Dashboard]
+    B -->|Ya| G

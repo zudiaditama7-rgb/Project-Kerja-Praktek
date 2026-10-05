@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Flowchart Sistem Manual</title>
+<style>
+  body { font-family: 'Times New Roman', Times, serif; background: #fff; padding: 20px; }
+  .caption { text-align: center; font-size: 14px; margin-top: 15px; font-weight: bold; }
+  svg { display: block; margin: 0 auto; background: #fff; }
+  .box { fill: #fff; stroke: #000; stroke-width: 1.5; }
+  .box-bold { fill: #fff; stroke: #000; stroke-width: 1.8; }
+  .lbl { font-family: 'Times New Roman', Times, serif; text-anchor: middle; dominant-baseline: middle; fill: #000; }
+  .lbl-bold { font-weight: bold; }
+  .edge { fill: none; stroke: #000; stroke-width: 1.4; marker-end: url(#arrow); }
+</style>
+</head>
+<body>
+ 
+<svg viewBox="0 0 640 1000" width="640" height="1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+ 
+  <!-- Mulai -->
+  <ellipse cx="320" cy="40" rx="90" ry="20" class="box"/>
+  <text x="320" y="42" class="lbl" font-size="12">Mulai</text>
+  <path d="M320,60 L320,86" class="edge"/>
+ 
+  <!-- Fase 1 -->
+  <rect x="220" y="90" width="200" height="30" rx="6" class="box-bold"/>
+  <text x="320" y="106" class="lbl lbl-bold" font-size="12">Awal Semester (Persiapan)</text>
+  <path d="M320,120 L320,146" class="edge"/>
+ 
+  <rect x="120" y="150" width="400" height="40" rx="4" class="box"/>
+  <text x="320" y="165" class="lbl" font-size="11">Tata Usaha (TU) Menyusun Pembagian Kelas &amp; Wali Kelas</text>
+  <text x="320" y="179" class="lbl" font-size="11">Menggunakan Kertas / Buku Catatan Manual</text>
+  <path d="M320,190 L320,216" class="edge"/>
+ 
+  <rect x="140" y="220" width="360" height="35" rx="4" class="box"/>
+  <text x="320" y="238" class="lbl" font-size="11">Kepala Madrasah Mengesahkan Data Pembagian Kelas</text>
+  <path d="M320,255 L320,286" class="edge"/>
+ 
+  <!-- Fase 2 -->
+  <rect x="230" y="290" width="180" height="30" rx="6" class="box-bold"/>
+  <text x="320" y="306" class="lbl lbl-bold" font-size="12">Presensi Harian</text>
+  <path d="M320,320 L320,346" class="edge"/>
+ 
+  <rect x="150" y="350" width="340" height="35" rx="4" class="box"/>
+  <text x="320" y="368" class="lbl" font-size="11">Guru Mengambil Buku Absensi Fisik di Ruang Guru / TU</text>
+  <path d="M320,385 L320,416" class="edge"/>
+ 
+  <rect x="120" y="420" width="400" height="45" rx="4" class="box"/>
+  <text x="320" y="436" class="lbl" font-size="11">Guru Memanggil Nama Siswa Satu-Persatu di Kelas</text>
+  <text x="320" y="452" class="lbl" font-size="11">&amp; Mencatat Kehadiran (S/I/A) dengan Pulpen</text>
+  <path d="M320,465 L320,496" class="edge"/>
+ 
+  <rect x="150" y="500" width="340" height="35" rx="4" class="box"/>
+  <text x="320" y="518" class="lbl" font-size="11">Guru Mengembalikan Buku Absensi ke Ruang Guru</text>
+  <path d="M320,535 L320,566" class="edge"/>
+ 
+  <!-- Fase 3 -->
+  <rect x="220" y="570" width="200" height="30" rx="6" class="box-bold"/>
+  <text x="320" y="586" class="lbl lbl-bold" font-size="12">Akhir Bulan / Semester</text>
+  <path d="M320,600 L320,626" class="edge"/>
+ 
+  <rect x="120" y="630" width="400" height="45" rx="4" class="box"/>
+  <text x="320" y="646" class="lbl" font-size="11">Wali Kelas Menghitung Manual Total Kehadiran Tiap Siswa</text>
+  <text x="320" y="662" class="lbl" font-size="11">Lalu Menulis Rekapitulasi di Kertas / Buku Laporan</text>
+  <path d="M320,675 L320,706" class="edge"/>
+ 
+  <rect x="160" y="710" width="320" height="35" rx="4" class="box"/>
+  <text x="320" y="728" class="lbl" font-size="11">Wali Kelas Menyerahkan Laporan Rekap ke TU</text>
+  <path d="M320,745 L320,776" class="edge"/>
+ 
+  <rect x="140" y="780" width="360" height="35" rx="4" class="box"/>
+  <text x="320" y="798" class="lbl" font-size="11">TU Mengumpulkan &amp; Mengarsipkan Rekap Seluruh Kelas</text>
+  <path d="M320,815 L320,846" class="edge"/>
+ 
+  <rect x="150" y="850" width="340" height="35" rx="4" class="box"/>
+  <text x="320" y="868" class="lbl" font-size="11">Kepala Madrasah Menandatangani Buku Laporan Akhir</text>
+  <path d="M320,885 L320,916" class="edge"/>
+ 
+  <!-- Selesai -->
+  <ellipse cx="320" cy="940" rx="90" ry="20" class="box"/>
+  <text x="320" y="942" class="lbl" font-size="12">Selesai</text>
+</svg>
+ 
+<p class="caption">Gambar Flowchart Sistem Presensi Manual di Madrasah Ibtidaiyah</p>
+ 
+</body>
+</html>

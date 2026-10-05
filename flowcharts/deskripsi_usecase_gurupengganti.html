@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deskripsi Use Case Guru Pengganti</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        td:first-child {
+            width: 25%;
+            font-weight: bold;
+        }
+        .table-title {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="table-title">Tabel 1. Deskripsi Use Case Melakukan Login</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melakukan Login</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Pengguna harus dapat mengakses sistem menggunakan kredensial yang dimilikinya</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memberikan akses ke dalam sistem sesuai hak akses Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti belum masuk ke dalam sistem (berada di halaman login)</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Username atau password salah, atau akun sedang dinonaktifkan</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Pengguna membuka halaman login<br>
+                2. Mengisi username dan password<br>
+                3. Sistem memverifikasi validitas data<br>
+                4. Pengguna diarahkan ke dashboard
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Guru Pengganti berhasil login ke dalam sistem</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 2. Deskripsi Use Case Melihat Dashboard</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Dashboard</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti dapat melihat notifikasi dan ringkasan kelas yang harus diajarnya hari ini</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Menyediakan informasi langsung (quick-view) mengenai tugas penggantian aktif</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti sudah berhasil login</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal memuat data penugasan dari database</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Sistem menampilkan halaman dashboard<br>
+                2. Guru Pengganti melihat ringkasan tugas kelas yang didelegasikan kepadanya
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Guru Pengganti mengetahui secara sekilas jadwal penggantian yang harus dilakukannya</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 3. Deskripsi Use Case Mengelola Profil</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Mengelola Profil</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti dapat memperbarui data kontak atau mengubah kata sandi</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memastikan data kredensial dan keamanan akun tetap terjaga</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti berada di dalam sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Gagal menyimpan karena koneksi terputus atau format password salah</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Memilih menu Profil<br>
+                2. Memperbarui isian data atau password baru<br>
+                3. Sistem memvalidasi dan menyimpan ke database
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Data profil akun Guru Pengganti berhasil di-update</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 4. Deskripsi Use Case Melihat Tugas Penggantian</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Tugas Penggantian</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti dapat mengakses detail instruksi dan mengunduh materi dari guru asli yang berhalangan</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Sebagai panduan mengajar agar materi pembelajaran di kelas yang digantikan tidak terputus</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Admin sudah menetapkan (assign) Guru Pengganti ke kelas tertentu</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Detail tugas tidak tampil atau lampiran dokumen gagal diunduh</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Guru Pengganti membuka menu Tugas Penggantian<br>
+                2. Memilih penugasan yang aktif<br>
+                3. Membaca instruksi mengajar dan mengunduh berkas lampiran materi
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Guru Pengganti mendapatkan materi yang harus disampaikan di kelas</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 5. Deskripsi Use Case Input Presensi Pengganti</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Input Presensi Pengganti</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti diberikan wewenang sementara untuk mencatat presensi kelas yang digantikannya</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memastikan data kehadiran siswa tetap direkam meski guru asli tidak hadir</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti berada di jam mengajar kelas pengganti</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem memblokir akses input karena jam mengajar sudah lewat atau jadwal salah</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Guru Pengganti membuka menu Presensi<br>
+                2. Sistem hanya menampilkan kelas yang ditugaskan kepadanya<br>
+                3. Menentukan metode absensi (Scan QR atau Manual)<br>
+                4. Sistem menyimpan data kehadiran ke database
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Kehadiran siswa di kelas pengganti berhasil dicatat</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 6. Deskripsi Use Case Presensi via QR Code (Scan)</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Presensi via QR Code (Scan)</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti memindai QR Code siswa pada kelas sementara tersebut</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Pencatatan presensi yang cepat dan akurat menggunakan pemindai QR</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti berada di form presensi kelas penugasan dan kamera aktif</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Kartu siswa rusak atau QR Code ditolak karena siswa dari kelas lain</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Memilih mode Scan QR Code<br>
+                2. Mengarahkan ID Card siswa ke kamera<br>
+                3. Sistem memverifikasi siswa tersebut adalah anggota kelas penugasan<br>
+                4. Status kehadiran langsung tersimpan
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Kehadiran siswa tercatat lewat scan QR oleh Guru Pengganti</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 7. Deskripsi Use Case Presensi via Manual (Form)</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Presensi via Manual (Form)</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti menginput presensi secara manual lewat form centang/daftar hadir</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Sebagai solusi apabila pemindaian QR Code mengalami kendala teknis</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti berada di form presensi kelas penugasan</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Gagal tersimpan karena masalah konektivitas server</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Membuka form presensi manual<br>
+                2. Memilih status kehadiran (Hadir/Sakit/Izin/Alpa) dari daftar nama siswa<br>
+                3. Menyimpan data absensi
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Presensi kelas penugasan berhasil dilengkapi secara manual</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 8. Deskripsi Use Case Melihat Riwayat Presensi</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Riwayat Presensi</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti dapat melihat riwayat absensi yang pernah ia catat selama ia bertugas</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Sebagai konfirmasi bahwa data presensi yang ia masukkan sebelumnya sudah benar tersimpan</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti sudah pernah menyelesaikan proses input presensi</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal memfilter riwayat sesuai akun yang meminta</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Mengakses menu Riwayat Presensi<br>
+                2. Sistem menampilkan log/laporan kelas mana saja yang sudah selesai diabsen oleh guru tersebut
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Guru Pengganti dapat memvalidasi log aktivitas mengajarnya</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 9. Deskripsi Use Case Melihat Data Siswa Kelas</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Data Siswa Kelas</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti membutuhkan data profil/identitas siswa di kelas yang ditugaskan kepadanya</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Membantu Guru Pengganti mengenali siswa di kelas yang belum familiar baginya</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Status penugasan ke kelas tersebut masih aktif</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Data siswa tidak muncul akibat kesalahan hak akses</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Guru Pengganti membuka menu Data Siswa Kelas<br>
+                2. Sistem hanya mengizinkan akses ke daftar siswa pada kelas penggantian yang aktif<br>
+                3. Sistem menampilkan nama dan informasi siswa
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Data siswa berhasil ditampilkan sesuai kelas penugasan sementara</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 10. Deskripsi Use Case Cetak Kartu Siswa QR</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Cetak Kartu Siswa QR</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti dapat men-generate ulang kartu QR untuk siswa di kelas tersebut (jika darurat/hilang)</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Agar siswa yang kartunya tertinggal/hilang tetap bisa dibuatkan kartu pengganti saat itu juga</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti sedang melihat menu Data Siswa Kelas</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal men-generate file gambar/PDF untuk kartu siswa</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Memilih nama siswa yang kehilangan kartu<br>
+                2. Menekan Cetak Kartu QR<br>
+                3. Sistem membuat ID card beserta QR Code-nya
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Kartu siswa siap didistribusikan (cetak/unduh PDF)</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 11. Deskripsi Use Case Melakukan Logout</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melakukan Logout</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru Pengganti dapat menghentikan sesi setelah pekerjaannya selesai</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Mengamankan akun dari potensi akses tak bertanggung jawab</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Guru Pengganti masih dalam keadaan login</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Browser error dan gagal membersihkan cookie sesi</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Menekan tombol Logout di menu navigasi<br>
+                2. Sistem menghapus sesi autentikasi<br>
+                3. Pengguna dikembalikan ke layar Login awal
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Guru Pengganti keluar dari sistem dengan aman</td>
+        </tr>
+    </table>
+
+</body>
+</html>

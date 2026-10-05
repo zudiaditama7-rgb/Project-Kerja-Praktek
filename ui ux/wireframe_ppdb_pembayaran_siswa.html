@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Alur Pembayaran Daftar Ulang Siswa (Midtrans)</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #fff;
+            color: #000;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .document-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Layout Wireframe Wrapper */
+        .wireframe-wrapper {
+            border: 2px solid #000;
+            padding: 0;
+            margin-bottom: 10px;
+            background-color: #fcfcfc;
+            border-radius: 4px 4px 0 0;
+        }
+        .browser-header {
+            border-bottom: 2px solid #000;
+            padding: 5px 10px;
+            display: flex;
+            gap: 5px;
+            background-color: #e0e0e0;
+        }
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        
+        /* Laporan text styling */
+        h2.report-heading {
+            font-size: 14pt;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .figure-caption {
+            text-align: center;
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .wireframe-description {
+            font-size: 11pt;
+            text-align: justify;
+            margin-bottom: 60px;
+            padding: 0 10px;
+        }
+        .wireframe-description p {
+            margin-bottom: 5px;
+        }
+        .wireframe-description ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+
+        /* --- DASHBOARD LAYOUT STYLES --- */
+        .dashboard-layout {
+            display: flex;
+            min-height: 450px;
+        }
+        .sidebar {
+            width: 180px;
+            border-right: 2px solid #000;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 10px;
+            box-sizing: border-box;
+        }
+        .sidebar-logo-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar-logo-box {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            margin: 0 auto 5px auto;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        .sidebar-logo-text {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .menu-label {
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .sidebar-menu {
+            flex: 1;
+        }
+        .menu-item {
+            padding: 8px 10px;
+            font-size: 11px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .menu-item.active {
+            background-color: #e0e0e0;
+            border: 1px solid #000;
+            font-weight: bold;
+        }
+        .sidebar-profile {
+            border-top: 1px dashed #000;
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .profile-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .profile-info {
+            font-size: 10px;
+        }
+        .btn-logout {
+            border: 1px solid #000;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+            border-radius: 4px;
+            background-color: #eee;
+        }
+        
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+        }
+        .topbar {
+            height: 50px;
+            border-bottom: 1px solid #000;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-weight: bold;
+            font-size: 14px;
+            background-color: #fafafa;
+        }
+        .content-area {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* --- TAGIHAN CARD (Gambar 1) --- */
+        .tagihan-card {
+            border: 2px solid #000;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e8e8e8;
+        }
+        .tagihan-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .tagihan-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            border-radius: 8px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .tagihan-text h4 {
+            margin: 0 0 3px 0;
+            font-size: 13px;
+        }
+        .tagihan-text p {
+            margin: 0;
+            font-size: 10px;
+            color: #555;
+        }
+        .tagihan-text .order-id {
+            font-size: 9px;
+            color: #666;
+            margin-top: 2px;
+        }
+        .tagihan-text .nominal {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+        .tagihan-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            border: 1px solid #000;
+            padding: 8px 15px;
+            font-size: 11px;
+            border-radius: 6px;
+            background-color: #eee;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn.dark {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* --- RIWAYAT PEMBAYARAN TABLE --- */
+        .history-card {
+            border: 1px solid #000;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 2px 2px 0px #e0e0e0;
+        }
+        .history-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border-left: 3px solid #000;
+            padding-left: 10px;
+        }
+        .table-history {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+        .table-history th {
+            text-align: left;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #000;
+            color: #555;
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+        .table-history td {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+            vertical-align: middle;
+        }
+        .badge-status {
+            border: 1px solid #000;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 9px;
+            background-color: #eee;
+            font-weight: bold;
+        }
+        .btn-small {
+            border: 1px solid #000;
+            padding: 4px 10px;
+            font-size: 9px;
+            border-radius: 4px;
+            background-color: #eee;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 3px;
+        }
+
+        /* --- MODAL POPUP (Gambar 2) --- */
+        .modal-wrapper {
+            position: relative;
+            min-height: 450px;
+        }
+        .modal-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-box {
+            width: 280px;
+            border: 2px solid #000;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 4px 4px 0px #999;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ccc;
+        }
+        .modal-header-title {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .modal-close {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            background-color: #eee;
+        }
+        .modal-body {
+            padding: 15px;
+        }
+        .modal-amount {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .modal-order-id {
+            font-size: 9px;
+            color: #666;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .modal-timer {
+            background-color: #e0e0e0;
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .modal-bank-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        .modal-bank-name {
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .modal-bank-logo {
+            width: 50px;
+            height: 20px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            background-color: #f5f5f5;
+        }
+        .modal-instruction {
+            font-size: 10px;
+            color: #555;
+            margin: 10px 0;
+        }
+        .modal-va-label {
+            font-size: 9px;
+            color: #555;
+            margin-bottom: 3px;
+        }
+        .modal-va-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .modal-va-number {
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .modal-va-copy {
+            font-size: 10px;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .modal-how-to-pay {
+            font-size: 10px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 0;
+            border-top: 1px dashed #ccc;
+        }
+        .modal-btn-check {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 6px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        /* --- STATUS LUNAS (Gambar 3) --- */
+        .status-card {
+            border: 1px solid #000;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .status-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .status-icon {
+            width: 45px;
+            height: 45px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .status-text h4 {
+            margin: 0 0 5px 0;
+            font-size: 13px;
+        }
+        .status-text p {
+            margin: 0;
+            font-size: 10px;
+            color: #555;
+        }
+        .btn-cetak {
+            border: 1px solid #000;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: #e0e0e0;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .back-link {
+            font-size: 11px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        
+        <h2 class="report-heading">Lampiran: Desain Antarmuka (Wireframe) Alur Pembayaran Daftar Ulang Siswa</h2>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 30px;">
+            Berikut adalah rancangan antarmuka pengguna (<em>User Interface Wireframe</em>) untuk alur pembayaran daftar ulang siswa pada Sistem Penerimaan Peserta Didik Baru (PPDB). Modul ini mencakup tiga tahapan utama: halaman tagihan menunggu pembayaran, dialog pop-up pembayaran Midtrans (<em>payment gateway</em>), dan halaman konfirmasi status lunas.
+        </p>
+
+
+        <!-- =========================================================
+             GAMBAR 1: HALAMAN TAGIHAN MENUNGGU PEMBAYARAN
+        ========================================================= -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-logo-area">
+                        <div class="sidebar-logo-box">Logo</div>
+                        <div class="sidebar-logo-text">SMP Muhammadiyah<br>Kaliwiro</div>
+                    </div>
+                    <div class="menu-label">MAIN MENU</div>
+                    <div class="sidebar-menu">
+                        <div class="menu-item">🏠 Dashboard</div>
+                        <div class="menu-item">📄 Formulir Biodata</div>
+                        <div class="menu-item active">💳 Pembayaran /<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Daftar Ulang</div>
+                        <div class="menu-item">💬 Tanya Panitia</div>
+                    </div>
+                    <div class="sidebar-profile">
+                        <div class="profile-avatar">W</div>
+                        <div class="profile-info"><strong>Wati Wati</strong><br>Siswa</div>
+                    </div>
+                    <div class="btn-logout">↪ Logout</div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="main-area">
+                    <div class="topbar">Daftar Ulang & Administrasi Keuangan</div>
+                    <div class="content-area">
+                        
+                        <!-- Tagihan Banner -->
+                        <div class="tagihan-card">
+                            <div class="tagihan-left">
+                                <div class="tagihan-icon">⚡</div>
+                                <div class="tagihan-text">
+                                    <h4>Tagihan Midtrans<br>Menunggu Pembayaran</h4>
+                                    <p class="order-id">Order ID: PPDB-14-1784701437</p>
+                                    <div class="nominal">Rp 300.000</div>
+                                </div>
+                            </div>
+                            <div class="tagihan-actions">
+                                <div class="btn">🔄 CEK STATUS</div>
+                                <div class="btn dark">💳 BAYAR SEKARANG</div>
+                            </div>
+                        </div>
+
+                        <!-- Riwayat Pembayaran -->
+                        <div class="history-card">
+                            <div class="history-title">Riwayat Pembayaran</div>
+                            <table class="table-history">
+                                <thead>
+                                    <tr>
+                                        <th>TANGGAL</th>
+                                        <th>METODE</th>
+                                        <th>JUMLAH</th>
+                                        <th>STATUS</th>
+                                        <th>AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>22 Jul 2026</td>
+                                        <td><strong>MIDTRANS</strong><br><span style="font-size:8px; color:#666;">PPDB-14-1784701437</span></td>
+                                        <td><strong>Rp 300.000</strong></td>
+                                        <td><span class="badge-status">Menunggu Verifikasi</span></td>
+                                        <td>
+                                            <div class="btn-small">💳 Bayar</div>
+                                            <div class="btn-small">🔄 Cek Status</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 1. Wireframe Halaman Tagihan Daftar Ulang (Menunggu Pembayaran)
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Kartu Tagihan (<em>Billing Card</em>):</strong> Menampilkan kotak informasi utama di bagian atas berisi status tagihan Midtrans yang sedang menunggu pembayaran. Kotak ini menampilkan ikon kilat, teks judul tagihan, Order ID unik (PPDB-14-xxxx), nominal tagihan (Rp 300.000), serta dua tombol aksi: "Cek Status" untuk memeriksa status pembayaran dan "Bayar Sekarang" untuk membuka dialog pembayaran Midtrans.</li>
+                <li><strong>Tabel Riwayat Pembayaran:</strong> Menampilkan daftar transaksi yang pernah dilakukan oleh siswa. Tabel ini terstruktur dengan kolom Tanggal, Metode Pembayaran (Midtrans), Jumlah Nominal, Status Transaksi (badge "Menunggu Verifikasi"), dan kolom Aksi berisi tombol "Bayar" dan "Cek Status".</li>
+            </ul>
+        </div>
+
+
+        <!-- =========================================================
+             GAMBAR 2: POP-UP / DIALOG PEMBAYARAN MIDTRANS
+        ========================================================= -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            
+            <div class="modal-wrapper">
+                <!-- Background: halaman di belakang (samar) -->
+                <div class="dashboard-layout" style="opacity: 0.3; min-height: 450px;">
+                    <div class="sidebar" style="width: 60px;">
+                        <div class="sidebar-logo-box" style="margin: 0 auto;">L</div>
+                    </div>
+                    <div class="main-area">
+                        <div class="topbar" style="font-size: 11px;">Daftar Ulang & Administrasi Keuangan</div>
+                        <div class="content-area">
+                            <div style="border:1px solid #ccc; padding:15px; border-radius:8px; margin-bottom:10px; background:#f5f5f5;">
+                                <div style="font-size:10px; color:#888;">Tagihan Midtrans...</div>
+                            </div>
+                            <div style="font-size:10px; color:#888;">Riwayat Pembayaran...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal Pop-up Midtrans -->
+                <div class="modal-backdrop">
+                    <div class="modal-box">
+                        <div class="modal-header">
+                            <div class="modal-header-title">sistemppdb</div>
+                            <div class="modal-close">✕</div>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Nominal -->
+                            <div class="modal-amount">Rp300.000</div>
+                            <div class="modal-order-id">
+                                <span>Order ID #PPDB-14-1784701437</span>
+                                <span style="text-decoration: underline; cursor: pointer;">Details ▾</span>
+                            </div>
+
+                            <!-- Timer -->
+                            <div class="modal-timer">Pay within 23:58:45</div>
+
+                            <!-- Bank Info -->
+                            <div class="modal-bank-row">
+                                <div class="modal-bank-name">Bank BRI</div>
+                                <div class="modal-bank-logo">BRI Logo</div>
+                            </div>
+
+                            <!-- Instruction -->
+                            <div class="modal-instruction">
+                                Complete payment from BRI bank to the virtual account number below.
+                            </div>
+
+                            <!-- Virtual Account Number -->
+                            <div class="modal-va-label">Virtual account number</div>
+                            <div class="modal-va-row">
+                                <div class="modal-va-number">630230763723048267</div>
+                                <div class="modal-va-copy">Copy</div>
+                            </div>
+
+                            <!-- How to pay -->
+                            <div class="modal-how-to-pay">
+                                ❓ How to pay ▸
+                            </div>
+
+                            <!-- Check Status Button -->
+                            <div class="modal-btn-check">Check status</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 2. Wireframe Dialog Pop-up Pembayaran Midtrans (Virtual Account)
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Latar Belakang Samar (<em>Backdrop Overlay</em>):</strong> Saat dialog pembayaran muncul, halaman utama (tagihan dan riwayat) ditampilkan secara samar di latar belakang, menandakan bahwa fokus pengguna dialihkan ke jendela pembayaran.</li>
+                <li><strong>Dialog Pembayaran (<em>Payment Modal</em>):</strong> Jendela pop-up Midtrans yang menampilkan informasi lengkap transaksi: nama merchant ("sistemppdb"), nominal tagihan (Rp300.000), Order ID unik, serta hitungan mundur (<em>countdown timer</em>) batas waktu pembayaran (23:58:45).</li>
+                <li><strong>Informasi Virtual Account:</strong> Menampilkan metode pembayaran yang dipilih (Bank BRI) beserta logo bank, instruksi pembayaran, dan nomor rekening Virtual Account yang dapat disalin (<em>copy</em>) oleh pengguna untuk melakukan transfer.</li>
+                <li><strong>Tombol Aksi:</strong> Terdapat tautan "How to pay" untuk petunjuk cara pembayaran, dan tombol "Check status" untuk memeriksa apakah pembayaran telah berhasil diverifikasi.</li>
+            </ul>
+        </div>
+
+
+        <!-- =========================================================
+             GAMBAR 3: HALAMAN STATUS LUNAS / TERDAFTAR
+        ========================================================= -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-logo-area">
+                        <div class="sidebar-logo-box">Logo</div>
+                        <div class="sidebar-logo-text">SMP Muhammadiyah<br>Kaliwiro</div>
+                    </div>
+                    <div class="menu-label">MAIN MENU</div>
+                    <div class="sidebar-menu">
+                        <div class="menu-item">🏠 Dashboard</div>
+                        <div class="menu-item">📄 Formulir Biodata</div>
+                        <div class="menu-item active">💳 Pembayaran /<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Daftar Ulang</div>
+                        <div class="menu-item">💬 Tanya Panitia</div>
+                    </div>
+                    <div class="sidebar-profile">
+                        <div class="profile-avatar">W</div>
+                        <div class="profile-info"><strong>Wati Wati</strong><br>Siswa</div>
+                    </div>
+                    <div class="btn-logout">↪ Logout</div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="main-area">
+                    <div class="topbar">Daftar Ulang & Administrasi Keuangan</div>
+                    <div class="content-area">
+                        
+                        <!-- Back Link -->
+                        <div class="back-link">← Kembali ke Dashboard</div>
+
+                        <!-- Status Lunas Card -->
+                        <div class="status-card">
+                            <div class="status-info">
+                                <div class="status-icon">✓</div>
+                                <div class="status-text">
+                                    <h4>STATUS: LUNAS / TERDAFTAR</h4>
+                                    <p>Selamat! Administrasi pendaftaran ulang Anda telah lunas.</p>
+                                </div>
+                            </div>
+                            <div class="btn-cetak">🖨️ Cetak Kuitansi Resmi</div>
+                        </div>
+
+                        <!-- Riwayat Pembayaran -->
+                        <div class="history-card">
+                            <div class="history-title">Riwayat Pembayaran</div>
+                            <table class="table-history">
+                                <thead>
+                                    <tr>
+                                        <th>TANGGAL</th>
+                                        <th>METODE</th>
+                                        <th>JUMLAH</th>
+                                        <th>STATUS</th>
+                                        <th>AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>22 Jul 2026</td>
+                                        <td><strong>MIDTRANS - BRI VIRTUAL ACCOUNT</strong></td>
+                                        <td><strong>Rp 300.000</strong></td>
+                                        <td><span class="badge-status">Lunas</span></td>
+                                        <td>—</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 3. Wireframe Halaman Status Lunas dan Terdaftar
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Tautan Navigasi Kembali:</strong> Terdapat tautan "← Kembali ke Dashboard" di bagian atas konten utama yang memungkinkan siswa menavigasi kembali ke halaman dasbor utama.</li>
+                <li><strong>Kartu Status Lunas (<em>Status Card</em>):</strong> Menampilkan kotak informasi utama dengan ikon centang (✓) yang mengindikasikan bahwa status administrasi siswa telah "LUNAS / TERDAFTAR". Kotak ini juga menyediakan tombol pintasan "Cetak Kuitansi Resmi" untuk mengunduh bukti pembayaran resmi.</li>
+                <li><strong>Tabel Riwayat Pembayaran:</strong> Menampilkan satu baris data transaksi yang telah selesai. Kolom Metode menunjukkan "MIDTRANS - BRI VIRTUAL ACCOUNT", Jumlah Nominal (Rp 300.000), Status bertuliskan badge "Lunas", dan kolom Aksi berisi tanda hubung (—) karena tidak ada tindakan lanjutan yang diperlukan.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

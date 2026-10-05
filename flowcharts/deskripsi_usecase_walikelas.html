@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deskripsi Use Case Wali Kelas</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            max-width: 750px; /* Lebar maksimal menyerupai dokumen Word (A4) */
+            margin: 0 auto;   /* Posisikan di tengah layar */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        td:first-child {
+            width: 25%;
+            font-weight: bold;
+        }
+        .table-title {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="table-title">Tabel 1. Deskripsi Use Case Melakukan Login</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melakukan Login</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Pengguna harus dapat mengakses sistem dengan kredensial yang valid</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memberikan akses ke dalam sistem sesuai peran Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas belum masuk ke dalam sistem (berada di halaman login)</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Username atau password salah, atau akun tidak terdaftar/tidak aktif</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Pengguna membuka halaman login<br>
+                2. Mengisi username dan password<br>
+                3. Sistem memverifikasi validitas data<br>
+                4. Pengguna diarahkan ke dashboard Wali Kelas
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Wali Kelas berhasil masuk ke sistem dan mendapatkan akses</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 2. Deskripsi Use Case Melihat Dashboard</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Dashboard</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat melihat ringkasan informasi kelas dan presensi</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Menyediakan informasi statistik dan status presensi terkini secara cepat</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sudah berhasil login ke sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal memuat data dashboard</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Sistem menampilkan halaman dashboard utama<br>
+                2. Wali kelas melihat ringkasan data siswa dan tren presensi kelasnya
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Wali kelas mendapatkan informasi visual terkait kondisi kelasnya</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 3. Deskripsi Use Case Mengelola Profil</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Mengelola Profil</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat memperbarui data pribadi atau mengganti kata sandi</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memastikan data diri Wali Kelas selalu up-to-date dan aman</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sedang berada di dalam sistem (sudah login)</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Format data tidak valid atau password konfirmasi tidak cocok</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas memilih menu Pengaturan/Profil<br>
+                2. Mengubah informasi profil atau kata sandi<br>
+                3. Sistem menyimpan dan memvalidasi perubahan<br>
+                4. Sistem memperbarui data profil Wali Kelas
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Data profil atau kata sandi Wali Kelas berhasil diperbarui</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 4. Deskripsi Use Case Input Presensi Harian</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Input Presensi Harian</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat mencatat daftar kehadiran siswa di kelasnya setiap hari</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Merekam data presensi (kehadiran, sakit, izin, alpa) ke dalam sistem</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sudah berada di menu Presensi dan memilih jadwal</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Gagal menyimpan data presensi ke dalam database</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas membuka form/menu Input Presensi Harian<br>
+                2. Menentukan metode input (melalui Scan atau Manual)<br>
+                3. Menyelesaikan proses pencatatan<br>
+                4. Sistem menyimpan data kehadiran ke database
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Data presensi harian siswa berhasil direkam dan berstatus tersimpan</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 5. Deskripsi Use Case Presensi via QR Code (Scan)</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Presensi via QR Code (Scan)</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat memindai QR Code siswa menggunakan kamera untuk presensi</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Mempercepat proses pencatatan presensi menggunakan pemindai QR</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sedang berada di form Input Presensi dan kamera perangkat aktif</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>QR Code rusak/tidak terbaca, kamera error, atau QR Code tidak valid</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas memilih opsi "Scan QR"<br>
+                2. Mengarahkan kamera pemindai ke kartu QR Code milik siswa<br>
+                3. Sistem mendeteksi dan memvalidasi identitas siswa dari QR<br>
+                4. Sistem mencatat siswa tersebut hadir
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Kehadiran siswa tercatat otomatis berdasarkan scan QR Code</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 6. Deskripsi Use Case Presensi via Manual (Form)</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Presensi via Manual (Form)</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat menginput kehadiran siswa melalui daftar nama manual</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Menyediakan alternatif pendataan jika QR Code tidak bisa digunakan</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sedang berada di form Input Presensi</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Data isian gagal terkirim karena masalah jaringan/sistem</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas memilih opsi presensi manual<br>
+                2. Menandai status (Hadir, Sakit, Izin, Alpa) pada nama siswa<br>
+                3. Menyimpan data formulir tersebut<br>
+                4. Sistem memproses status yang diinput
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Kehadiran siswa berhasil tercatat melalui pengisian form secara manual</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 7. Deskripsi Use Case Melihat Riwayat Presensi</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Riwayat Presensi</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat melihat log kehadiran siswa pada waktu sebelumnya</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memantau rekam jejak dan riwayat kedisiplinan kehadiran siswa</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas berhasil masuk sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal menampilkan data riwayat pada rentang waktu yang diminta</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas memilih menu Riwayat Presensi<br>
+                2. Memfilter data berdasarkan tanggal atau bulan tertentu<br>
+                3. Sistem menampilkan tabel/laporan riwayat presensi siswa
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Laporan riwayat presensi tampil di layar pengguna</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 8. Deskripsi Use Case Melihat Data Siswa Kelas</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Data Siswa Kelas</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat mengakses data detail mengenai siswa di kelasnya</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Menyediakan informasi administratif siswa (nama, NIS, kontak, dll)</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas telah ditetapkan pada kelas perwalian tertentu</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Daftar siswa kosong atau gagal dimuat dari database</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas mengakses menu Data Siswa<br>
+                2. Sistem mengambil data dari database<br>
+                3. Sistem menampilkan daftar identitas siswa kelas tersebut
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Daftar siswa beserta kelengkapan informasinya berhasil ditampilkan</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 9. Deskripsi Use Case Mencetak Kartu Siswa QR</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Mencetak Kartu Siswa QR</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat men-generate dan mengunduh format kartu presensi siswa</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Menghasilkan ID Card fisik/digital berisikan QR Code untuk siswa</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Data siswa beserta QR Code-nya sudah tersimpan di sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal membuat pratinjau kartu atau file PDF gagal dibuat</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas memilih siswa tertentu atau keseluruhan kelas<br>
+                2. Menekan tombol "Cetak Kartu QR"<br>
+                3. Sistem menyusun visual kartu ID siswa beserta QR-nya<br>
+                4. Sistem menampilkan opsi cetak/unduh
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Kartu QR siswa siap untuk dicetak atau diunduh</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 10. Deskripsi Use Case Mengajukan Izin Pengganti</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Mengajukan Izin Pengganti</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat mengajukan ketidakhadiran ke admin/kepala sekolah</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memberitahukan ketidakhadiran secara resmi pada sistem</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas masuk ke sistem dan tidak bisa hadir mengajar</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Formulir pengajuan tidak lengkap saat dikirim</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas membuka form Pengajuan Izin<br>
+                2. Mengisi detail (tanggal, durasi, alasan)<br>
+                3. Melakukan upload surat bukti izin (include)<br>
+                4. Menekan tombol kirim pengajuan<br>
+                5. Sistem menyimpan pengajuan
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Pengajuan izin terekam dalam sistem dengan status menunggu</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 11. Deskripsi Use Case Upload Surat Bukti Izin</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Upload Surat Bukti Izin</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas diwajibkan melampirkan berkas bukti (misal: surat sakit)</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memverifikasi keabsahan alasan pengajuan izin</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sedang berada di tahap pengisian formulir Izin Pengganti</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Tipe file tidak diizinkan atau ukuran melebihi batas maksimal</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas menekan area unggah berkas (upload)<br>
+                2. Memilih dokumen/foto dari perangkatnya<br>
+                3. Sistem mengunggah dan memvalidasi tipe file<br>
+                4. Dokumen menempel pada form pengajuan
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Berkas surat izin telah terlampir dengan sukses pada form</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 12. Deskripsi Use Case Melihat Status Pengajuan</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melihat Status Pengajuan</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat mengecek progress izin/tugas yang telah diajukan</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memberikan transparansi apakah permohonan disetujui, ditolak, atau diproses</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sudah pernah melakukan pengajuan izin/tugas</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal mengambil data status dari server</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas membuka menu Status Pengajuan<br>
+                2. Sistem menampilkan daftar riwayat pengajuannya<br>
+                3. Wali Kelas melihat label status (Disetujui/Ditolak/Menunggu)
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Wali Kelas mengetahui update terbaru terkait permohonannya</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 13. Deskripsi Use Case Download Surat Pengajuan PDF</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Download Surat Pengajuan PDF</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat mengunduh arsip dokumen pengajuannya (PDF)</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memfasilitasi pengguna untuk memiliki salinan cetak/digital</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Pengajuan telah berhasil direkam di sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Terjadi kesalahan saat rendering file PDF oleh sistem</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas membuka detail pengajuan yang diinginkan<br>
+                2. Menekan tombol "Download PDF"<br>
+                3. Sistem mengkonversi data pengajuan menjadi file PDF<br>
+                4. Berkas terunduh ke perangkat pengguna
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>File PDF Surat Pengajuan tersimpan di perangkat pengguna</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 14. Deskripsi Use Case Mengajukan Tugas Pengganti</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Mengajukan Tugas Pengganti</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat mendelegasikan materi/tugas belajar saat ia izin</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Memastikan aktivitas kelas tetap berjalan lancar meski guru berhalangan</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sudah login ke dalam sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Koneksi gagal saat sistem mengirim detail tugas ke server</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas membuka form Pengajuan Tugas Pengganti<br>
+                2. Mengisi instruksi dan keterangan tugas<br>
+                3. Melakukan upload dokumen materi pengganti (include)<br>
+                4. Mengirim pengajuan tugas<br>
+                5. Sistem menyimpan dan meneruskan instruksi
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Instruksi tugas pengganti berhasil diteruskan/tersimpan dalam sistem</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 15. Deskripsi Use Case Upload Dokumen Pengganti</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Upload Dokumen Pengganti</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas mengunggah berkas/modul pendukung untuk dikerjakan siswa</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Melengkapi instruksi tugas dengan lampiran materi ajar</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sedang mengisi form Mengajukan Tugas Pengganti</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Format berkas tidak terbaca atau upload terinterupsi</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas menekan tombol "Lampirkan Tugas"<br>
+                2. Memilih berkas (PDF/Word/Dll) dari komputer<br>
+                3. Sistem mengunggah file tersebut<br>
+                4. Berkas disisipkan dalam paket tugas
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Dokumen lampiran tugas berhasil dilampirkan</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 16. Deskripsi Use Case Mengganti Peran</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Mengganti Peran (Switch Role)</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Pengguna dengan lebih dari satu jabatan (misal Wali Kelas dan Guru Mapel) dapat bertukar peran tanpa perlu login ulang</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Mempermudah akses ke berbagai fungsi sistem sesuai dengan peran yang diemban saat itu</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Pengguna sudah login dan memiliki lebih dari satu peran di dalam sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sistem gagal memproses pergantian peran atau pengguna hanya memiliki satu peran</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Pengguna membuka sidebar menu<br>
+                2. Pengguna memilih peran yang diinginkan pada dropdown "Peran Aktif"<br>
+                3. Sistem memproses permintaan dan mengubah sesi (session) peran aktif<br>
+                4. Sistem memuat ulang halaman dan mengarahkan ke dashboard peran yang dipilih
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Pengguna berhasil berpindah layar dan mendapatkan akses sesuai peran barunya</td>
+        </tr>
+    </table>
+
+    <div class="table-title">Tabel 17. Deskripsi Use Case Melakukan Logout</div>
+    <table>
+        <tr>
+            <td>Nama use case</td>
+            <td>Melakukan Logout</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Pengguna dapat memutuskan sesi dan keluar dari sistem secara aman</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Menjaga keamanan akun agar tidak disalahgunakan orang lain</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas dalam keadaan login dan berada di dalam sistem</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Sesi browser (cookies/session) gagal dibersihkan</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas menekan tombol Logout (Keluar)<br>
+                2. Sistem menghentikan dan menghapus sesi aktif pengguna<br>
+                3. Sistem mengarahkan kembali layar ke halaman Login utama
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Sesi Wali Kelas berakhir dan harus login ulang untuk masuk</td>
+        </tr>
+    </table>
+
+</body>
+</html>

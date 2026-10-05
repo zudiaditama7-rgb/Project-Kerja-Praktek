@@ -1,0 +1,13 @@
+flowchart TD
+    A([Wali Kelas]) --> B[Menu Pengajuan Rekap]
+    B --> C[Pilih Tipe: Bulanan / Semester]
+    C --> D[Pilih Bulan + Tahun]
+    D --> E{Sudah Ada?}
+    E -->|Ya| F[Error Duplikat]
+    E -->|Tidak| G[Simpan: status pending]
+    G --> H([Kepala Sekolah])
+    H --> I{Keputusan}
+    I -->|Setujui| J[Disetujui + acc_by + acc_date]
+    I -->|Tolak| K[Ditolak + keterangan]
+    J --> L([Wali Kelas Download PDF])
+    L --> M[Generate PDF Rekap]

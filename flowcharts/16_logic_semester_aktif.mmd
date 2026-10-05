@@ -1,0 +1,11 @@
+flowchart TD
+    A([Sistem Request Periode]) --> B[Ambil TA Aktif]
+    B --> C{Ada TA Aktif?}
+    C -->|Tidak| D[Fallback: Tahun Sekarang + Ganjil]
+    C -->|Ya| E{Hari Ini di Range Gasal?}
+    E -->|Ya| F[Return TA-Ganjil]
+    E -->|Tidak| G{Hari Ini di Range Genap?}
+    G -->|Ya| H[Return TA-Genap]
+    G -->|Tidak| I{Bulan >= 7?}
+    I -->|Ya| J[Fallback Ganjil]
+    I -->|Tidak| K[Fallback Genap]

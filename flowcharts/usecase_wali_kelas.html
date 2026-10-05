@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Case Diagram - Wali Kelas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafb; padding: 40px; display: flex; flex-direction: column; align-items: center; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { font-size: 22px; font-weight: 800; color: #065F46; margin-bottom: 8px; }
+        .header p { font-size: 14px; color: #555; }
+        .diagram-container { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); width: 100%; max-width: 1500px; overflow-x: auto; display: flex; justify-content: center; }
+        .actions { margin-top: 30px; display: flex; gap: 15px; }
+        button { padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; }
+        .btn-png { background: #065F46; color: white; }
+        .btn-jpg { background: #1e40af; color: white; }
+        svg text { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Use Case Diagram: Wali Kelas</h1>
+        <p>Fitur lengkap aktor Wali Kelas dalam Sistem Informasi Presensi Siswa</p>
+    </div>
+    <div class="diagram-container">
+        <svg id="uc-diagram" width="1300" height="2300" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div class="actions">
+        <button class="btn-png" onclick="downloadImage('png')">⬇ Download PNG</button>
+        <button class="btn-jpg" onclick="downloadImage('jpg')">⬇ Download JPG</button>
+    </div>
+
+    <script>
+        const svg = document.getElementById('uc-diagram');
+        const ns = "http://www.w3.org/2000/svg";
+        const RX = 150, RY = 42;
+
+        const actor = { x: 100, y: 1055, label: 'Wali Kelas' };
+
+        const ucs = {
+            'uc1':  { x: 480, y: 180,  label: 'Melakukan Login' },
+            'uc4':  { x: 480, y: 330,  label: 'Melihat Dashboard' },
+            'uc2':  { x: 480, y: 480,  label: 'Mengelola Profil' },
+            'uc5':  { x: 480, y: 650,  label: 'Input Presensi Harian' },
+            'uc6':  { x: 480, y: 850,  label: 'Melihat Riwayat Presensi' },
+            'uc7':  { x: 480, y: 1000, label: 'Melihat Data Siswa Kelas' },
+            'uc8':  { x: 480, y: 1150, label: 'Mencetak Kartu Siswa QR' },
+            'uc9':  { x: 480, y: 1300, label: 'Mengajukan Izin Pengganti' },
+            'uc10': { x: 480, y: 1450, label: 'Melihat Status Pengajuan' },
+            'uc11': { x: 480, y: 1600, label: 'Download Surat Pengajuan PDF' },
+            'uc12': { x: 480, y: 1750, label: 'Mengajukan Tugas Pengganti' },
+            'uc17': { x: 480, y: 1900, label: 'Mengganti Peran (Switch Role)' },
+            'uc3':  { x: 480, y: 2050, label: 'Melakukan Logout' },
+            
+            'uc13': { x: 1000, y: 550,  label: 'Presensi via QR Code (Scan)' },
+            'uc14': { x: 1000, y: 750,  label: 'Presensi via Manual (Form)' },
+            'uc15': { x: 1000, y: 1300, label: 'Upload Surat Bukti Izin' },
+            'uc16': { x: 1000, y: 1750, label: 'Upload Dokumen Pengganti' },
+        };
+
+        const links = ['uc1','uc2','uc3','uc4','uc5','uc6','uc7','uc8','uc9','uc10','uc11','uc12','uc17'];
+        const deps = [
+            ['extend',  'uc13', 'uc5'],
+            ['extend',  'uc14', 'uc5'],
+            ['include', 'uc9',  'uc15'],
+            ['include', 'uc12', 'uc16'],
+        ];
+
+        function el(tag, attrs) { const e = document.createElementNS(ns, tag); for (let k in attrs) e.setAttribute(k, attrs[k]); return e; }
+        function getOvalEdge(cx, cy, rx, ry, angle) {
+            const r = (rx * ry) / Math.sqrt(Math.pow(rx * Math.sin(angle), 2) + Math.pow(ry * Math.cos(angle), 2));
+            return { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r };
+        }
+
+        // Boundary
+        svg.appendChild(el('rect', { x: 260, y: 60, width: 900, height: 2150, fill: 'transparent', stroke: '#000', 'stroke-width': '2.5' }));
+        const bT = el('text', { x: 280, y: 100, 'font-size': '18', 'font-weight': 'bold', fill: '#000' });
+        bT.textContent = 'SISTEM INFORMASI PRESENSI SISWA'; svg.appendChild(bT);
+
+        // Lines actor -> use cases
+        links.forEach(id => {
+            const u = ucs[id];
+            const angle = Math.atan2(u.y - actor.y, u.x - (actor.x + 35));
+            const edge = getOvalEdge(u.x, u.y, RX, RY, angle + Math.PI);
+            svg.appendChild(el('line', { x1: actor.x + 35, y1: actor.y, x2: edge.x, y2: edge.y, stroke: '#333', 'stroke-width': '1.5' }));
+        });
+
+        // Ovals
+        for (let k in ucs) {
+            const u = ucs[k]; const g = el('g', {});
+            g.appendChild(el('ellipse', { cx: u.x, cy: u.y, rx: RX, ry: RY, fill: '#fff', stroke: '#000', 'stroke-width': '2' }));
+            const t = el('text', { x: u.x, y: u.y, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': '15', 'font-weight': '600', fill: '#000' });
+            t.textContent = u.label; g.appendChild(t); svg.appendChild(g);
+        }
+
+        // Dashed arrows
+        const defs = el('defs', {}); const marker = el('marker', { id: 'arrow', viewBox: '0 0 10 10', refX: '9', refY: '5', markerWidth: '7', markerHeight: '7', orient: 'auto-start-reverse' });
+        marker.appendChild(el('path', { d: 'M 0 0 L 10 5 L 0 10 z', fill: '#333' })); defs.appendChild(marker); svg.appendChild(defs);
+
+        deps.forEach(d => {
+            const from = ucs[d[1]], to = ucs[d[2]];
+            const angle = Math.atan2(to.y - from.y, to.x - from.x);
+            const e1 = getOvalEdge(from.x, from.y, RX, RY, angle);
+            const e2 = getOvalEdge(to.x, to.y, RX, RY, angle + Math.PI);
+            const x1 = e1.x + Math.cos(angle)*3, y1 = e1.y + Math.sin(angle)*3;
+            const x2 = e2.x - Math.cos(angle)*3, y2 = e2.y - Math.sin(angle)*3;
+            svg.appendChild(el('line', { x1, y1, x2, y2, stroke: '#333', 'stroke-width': '1.8', 'stroke-dasharray': '8 5', 'marker-end': 'url(#arrow)' }));
+            const mx = (x1+x2)/2, my = (y1+y2)/2 - 10;
+            svg.appendChild(el('rect', { x: mx-50, y: my-14, width: 100, height: 20, fill: 'white' }));
+            const t = el('text', { x: mx, y: my, 'text-anchor': 'middle', 'font-size': '14', fill: '#000', 'font-style': 'italic' });
+            t.textContent = `<<${d[0]}>>`; svg.appendChild(t);
+        });
+
+        // Actor
+        const g = el('g', {});
+        g.appendChild(el('circle', { cx: actor.x, cy: actor.y - 38, r: 20, fill: '#fff', stroke: '#000', 'stroke-width': '2.5' }));
+        g.appendChild(el('line', { x1: actor.x, y1: actor.y - 18, x2: actor.x, y2: actor.y + 30, stroke: '#000', 'stroke-width': '2.5' }));
+        g.appendChild(el('line', { x1: actor.x - 28, y1: actor.y, x2: actor.x + 28, y2: actor.y, stroke: '#000', 'stroke-width': '2.5' }));
+        g.appendChild(el('line', { x1: actor.x, y1: actor.y + 30, x2: actor.x - 22, y2: actor.y + 70, stroke: '#000', 'stroke-width': '2.5' }));
+        g.appendChild(el('line', { x1: actor.x, y1: actor.y + 30, x2: actor.x + 22, y2: actor.y + 70, stroke: '#000', 'stroke-width': '2.5' }));
+        const at = el('text', { x: actor.x, y: actor.y + 100, 'text-anchor': 'middle', 'font-size': '20', 'font-weight': 'bold', fill: '#000' });
+        at.textContent = actor.label; g.appendChild(at); svg.appendChild(g);
+
+        function downloadImage(format) {
+            const scale = 3, width = 1300, height = 2300, headerH = 100;
+            const canvas = document.createElement('canvas'); canvas.width = width*scale; canvas.height = (height+headerH)*scale;
+            const ctx = canvas.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.scale(scale,scale); ctx.fillStyle = '#065F46'; ctx.textAlign = 'center'; ctx.font = 'bold 24px Inter, sans-serif';
+            ctx.fillText('Use Case Diagram: Wali Kelas', width/2, 45);
+            ctx.fillStyle = '#555'; ctx.font = '16px Inter, sans-serif';
+            ctx.fillText('Sistem Informasi Presensi Siswa', width/2, 75); ctx.setTransform(1,0,0,1,0,0);
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const img = new Image(); const blob = new Blob([svgData], {type:'image/svg+xml;charset=utf-8'}); const url = URL.createObjectURL(blob);
+            img.onload = function() { ctx.drawImage(img,0,headerH*scale,width*scale,height*scale); URL.revokeObjectURL(url);
+                canvas.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `usecase_wali_kelas.${format}`; a.click(); }, format==='jpg'?'image/jpeg':'image/png', 0.95); };
+            img.src = url;
+        }
+    </script>
+</body>
+</html>

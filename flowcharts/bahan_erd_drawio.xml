@@ -1,0 +1,90 @@
+<mxfile host="app.diagrams.net" modified="2024-01-01T00:00:00.000Z" agent="Mozilla/5.0" version="21.1.2" type="device">
+  <diagram id="erd_diagram" name="ERD Presensi">
+    <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- ENTITAS (Kotak) -->
+        <mxCell id="E1" value="USER" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="100" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E2" value="SISWA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E3" value="KELAS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E4" value="ROMBEL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E5" value="PRESENSI" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E6" value="PENGAJUAN_PRESENSI" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="600" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E7" value="TUGAS_PENGGANTI" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="700" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E8" value="RIWAYAT_SISWA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="800" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E9" value="TAHUN_AJARAN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="900" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- RELASI (Belah Ketupat) -->
+        <mxCell id="R1" value="mencatat" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="100" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R2" value="mengajukan" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="200" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R3" value="membina" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R4" value="menugaskan" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="400" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R5" value="memiliki" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="500" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R6" value="terdaftar" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="600" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R7" value="riwayat" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="700" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R8" value="berisi" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="800" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R9" value="mengatur" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="600" y="900" width="100" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ATRIBUT (Oval) -->
+        <mxCell id="A1" value="&lt;u&gt;id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="100" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A2" value="name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="160" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A3" value="username" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="220" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A4" value="role" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="280" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A5" value="avatar" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="340" width="80" height="50" as="geometry" /></mxCell>
+
+        <mxCell id="A6" value="&lt;u&gt;id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="420" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A7" value="nis" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="480" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A8" value="nama_siswa" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="540" width="100" height="50" as="geometry" /></mxCell>
+        <mxCell id="A9" value="status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="600" width="80" height="50" as="geometry" /></mxCell>
+
+        <mxCell id="A10" value="&lt;u&gt;id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="680" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A11" value="nama_kelas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="740" width="100" height="50" as="geometry" /></mxCell>
+        <mxCell id="A12" value="semester" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="800" width="80" height="50" as="geometry" /></mxCell>
+
+        <mxCell id="A13" value="&lt;u&gt;id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="880" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A14" value="tanggal" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="940" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A15" value="status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="1000" width="80" height="50" as="geometry" /></mxCell>
+        <mxCell id="A16" value="nama_mapel" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1"><mxGeometry x="100" y="1060" width="100" height="50" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

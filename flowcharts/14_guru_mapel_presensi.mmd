@@ -1,0 +1,12 @@
+flowchart TD
+    A([Guru Mapel]) --> B[Dashboard: Kelas + Jumlah Siswa]
+    B --> C[Menu Presensi]
+    C --> D[Pilih Kelas]
+    D --> E[Input Nama + Mata Pelajaran]
+    E --> F{Metode}
+    F -->|Manual| G[Set Status Tiap Siswa]
+    G --> H{Semua Terisi?}
+    H -->|Ya| I[Simpan + nama + mapel]
+    H -->|Tidak| J[Error] --> G
+    F -->|Scan QR| K[Validasi Input Terisi]
+    K --> L[Buka Scanner QR]

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowchart Sistem Presensi</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #e2e8f0; padding: 2rem; }
+        h1 { text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, #34d399, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .diagram-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; }
+        .diagram-card h2 { color: #34d399; font-size: 1.2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #334155; }
+        .mermaid { display: flex; justify-content: center; overflow-x: auto; }
+        .mermaid svg { max-width: 100%; }
+        .nav { position: fixed; top: 1rem; right: 1rem; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1rem; max-height: 90vh; overflow-y: auto; width: 280px; z-index: 99; font-size: 0.8rem; }
+        .nav a { display: block; color: #94a3b8; text-decoration: none; padding: 4px 0; }
+        .nav a:hover { color: #34d399; }
+        @media (max-width: 768px) { .nav { display: none; } }
+    </style>
+</head>
+<body>
+    <h1>📊 Flowchart Sistem Presensi Sekolah</h1>
+
+    <nav class="nav">
+        <strong style="color:#34d399;">Daftar Diagram</strong>
+        <a href="#d1">1. Autentikasi & Routing</a>
+        <a href="#d2">2. Admin CRUD Siswa</a>
+        <a href="#d3">3. Admin Manajemen User</a>
+        <a href="#d4">4. Admin CRUD Kelas</a>
+        <a href="#d5">5. Admin Tahun Ajaran</a>
+        <a href="#d6">6. Admin Kenaikan Kelas</a>
+        <a href="#d7">7. Wali Kelas Presensi</a>
+        <a href="#d8">8. QR Scan Presensi</a>
+        <a href="#d9">9. QR Scan Guru Mapel</a>
+        <a href="#d10">10. Pengajuan Guru Pengganti</a>
+        <a href="#d11">11. Guru Pengganti Presensi</a>
+        <a href="#d12">12. Pengajuan Rekap</a>
+        <a href="#d13">13. Kepsek Monitoring</a>
+        <a href="#d14">14. Guru Mapel Presensi</a>
+        <a href="#d15">15. Profile Management</a>
+        <a href="#d16">16. Semester Aktif</a>
+        <a href="#d17">17. ERD Database</a>
+        <a href="#d18">18. Swimlane Guru Pengganti</a>
+        <a href="#d19">19. Swimlane Rekap</a>
+        <a href="#d20">20. Arsitektur Sistem</a>
+    </nav>
+
+    <!-- 1 -->
+    <div class="diagram-card" id="d1">
+        <h2>1. Flowchart Autentikasi & Role-based Routing</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([User Akses Sistem]) --> B{Sudah Login?}
+    B -->|Tidak| C[Halaman Login]
+    C --> D[Input Username & Password]
+    D --> E{Validasi Kredensial}
+    E -->|Gagal| F[Tampilkan Error] --> C
+    E -->|Berhasil| G{Cek Role User}
+    G -->|admin| H[Admin Dashboard]
+    G -->|wali_kelas| I[Wali Kelas Dashboard]
+    G -->|kepala_sekolah| J[Kepsek Dashboard]
+    G -->|guru_pengganti| K[Guru Pengganti Dashboard]
+    G -->|guru_mapel| L[Guru Mapel Dashboard]
+    B -->|Ya| G
+        </pre>
+    </div>
+
+    <!-- 2 -->
+    <div class="diagram-card" id="d2">
+        <h2>2. Admin - Manajemen Siswa (CRUD + Import/Export)</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Admin Dashboard]) --> B[Menu Siswa]
+    B --> C{Pilih Aksi}
+    C -->|Lihat| D[Daftar Siswa + Filter Kelas/Search]
+    C -->|Tambah| E[Form Tambah Siswa]
+    C -->|Import| F[Upload File Excel]
+    C -->|Export| G{Format?}
+    G -->|Excel| G1[Download .xlsx]
+    G -->|PDF| G2[Download .pdf]
+    E --> H[Validasi Input]
+    H -->|Valid| I[Simpan + Buat Rombel + Catat Riwayat]
+    H -->|Invalid| E
+    F --> J[Parse Excel] --> K[Simpan Batch ke DB]
+    D --> M{Aksi Per Siswa}
+    M -->|Edit| N[Form Edit] --> O[Update + Catat Riwayat jika Kelas Berubah]
+    M -->|Hapus| P[Konfirmasi] --> Q[Delete dari DB]
+    M -->|Kartu| R[Tampilkan Kartu Siswa + QR Code]
+        </pre>
+    </div>
+
+    <!-- 3 -->
+    <div class="diagram-card" id="d3">
+        <h2>3. Admin - Manajemen User + Auto-Handover</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Admin]) --> B[Menu Users]
+    B --> C[Daftar User non-admin]
+    C --> D{Aksi}
+    D -->|Tambah| E[Form: Nama, Username, Password, Role]
+    E --> F{Role = Wali Kelas?}
+    F -->|Ya| G[Pilih Kelas] --> H[Simpan User + Assign di tabel Kelas]
+    F -->|Tidak| H2[Simpan User Langsung]
+    D -->|Edit| I[Form Edit User]
+    I --> J{Kelas Berubah?}
+    J -->|Ya| K[Auto-Handover: Cabut wali lama, Assign baru]
+    J -->|Tidak| L[Update Data User Saja]
+    D -->|Hapus| M[Cek role bukan admin] --> N[Hapus + Clear kelas]
+        </pre>
+    </div>
+
+    <!-- 4 -->
+    <div class="diagram-card" id="d4">
+        <h2>4. Admin - CRUD Kelas + Sinkronisasi Data</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Admin]) --> B[Menu Kelas]
+    B --> C[Daftar Kelas Semester Aktif + Jumlah Siswa]
+    C --> D{Aksi}
+    D -->|Tambah| E[Input Nama Kelas + Pilih Wali]
+    E --> F[Validasi Unik per Semester] --> G[Simpan ke DB]
+    D -->|Edit| H[Update Nama + Wali Kelas]
+    H --> I{Nama Berubah?}
+    I -->|Ya| J[Sync: Update tugas_pengganti & pengajuan]
+    I -->|Tidak| K{Wali Berubah?}
+    K -->|Ya| L[Cabut Wali Lama, Assign Baru]
+    D -->|Hapus| M{Ada Siswa Aktif?}
+    M -->|Ya| N[Tolak Hapus + Error]
+    M -->|Tidak| O[Hapus Kelas]
+        </pre>
+    </div>
+
+    <!-- 5 -->
+    <div class="diagram-card" id="d5">
+        <h2>5. Admin - Tahun Ajaran</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Admin]) --> B[Menu Tahun Ajaran]
+    B --> C[Daftar Tahun Ajaran]
+    C --> D{Aksi}
+    D -->|Tambah| E[Input: Nama, Tgl Mulai/Selesai Gasal dan Genap]
+    E --> F[Simpan ke Database]
+    D -->|Edit| G[Update Data Tahun Ajaran]
+    D -->|Aktifkan| H[Set semua is_active = false]
+    H --> I[Set target is_active = true]
+        </pre>
+    </div>
+
+    <!-- 6 -->
+    <div class="diagram-card" id="d6">
+        <h2>6. Admin - Kenaikan Kelas</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Admin]) --> B[Menu Kenaikan Kelas]
+    B --> C[Pilih Kelas Asal]
+    C --> D[Ambil Daftar Siswa Aktif via API]
+    D --> E[Pilih Kelas Tujuan]
+    E --> F[Centang Siswa yang Naik]
+    F --> G[Submit Proses]
+    G --> H{Loop Semua Siswa}
+    H --> I{Dicentang Naik?}
+    I -->|Ya dan Lulus| J[Set status lulus + Catat Riwayat]
+    I -->|Ya dan Kelas Baru| K[Buat Rombel Baru + Riwayat Naik]
+    I -->|Tidak Naik| L[Tetap Kelas Asal + Riwayat Tinggal]
+        </pre>
+    </div>
+
+    <!-- 7 -->
+    <div class="diagram-card" id="d7">
+        <h2>7. Wali Kelas - Input Presensi Manual</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Wali Kelas]) --> B[Menu Presensi]
+    B --> C[Ambil Siswa Kelas via Rombel]
+    C --> D[Cek Presensi Hari Ini]
+    D --> E{Sudah Ada?}
+    E -->|Oleh Guru Pengganti| F[Info Guru Pengganti - Terkunci]
+    E -->|Oleh Guru Mapel| F2[Info Guru Mapel + Mata Pelajaran]
+    E -->|Belum| G[Form: Set Status Tiap Siswa]
+    G --> H[Hadir / Izin / Sakit / Alpha]
+    H --> I{Izin atau Sakit?}
+    I -->|Ya| J[Upload Dokumen Pendukung]
+    I -->|Tidak| K[Lanjut]
+    J --> K
+    K --> L{Semua Siswa Terisi?}
+    L -->|Tidak| M[Error: Harus Lengkap] --> G
+    L -->|Ya| N[Simpan via updateOrCreate]
+        </pre>
+    </div>
+
+    <!-- 8 -->
+    <div class="diagram-card" id="d8">
+        <h2>8. Presensi via QR Code Scan</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Wali Kelas / Guru Pengganti]) --> B[Buka Halaman Scan QR]
+    B --> C[Inisialisasi Kamera + Html5QrcodeScanner]
+    C --> D[Scan QR Code Siswa]
+    D --> E[Kirim POST: qr_data]
+    E --> F{Cari Siswa by NIS}
+    F -->|Tidak Ditemukan| G[Cari by ID]
+    G -->|Tidak Ada| H[Response 404]
+    F -->|Ditemukan| I{Cek Permission}
+    G -->|Ditemukan| I
+    I -->|Wali + Beda Kelas| J[Response 403]
+    I -->|OK| K{Sudah Absen?}
+    K -->|Ya| L[Response: Sudah Presensi]
+    K -->|Belum| M[Simpan: status hadir]
+    M --> N[Response Sukses]
+        </pre>
+    </div>
+
+    <!-- 9 -->
+    <div class="diagram-card" id="d9">
+        <h2>9. QR Scan Guru Mapel</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Guru Mapel]) --> B[Pilih Kelas]
+    B --> C[Isi Nama Lengkap + Mata Pelajaran]
+    C --> D{Nama dan Mapel Terisi?}
+    D -->|Tidak| E[Redirect + Error]
+    D -->|Ya| F[Buka Scanner QR]
+    F --> G[Scan QR Siswa]
+    G --> H[POST: qr_data + nama_mapel + nama_pengganti]
+    H --> I{Siswa Ditemukan?}
+    I -->|Tidak| J[404 Error]
+    I -->|Ya| K{Siswa di Kelas Ini?}
+    K -->|Tidak| L[403 Error]
+    K -->|Ya| M{Sudah Presensi Mapel?}
+    M -->|Ya| N[Sudah Tercatat]
+    M -->|Belum| O[Simpan: hadir + mapel]
+        </pre>
+    </div>
+
+    <!-- 10 -->
+    <div class="diagram-card" id="d10">
+        <h2>10. Pengajuan Guru Pengganti End-to-End</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Wali Kelas]) --> B[Menu Tugas Pengganti]
+    B --> C[Buat Pengajuan Baru]
+    C --> D[Input: Tanggal + Alasan + Dokumen]
+    D --> E{Validasi}
+    E -->|Tanggal Lampau| F[Error]
+    E -->|Valid| G[Simpan: status pending]
+    G --> H([Admin Menerima])
+    H --> I{Keputusan}
+    I -->|Setujui| J[Assign Guru + status disetujui]
+    I -->|Tolak| K[Keterangan + status ditolak]
+    J --> L([Guru Pengganti Lihat Tugas])
+        </pre>
+    </div>
+
+    <!-- 11 -->
+    <div class="diagram-card" id="d11">
+        <h2>11. Guru Pengganti - Input Presensi + Lock</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Guru Pengganti]) --> B[Dashboard: Tugas Hari Ini]
+    B --> C[Menu Presensi]
+    C --> D[Kelas dari Tugas Disetujui]
+    D --> E[Pilih Kelas]
+    E --> F{Sudah Dipresensi?}
+    F -->|Ya| G[Terkunci - Read Only]
+    F -->|Belum| H[Form + Input Nama Pengganti]
+    H --> I[Set Status + Upload Dokumen]
+    I --> J{Semua Terisi?}
+    J -->|Tidak| K[Error] --> H
+    J -->|Ya| L[Simpan Presensi]
+    L --> M[Update Tugas: status selesai]
+        </pre>
+    </div>
+
+    <!-- 12 -->
+    <div class="diagram-card" id="d12">
+        <h2>12. Pengajuan Rekap Presensi</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Wali Kelas]) --> B[Menu Pengajuan Rekap]
+    B --> C[Pilih Tipe: Bulanan / Semester]
+    C --> D[Pilih Bulan + Tahun]
+    D --> E{Sudah Ada?}
+    E -->|Ya| F[Error Duplikat]
+    E -->|Tidak| G[Simpan: status pending]
+    G --> H([Kepala Sekolah])
+    H --> I{Keputusan}
+    I -->|Setujui| J[Disetujui + acc_by + acc_date]
+    I -->|Tolak| K[Ditolak + keterangan]
+    J --> L([Wali Kelas Download PDF])
+    L --> M[Generate PDF Rekap]
+        </pre>
+    </div>
+
+    <!-- 13 -->
+    <div class="diagram-card" id="d13">
+        <h2>13. Kepala Sekolah - Monitoring & Laporan</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Kepala Sekolah]) --> B[Dashboard: Statistik Hari Ini]
+    B --> C{Menu}
+    C -->|Monitoring| D[Filter: Tanggal + Kelas]
+    D --> E[Data Presensi Real-time]
+    C -->|Laporan| F[Filter: Range Tanggal + Kelas]
+    F --> G[Rekap + Pagination]
+    C -->|Approval| H[Daftar Pengajuan Rekap]
+    H --> I[Setujui / Tolak]
+        </pre>
+    </div>
+
+    <!-- 14 -->
+    <div class="diagram-card" id="d14">
+        <h2>14. Guru Mapel - Presensi Lengkap</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Guru Mapel]) --> B[Dashboard: Kelas + Jumlah Siswa]
+    B --> C[Menu Presensi]
+    C --> D[Pilih Kelas]
+    D --> E[Input Nama + Mata Pelajaran]
+    E --> F{Metode}
+    F -->|Manual| G[Set Status Tiap Siswa]
+    G --> H{Semua Terisi?}
+    H -->|Ya| I[Simpan + nama + mapel]
+    H -->|Tidak| J[Error] --> G
+    F -->|Scan QR| K[Validasi Input Terisi]
+    K --> L[Buka Scanner QR]
+        </pre>
+    </div>
+
+    <!-- 15 -->
+    <div class="diagram-card" id="d15">
+        <h2>15. Profile Management</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Semua User]) --> B[Menu Profile]
+    B --> C{Aksi}
+    C -->|Edit| D[Update Nama + Username]
+    C -->|Avatar| E{Upload / Hapus?}
+    E -->|Upload| F[Simpan File + Hapus Lama]
+    E -->|Hapus| G[Hapus File + Set null]
+    C -->|Hapus Akun| H[Konfirmasi Password]
+    H --> I[Logout + Delete User]
+        </pre>
+    </div>
+
+    <!-- 16 -->
+    <div class="diagram-card" id="d16">
+        <h2>16. Logic Penentuan Semester Aktif</h2>
+        <pre class="mermaid">
+flowchart TD
+    A([Sistem Request Periode]) --> B[Ambil TA Aktif]
+    B --> C{Ada TA Aktif?}
+    C -->|Tidak| D[Fallback: Tahun Sekarang + Ganjil]
+    C -->|Ya| E{Hari Ini di Range Gasal?}
+    E -->|Ya| F[Return TA-Ganjil]
+    E -->|Tidak| G{Hari Ini di Range Genap?}
+    G -->|Ya| H[Return TA-Genap]
+    G -->|Tidak| I{Bulan >= 7?}
+    I -->|Ya| J[Fallback Ganjil]
+    I -->|Tidak| K[Fallback Genap]
+        </pre>
+    </div>
+
+    <!-- 17 -->
+    <div class="diagram-card" id="d17">
+        <h2>17. Entity Relationship Diagram</h2>
+        <pre class="mermaid">
+erDiagram
+    USERS ||--o{ PRESENSIS : mencatat
+    USERS ||--o{ PENGAJUAN_PRESENSIS : mengajukan
+    USERS ||--o{ KELAS : wali_kelas
+    USERS ||--o{ TUGAS_PENGGANTIS : wali
+    USERS ||--o{ TUGAS_PENGGANTIS : guru
+    SISWAS ||--o{ PRESENSIS : memiliki
+    SISWAS ||--o{ ROMBELS : terdaftar
+    SISWAS ||--o{ RIWAYAT_SISWAS : riwayat
+    KELAS ||--o{ ROMBELS : berisi
+
+    USERS {
+        int id PK
+        string name
+        string username
+        string role
+        string avatar
+    }
+    SISWAS {
+        int id PK
+        string nis
+        string nama_siswa
+        string status
+    }
+    KELAS {
+        int id PK
+        string nama_kelas
+        int wali_kelas_id FK
+        string semester
+    }
+    ROMBELS {
+        int id PK
+        int siswa_id FK
+        int kelas_id FK
+        string semester
+    }
+    PRESENSIS {
+        int id PK
+        int siswa_id FK
+        int user_id FK
+        date tanggal
+        string status
+        string nama_pengganti
+        string nama_mapel
+    }
+    TUGAS_PENGGANTIS {
+        int id PK
+        int wali_kelas_id FK
+        int guru_pengganti_id FK
+        string kelas
+        date tanggal
+        string status
+    }
+    TAHUN_AJARANS {
+        int id PK
+        string nama_tahun
+        boolean is_active
+    }
+        </pre>
+    </div>
+
+    <!-- 18 -->
+    <div class="diagram-card" id="d18">
+        <h2>18. Swimlane: Alur Guru Pengganti</h2>
+        <pre class="mermaid">
+sequenceDiagram
+    participant WK as Wali Kelas
+    participant SYS as Sistem
+    participant ADM as Admin
+    participant GP as Guru Pengganti
+
+    WK->>SYS: Ajukan Guru Pengganti
+    SYS->>SYS: Simpan status pending
+    ADM->>SYS: Lihat daftar pengajuan
+    alt Disetujui
+        ADM->>SYS: Assign Guru + status disetujui
+        SYS->>GP: Tugas muncul di dashboard
+        GP->>SYS: Input presensi kelas
+        SYS->>SYS: Simpan + tugas selesai
+    else Ditolak
+        ADM->>SYS: Tolak + keterangan
+        SYS->>WK: Status ditolak
+    end
+        </pre>
+    </div>
+
+    <!-- 19 -->
+    <div class="diagram-card" id="d19">
+        <h2>19. Swimlane: Alur Pengajuan Rekap</h2>
+        <pre class="mermaid">
+sequenceDiagram
+    participant WK as Wali Kelas
+    participant SYS as Sistem
+    participant KS as Kepala Sekolah
+
+    WK->>SYS: Ajukan rekap bulanan/semester
+    SYS->>SYS: Cek duplikat periode
+    alt Duplikat
+        SYS->>WK: Error duplikat
+    else Baru
+        SYS->>SYS: Simpan status pending
+        KS->>SYS: Buka menu approval
+        alt Disetujui
+            KS->>SYS: Approve
+            WK->>SYS: Download PDF Rekap
+            SYS->>WK: File PDF
+        else Ditolak
+            KS->>SYS: Tolak + keterangan
+        end
+    end
+        </pre>
+    </div>
+
+    <!-- 20 -->
+    <div class="diagram-card" id="d20">
+        <h2>20. Overview Arsitektur Sistem</h2>
+        <pre class="mermaid">
+flowchart LR
+    subgraph ROLES["User Roles"]
+        R1[Admin]
+        R2[Wali Kelas]
+        R3[Guru Pengganti]
+        R4[Guru Mapel]
+        R5[Kepala Sekolah]
+    end
+
+    subgraph FEATURES["Fitur Utama"]
+        F1[CRUD Siswa]
+        F2[CRUD User]
+        F3[CRUD Kelas]
+        F4[Tahun Ajaran]
+        F5[Presensi Manual]
+        F6[Presensi QR Scan]
+        F7[Tugas Pengganti]
+        F8[Pengajuan Rekap]
+        F9[Approval Rekap]
+        F10[Monitoring]
+        F11[Laporan]
+        F12[Kenaikan Kelas]
+    end
+
+    R1 --- F1 & F2 & F3 & F4 & F7 & F10 & F11 & F12
+    R2 --- F5 & F6 & F7 & F8
+    R3 --- F5 & F6
+    R4 --- F5 & F6
+    R5 --- F9 & F10 & F11
+        </pre>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#065F46',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#34d399',
+                lineColor: '#94a3b8',
+                secondaryColor: '#1e293b',
+                tertiaryColor: '#334155',
+                fontFamily: 'Inter'
+            }
+        });
+    </script>
+</body>
+</html>

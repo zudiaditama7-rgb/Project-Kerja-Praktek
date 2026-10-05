@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Flowchart Sistem Usulan - Presensi Harian</title>
+<style>
+  body { font-family: 'Times New Roman', Times, serif; background: #fff; padding: 20px; }
+  .caption { text-align: center; font-size: 14px; margin-top: 15px; font-weight: bold; }
+  svg { display: block; margin: 0 auto; background: #fff; }
+  .box { fill: #fff; stroke: #000; stroke-width: 1.5; }
+  .box-bold { fill: #fff; stroke: #000; stroke-width: 1.8; }
+  .lbl { font-family: 'Times New Roman', Times, serif; text-anchor: middle; dominant-baseline: middle; fill: #000; }
+  .lbl-bold { font-weight: bold; }
+  .edge { fill: none; stroke: #000; stroke-width: 1.4; marker-end: url(#arrow); }
+</style>
+</head>
+<body>
+ 
+<svg viewBox="0 0 640 700" width="640" height="700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+ 
+  <ellipse cx="320" cy="40" rx="90" ry="20" class="box"/>
+  <text x="320" y="42" class="lbl" font-size="12">Mulai KBM</text>
+  <path d="M320,60 L320,96" class="edge"/>
+ 
+  <rect x="130" y="100" width="380" height="35" rx="4" class="box"/>
+  <text x="320" y="118" class="lbl" font-size="11">Guru Login Aplikasi &amp; Membuka Menu Kamera Scanner QR</text>
+  <path d="M320,135 L320,176" class="edge"/>
+ 
+  <rect x="170" y="180" width="300" height="35" rx="4" class="box"/>
+  <text x="320" y="198" class="lbl" font-size="11">Siswa Menunjukkan Kartu QR Code ke Kamera</text>
+  <path d="M320,215 L320,246" class="edge"/>
+ 
+  <!-- Diamond -->
+  <polygon points="320,250 470,320 320,390 170,320" class="box"/>
+  <text x="320" y="312" class="lbl" font-size="10.5">Siswa Bawa Kartu</text>
+  <text x="320" y="328" class="lbl" font-size="10.5">&amp; Scan Berhasil?</text>
+ 
+  <!-- Ya -->
+  <path d="M320,390 L320,446" class="edge"/>
+  <text x="330" y="415" class="lbl" font-size="10" text-anchor="start">Ya (Scan Berhasil)</text>
+ 
+  <rect x="220" y="450" width="200" height="40" rx="4" class="box"/>
+  <text x="320" y="464" class="lbl" font-size="10">Sistem Otomatis</text>
+  <text x="320" y="478" class="lbl" font-size="10">Mencatat "Hadir"</text>
+ 
+  <!-- Tidak (Manual) -->
+  <path d="M470,320 L530,320 L530,450" class="edge"/>
+  <text x="475" y="310" class="lbl" font-size="10" text-anchor="start">Tidak (Lupa/Sakit/Izin/Alpha)</text>
+ 
+  <rect x="440" y="450" width="180" height="40" rx="4" class="box"/>
+  <text x="530" y="464" class="lbl" font-size="10">Guru Memilih Status Presensi</text>
+  <text x="530" y="478" class="lbl" font-size="10">Secara Manual di Layar</text>
+ 
+  <!-- Converge -->
+  <path d="M320,490 L320,526" class="edge"/>
+  <path d="M530,490 L530,510 L320,510 L320,526" class="edge"/>
+ 
+  <!-- Database Symbol (Cylinder-like) -->
+  <path d="M140,530 C140,520 500,520 500,530 L500,565 C500,575 140,575 140,565 Z" class="box"/>
+  <path d="M140,530 C140,540 500,540 500,530" fill="none" stroke="#000" stroke-width="1.5"/>
+  <text x="320" y="552" class="lbl" font-size="11">Data Presensi Tersimpan Real-time di Database</text>
+  <path d="M320,570 L320,606" class="edge"/>
+ 
+  <ellipse cx="320" cy="626" rx="90" ry="20" class="box"/>
+  <text x="320" y="628" class="lbl" font-size="12">Selesai KBM</text>
+</svg>
+ 
+<p class="caption">Flowchart 2: Sistem Usulan (Terkomputerisasi) - Presensi Harian QR Code</p>
+ 
+</body>
+</html>

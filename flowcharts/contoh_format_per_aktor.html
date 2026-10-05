@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Format Per Aktor</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        h3, h4 {
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        .table-title {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        p {
+            text-align: justify;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed gray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: gray;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>3.2.1 Use Case Diagram Wali Kelas</h3>
+    <p>
+        Aktor Wali Kelas merupakan pengguna yang memiliki wewenang untuk mengelola kehadiran harian siswa di kelas perwaliannya, serta dapat mengajukan izin jika berhalangan hadir. Interaksi Wali Kelas dengan sistem digambarkan pada diagram berikut:
+    </p>
+
+    <!-- Tempat menaruh gambar di Word -->
+    <div class="image-placeholder">
+        [ PASTE GAMBAR USE CASE DIAGRAM WALI KELAS DI SINI ]
+    </div>
+
+    <p>
+        Berdasarkan diagram di atas, seluruh aktivitas yang dapat dilakukan oleh Wali Kelas dirangkum dalam tabel deskripsi berikut ini:
+    </p>
+
+    <div class="table-title">Tabel 1. Deskripsi Use Case Wali Kelas</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">No</th>
+                <th style="width: 25%;">Nama Use Case</th>
+                <th style="width: 70%;">Deskripsi / Tujuan Singkat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center;">1</td>
+                <td>Melakukan Login</td>
+                <td>Mengakses sistem dengan kredensial yang valid sebagai Wali Kelas.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">2</td>
+                <td>Melihat Dashboard</td>
+                <td>Melihat ringkasan informasi, jadwal kelas, dan status presensi terkini secara cepat.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">3</td>
+                <td>Mengelola Profil</td>
+                <td>Memperbarui data pribadi atau mengganti kata sandi demi keamanan akun.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">4</td>
+                <td>Input Presensi Harian</td>
+                <td>Mencatat daftar kehadiran siswa di kelasnya setiap hari ke dalam sistem.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">5</td>
+                <td>Presensi via QR Code (Scan)</td>
+                <td><i>(Extend)</i> Mempercepat proses pencatatan kehadiran menggunakan pemindai/kamera untuk membaca ID Card siswa.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">6</td>
+                <td>Presensi via Manual (Form)</td>
+                <td><i>(Extend)</i> Menginput absensi secara manual melalui daftar hadir jika QR Code tidak bisa digunakan.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">7</td>
+                <td>Melihat Riwayat Presensi</td>
+                <td>Melihat log riwayat kehadiran siswa pada hari atau minggu sebelumnya.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">8</td>
+                <td>Melihat Data Siswa Kelas</td>
+                <td>Mengakses data detail mengenai siswa yang berada di perwaliannya.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">9</td>
+                <td>Mencetak Kartu Siswa QR</td>
+                <td>Men-generate dan mengunduh format kartu presensi siswa (fisik/digital).</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">10</td>
+                <td>Mengajukan Izin Pengganti</td>
+                <td>Mengajukan ketidakhadiran (izin/sakit) beserta <i>(Include)</i> unggah surat bukti izin ke kepala sekolah/admin.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">11</td>
+                <td>Melihat Status Pengajuan</td>
+                <td>Mengecek progress izin/tugas yang telah diajukan (disetujui/ditolak/pending).</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">12</td>
+                <td>Download Surat Pengajuan PDF</td>
+                <td>Mengunduh arsip dokumen pengajuannya dalam format PDF.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">13</td>
+                <td>Mengajukan Tugas Pengganti</td>
+                <td>Mendelegasikan materi belajar saat tidak masuk, beserta <i>(Include)</i> unggah dokumen tugas/materi.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">14</td>
+                <td>Melakukan Logout</td>
+                <td>Mengakhiri sesi dan keluar dari sistem dengan aman.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

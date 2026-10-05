@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 4 - Analisis dan Perancangan Sistem</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        h3, h4 {
+            text-align: left;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        ul, ol {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>4.1. Analisis Kebutuhan Sistem</h3>
+    <p>
+        Pada tahapan awal pengembangan sistem, dilakukan proses analisis kebutuhan untuk memahami secara menyeluruh fitur-fitur yang harus disediakan oleh Sistem Informasi Presensi Siswa Berbasis QR Code. Analisis dilakukan melalui metode observasi langsung terhadap aktivitas operasional sekolah serta wawancara dengan pihak terkait, yaitu pihak administrasi (tata usaha) dan dewan guru. Kebutuhan ini dibagi menjadi kebutuhan fungsional dan non-fungsional.
+    </p>
+
+    <h4>Kebutuhan Fungsional</h4>
+    <p>
+        Kebutuhan fungsional mendeskripsikan fungsi atau layanan spesifik yang harus disediakan oleh sistem untuk setiap aktor yang terlibat.
+    </p>
+    
+    <p><b>a. Untuk Wali Kelas dan Guru Mata Pelajaran:</b></p>
+    <ol>
+        <li>Sistem harus memungkinkan guru untuk mengakses *dashboard* melalui proses login yang divalidasi.</li>
+        <li>Sistem harus menyediakan fitur pemindaian (scan) QR Code dari kartu identitas siswa untuk mencatat kehadiran secara otomatis dan <i>real-time</i>.</li>
+        <li>Sistem harus mengizinkan guru untuk menginput presensi secara manual (Hadir, Sakit, Izin, Alpa) jika QR Code mengalami kendala terbaca.</li>
+        <li>Sistem harus memungkinkan guru melihat riwayat presensi dan detail data siswa di kelas yang mereka ampu.</li>
+        <li>Sistem harus memfasilitasi guru untuk mengajukan permohonan izin ketidakhadiran, serta mendelegasikan tugas pengganti beserta lampiran dokumen materinya.</li>
+    </ol>
+
+    <p><b>b. Untuk Guru Pengganti:</b></p>
+    <ol>
+        <li>Sistem harus menampilkan daftar tugas penggantian (kelas yang diamanahkan) lengkap dengan materi lampiran dari guru asli yang berhalangan.</li>
+        <li>Sistem harus memberikan wewenang sementara bagi Guru Pengganti untuk mendata presensi di kelas tersebut (baik via <i>Scan</i> QR maupun manual).</li>
+    </ol>
+
+    <p><b>c. Untuk Admin:</b></p>
+    <ol>
+        <li>Admin harus memiliki akses ke <i>dashboard</i> khusus yang dilindungi oleh proses login.</li>
+        <li>Admin harus dapat mengelola data master, meliputi data siswa (beserta <i>import/export</i> Excel), data kelas, mata pelajaran, pengguna sistem, dan penetapan tahun ajaran aktif.</li>
+        <li>Sistem harus memungkinkan admin mencetak (*generate*) kartu ID siswa yang dilengkapi dengan QR Code secara massal maupun individu.</li>
+        <li>Admin harus dapat memonitor proses pengisian presensi dari setiap kelas setiap harinya, dan mencetak laporan rekapitulasi kehadiran.</li>
+        <li>Admin berwenang untuk memproses pengajuan izin guru dan menugaskan (*assign*) jadwal tersebut kepada Guru Pengganti.</li>
+        <li>Admin dapat mengeksekusi proses migrasi atau kenaikan kelas siswa pada pergantian tahun ajaran.</li>
+    </ol>
+
+    <p><b>d. Untuk Kepala Sekolah:</b></p>
+    <ol>
+        <li>Kepala Sekolah harus memiliki akses ke <i>dashboard</i> eksekutif untuk melihat statistik tingkat kedisiplinan dan tren kehadiran siswa melalui grafik visual.</li>
+        <li>Sistem harus memungkinkan Kepala Sekolah melakukan supervisi operasional (Monitoring Presensi Harian).</li>
+        <li>Kepala Sekolah berwenang melakukan verifikasi dan <i>Approval</i> (pengesahan) terhadap laporan rekap presensi bulanan yang diajukan.</li>
+    </ol>
+
+    <h4>Kebutuhan Non-Fungsional</h4>
+    <p>
+        Kebutuhan non-fungsional mendefinisikan kriteria kualitas dan operasional dari sistem.
+    </p>
+    <ol>
+        <li><b>Kemudahan Penggunaan (Usability):</b> Antarmuka pengguna (UI) harus dirancang agar intuitif, sederhana, responsif (dapat diakses nyaman melalui <i>smartphone</i>/tablet guru saat di kelas), dan mudah dioperasikan.</li>
+        <li><b>Performa (Performance):</b> Sistem harus memiliki waktu respons yang cepat, terutama pada saat proses memindai (scan) QR Code agar antrean absensi siswa di pintu kelas tidak menumpuk.</li>
+        <li><b>Keamanan (Security):</b> Sistem harus menggunakan enkripsi kata sandi dan hak akses berbasis peran (<i>Role-Based Access Control</i>) untuk menjamin keamanan data kehadiran dan mencegah manipulasi otorisasi.</li>
+        <li><b>Skalabilitas (Scalability):</b> Arsitektur basis data harus fleksibel agar sanggup menampung lonjakan volume data transaksi presensi yang bertambah setiap harinya dan mengakomodasi perpindahan data pada tahun ajaran baru.</li>
+    </ol>
+
+    <h3>4.2. Perancangan Sistem</h3>
+    <p>
+        Pada tahap perancangan, dilakukan penyusunan arsitektur sistem yang mencakup desain antarmuka pengguna (UI), struktur basis data, serta alur proses pencatatan presensi. Perancangan ini bertujuan untuk membangun sistem yang efektif, efisien, dan sesuai dengan kebutuhan operasional tata tertib sekolah. Beberapa langkah yang dilakukan dalam proses perancangan sistem adalah sebagai berikut:
+    </p>
+
+    <p><b>1) Perancangan Antarmuka Pengguna (UI)</b></p>
+    <p>
+        Antarmuka pengguna dirancang agar mudah digunakan oleh berbagai level pengguna, dari Admin, Guru, hingga Kepala Sekolah. Tampilan antarmuka dibangun dengan pendekatan desain modern, responsif, dan <i>user-friendly</i>. Beberapa fitur antarmuka yang dirancang meliputi:
+    </p>
+    <ul>
+        <li><b>Halaman Login Terpusat:</b> Pintu masuk utama sistem yang memverifikasi kredensial pengguna dan mengarahkan mereka ke <i>dashboard</i> sesuai peran (Admin, Guru, atau Kepala Sekolah).</li>
+        <li><b>Halaman Dashboard Analitik:</b> Menampilkan informasi ringkas (*executive summary*) berupa grafik kehadiran harian, jumlah siswa, jadwal kelas, dan notifikasi pengajuan masuk.</li>
+        <li><b>Halaman Presensi & Pemindai QR (Scan):</b> Halaman khusus yang mengintegrasikan akses kamera perangkat (*smartphone/webcam*) untuk memindai kartu pelajar siswa secara <i>real-time</i>, serta tombol alternatif untuk presensi manual.</li>
+        <li><b>Halaman Manajemen Data Master:</b> Antarmuka khusus Admin untuk melakukan penambahan, pengeditan, penghapusan data siswa, sinkronisasi kelas, dan pengaturan pengguna.</li>
+        <li><b>Halaman Laporan dan Cetak Kartu:</b> Area untuk memfilter laporan berdasarkan bulan/kelas, me-<i>render</i> laporan dalam bentuk dokumen PDF resmi, serta alat untuk men-<i>generate</i> ID Card siswa berbasis QR Code.</li>
+        <li><b>Halaman Pengajuan Izin & Delegasi:</b> Antarmuka interaktif bagi guru untuk melampirkan alasan ketidakhadiran, mengunggah modul materi, serta panel bagi Admin untuk menyetujui dan mem-<i>forward</i> tugas ke Guru Pengganti.</li>
+    </ul>
+
+    <p><b>2) Perancangan Basis Data</b></p>
+    <p>
+        Struktur basis data dirancang untuk menyimpan dan mengelola data penting pendidikan secara konsisten, berelasi kuat, dan aman. Basis data yang digunakan adalah MySQL, dengan beberapa tabel utama berikut:
+    </p>
+    <ul>
+        <li><b>Tabel Pengguna (Users / Role):</b> Menyimpan kredensial autentikasi (nama, *username*, kata sandi) dan membedakan hak akses (*role*) apakah pengguna tersebut Admin, Guru, Wali Kelas, atau Kepala Sekolah.</li>
+        <li><b>Tabel Siswa (Students):</b> Berisi data induk identitas siswa seperti NIS/NISN, nama lengkap, kontak, serta *hash/string* referensi *QR Code* unik yang terhubung pada ID Card mereka.</li>
+        <li><b>Tabel Kelas & Jadwal (Classes/Schedules):</b> Mencatat daftar rombongan belajar, mengikat siswa ke dalam kelas tertentu pada tahun ajaran yang sedang aktif, serta mencatat jadwal mata pelajaran yang diampu oleh Guru Mapel.</li>
+        <li><b>Tabel Presensi (Attendances):</b> Tabel transaksional paling penting yang mencatat rekam jejak setiap pemindaian absen. Mencakup data *ID Siswa*, *Tanggal*, *Waktu Scan*, *Status* (Hadir/Alpa/Sakit/Izin), dan petugas/guru yang me-log absensi tersebut.</li>
+        <li><b>Tabel Pengajuan & Tugas (Requests/Substitutions):</b> Mengelola data siklus dokumen izin guru, status *approval*, lampiran *file* materi pelajaran, dan relasi tugas tersebut kepada ID Guru Pengganti yang ditunjuk.</li>
+    </ul>
+
+    <h3>4.3. Tahapan Analisis (Spesifikasi Kebutuhan Per Aktor)</h3>
+    <p>
+        Berdasarkan hasil analisis kebutuhan yang telah dilakukan melalui wawancara dan pengamatan alur kerja administratif, berikut adalah spesifikasi kebutuhan interaksi spesifik dari sistem Informasi Presensi Siswa berbasis QR Code:
+    </p>
+
+    <p><b>Halaman / Kewenangan Guru (Wali Kelas & Guru Mapel):</b></p>
+    <ul>
+        <li>Guru dapat melakukan login masuk ke sistem.</li>
+        <li>Guru dapat melihat ringkasan jadwal mengajar dan tugas kelasnya hari ini.</li>
+        <li>Guru dapat memindai QR Code dari kartu siswa menggunakan kamera perangkat.</li>
+        <li>Guru dapat mencatat status presensi (Sakit, Izin, Alpa) secara manual jika diperlukan.</li>
+        <li>Guru dapat melihat rekap riwayat presensi murid di kelasnya.</li>
+        <li>Guru dapat mengajukan izin ketidakhadiran dengan mengunggah bukti dokumen.</li>
+        <li>Guru dapat menitipkan/mendelegasikan materi tugas lewat sistem bagi kelas yang ditinggalkannya.</li>
+    </ul>
+
+    <p><b>Halaman / Kewenangan Admin:</b></p>
+    <ul>
+        <li>Admin dapat memantau secara <i>real-time</i> kelas mana saja yang sudah atau belum diabsen oleh guru.</li>
+        <li>Admin dapat menambah, mengedit, menghapus (*CRUD*) data siswa, data guru, kelas, dan tahun ajaran.</li>
+        <li>Admin dapat melakukan <i>import</i> data siswa baru secara massal via Excel.</li>
+        <li>Admin dapat mencetak Kartu Tanda Pelajar yang telah tersisip gambar QR Code.</li>
+        <li>Admin dapat menugaskan Guru Pengganti untuk mengisi kelas yang kosong berdasarkan pengajuan guru.</li>
+        <li>Admin dapat memproses mutasi siswa dan prosedur kenaikan kelas.</li>
+    </ul>
+
+    <p><b>Halaman / Kewenangan Kepala Sekolah:</b></p>
+    <ul>
+        <li>Kepala Sekolah dapat memantau tren grafik tingkat kedisiplinan (persentase kehadiran) seluruh sekolah.</li>
+        <li>Kepala Sekolah dapat mengevaluasi kepatuhan operasional pengisian presensi tiap kelas/guru.</li>
+        <li>Kepala Sekolah dapat melakukan <i>Approval</i> (pengesahan legal) untuk laporan rekap bulanan yang diajukan secara digital.</li>
+        <li>Kepala Sekolah dapat mengunduh laporan sah sekolah (PDF) yang siap untuk diarsipkan atau dikirim ke dinas pendidikan.</li>
+    </ul>
+
+    <p><b>Halaman / Kewenangan Guru Pengganti:</b></p>
+    <ul>
+        <li>Guru Pengganti dapat menerima notifikasi dan melihat detail materi tugas penggantian.</li>
+        <li>Guru Pengganti diberikan wewenang untuk mengisi presensi (Scan QR/Manual) secara eksklusif hanya pada kelas dan jam ia ditugaskan.</li>
+    </ul>
+
+</body>
+</html>

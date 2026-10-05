@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Pengujian Blackbox - Sistem Presensi</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f9;
+            color: #000;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.5;
+        }
+        .document-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 50px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1.document-title {
+            text-align: center;
+            font-size: 16pt;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        h2.document-subtitle {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: normal;
+            margin-bottom: 40px;
+        }
+        h3.section-title {
+            font-size: 12pt;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 11pt;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f0f0f0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .status-valid {
+            font-weight: bold;
+            color: #000;
+        }
+        .notes {
+            font-size: 10pt;
+            font-style: italic;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <h1 class="document-title">Lampiran: Pengujian Sistem (Blackbox Testing)</h1>
+        <h2 class="document-subtitle">Sistem Informasi Presensi Siswa</h2>
+
+        <p style="text-align: justify; font-size: 11pt;">
+            Tabel berikut menyajikan skenario pengujian fungsional sistem menggunakan metode <strong>Blackbox Testing</strong> (pendekatan <em>Equivalence Partitioning</em>). Pengujian ini dilakukan untuk memvalidasi bahwa seluruh fitur yang tersedia untuk aktor <strong>Admin, Guru Mapel, Guru Pengganti, Wali Kelas, dan Kepala Sekolah</strong> berjalan dengan baik dan mampu menangani kesalahan input (*error handling*).
+        </p>
+
+        <!-- 1. UMUM (AUTENTIKASI) -->
+        <h3 class="section-title">1. Pengujian Modul Autentikasi (Semua Aktor)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 20%;">Fungsi yang Diuji</th>
+                    <th style="width: 30%;">Skenario Input</th>
+                    <th style="width: 25%;">Hasil yang Diharapkan (*Expected Result*)</th>
+                    <th style="width: 10%;">Hasil Pengujian</th>
+                    <th style="width: 10%;">Kesimpulan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">1.1</td>
+                    <td>Login Sukses</td>
+                    <td>Memasukkan <em>Username</em> dan <em>Password</em> yang valid sesuai hak akses yang terdaftar.</td>
+                    <td>Sistem memberikan akses masuk dan mengarahkan ke halaman <em>Dashboard</em> yang sesuai dengan peran (role) pengguna.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">1.2</td>
+                    <td>Login Gagal (Password Salah)</td>
+                    <td>Memasukkan <em>Username</em> yang benar tetapi <em>Password</em> salah.</td>
+                    <td>Sistem menolak akses, tetap di halaman Login, dan menampilkan notifikasi "Kredensial tidak cocok / Password salah".</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">1.3</td>
+                    <td>Validasi Form Kosong</td>
+                    <td>Mengeklik tombol "Login" dalam keadaan kolom <em>Username</em> dan <em>Password</em> kosong.</td>
+                    <td>Sistem mencegah pengiriman form dan memunculkan peringatan <em>"Please fill out this field."</em> di sekitar kotak input.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">1.4</td>
+                    <td>Fungsi Logout</td>
+                    <td>Mengeklik tombol "Logout" dari dalam sistem.</td>
+                    <td>Sesi (session) pengguna dihancurkan, dan pengguna dikembalikan ke halaman Login awal.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 2. ADMIN -->
+        <h3 class="section-title">2. Pengujian Modul Aktor: Admin</h3>
+        <p class="notes">Fokus: Pengelolaan data master (Siswa, Kelas, Guru, Jadwal).</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 20%;">Fungsi yang Diuji</th>
+                    <th style="width: 30%;">Skenario Input</th>
+                    <th style="width: 25%;">Hasil yang Diharapkan (*Expected Result*)</th>
+                    <th style="width: 10%;">Hasil Pengujian</th>
+                    <th style="width: 10%;">Kesimpulan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">2.1</td>
+                    <td>Tambah Data Siswa Baru</td>
+                    <td>Mengisi form data siswa lengkap (NIS, Nama, Kelas) dengan data valid lalu klik "Simpan".</td>
+                    <td>Data tersimpan di database dan muncul di tabel siswa. Tampil pesan "Siswa berhasil ditambahkan".</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">2.2</td>
+                    <td>Validasi Duplikasi NIS Siswa</td>
+                    <td>Memasukkan data siswa baru menggunakan NIS yang sudah pernah didaftarkan pada siswa lain.</td>
+                    <td>Sistem menolak penyimpanan, data tidak masuk tabel, dan muncul peringatan "NIS sudah terdaftar".</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">2.3</td>
+                    <td>Persetujuan Tugas Pengganti</td>
+                    <td>Mengeklik tombol "Setujui" (Assign) atau "Tolak" (Reject) pada usulan tugas pengganti dari Guru Mapel.</td>
+                    <td>Status tugas pengganti berubah di database dan notifikasi diteruskan ke Guru Mapel terkait secara langsung.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">2.4</td>
+                    <td>Hapus Data Guru</td>
+                    <td>Mengeklik tombol "Hapus" pada salah satu data guru di halaman kelola guru.</td>
+                    <td>Muncul dialog konfirmasi (<em>Are you sure?</em>). Jika disetujui, data guru hilang dari tabel kelola.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 3. GURU MAPEL -->
+        <h3 class="section-title">3. Pengujian Modul Aktor: Guru Mapel</h3>
+        <p class="notes">Fokus: Input absensi kehadiran harian dan pembuatan QR Code penugasan.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 20%;">Fungsi yang Diuji</th>
+                    <th style="width: 30%;">Skenario Input</th>
+                    <th style="width: 25%;">Hasil yang Diharapkan (*Expected Result*)</th>
+                    <th style="width: 10%;">Hasil Pengujian</th>
+                    <th style="width: 10%;">Kesimpulan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">3.1</td>
+                    <td>Input Presensi Harian</td>
+                    <td>Mengubah status absensi siswa di kelas yang diajar (Hadir, Izin, Sakit, Alpa), lalu klik "Simpan Presensi".</td>
+                    <td>Data presensi berhasil disimpan. Status kehadiran siswa tercatat dan masuk ke rekap absensi kelas.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">3.2</td>
+                    <td>Pembuatan Tugas Pengganti (Generate QR)</td>
+                    <td>Mengajukan usulan ketidakhadiran (tugas pengganti) untuk jadwal mengajar tertentu.</td>
+                    <td>Sistem berhasil merekam usulan dan membuat (<em>generate</em>) sebuah QR Code khusus untuk jadwal tersebut.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">3.3</td>
+                    <td>Lihat Riwayat Mengajar</td>
+                    <td>Membuka halaman riwayat atau laporan absensi yang sudah di-input sebelumnya.</td>
+                    <td>Sistem menampilkan tabel rekaman tanggal dan jumlah siswa yang Hadir/Izin/Sakit pada sesi tersebut.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 4. GURU PENGGANTI -->
+        <h3 class="section-title">4. Pengujian Modul Aktor: Guru Pengganti</h3>
+        <p class="notes">Fokus: Serah terima tugas via scanner QR Code dan pengisian presensi.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 20%;">Fungsi yang Diuji</th>
+                    <th style="width: 30%;">Skenario Input</th>
+                    <th style="width: 25%;">Hasil yang Diharapkan (*Expected Result*)</th>
+                    <th style="width: 10%;">Hasil Pengujian</th>
+                    <th style="width: 10%;">Kesimpulan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">4.1</td>
+                    <td>Scan QR Code (Valid)</td>
+                    <td>Menggunakan fitur Scanner untuk memindai QR Code tugas pengganti yang benar dan masih aktif.</td>
+                    <td>QR berhasil dipindai. Sistem mengalihkan kewenangan kelas kepada Guru Pengganti untuk mengisi presensi.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">4.2</td>
+                    <td>Scan QR Code (Tidak Valid/Expired)</td>
+                    <td>Memindai QR Code yang usianya sudah kadaluarsa (di luar tanggal jadwal) atau QR palsu.</td>
+                    <td>Sistem menolak pendelegasian, muncul peringatan "QR Code tidak valid atau sudah kadaluarsa".</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">4.3</td>
+                    <td>Input Presensi (Delegasi)</td>
+                    <td>Menyimpan presensi siswa (Hadir/Izin/Sakit) setelah berhasil melakukan scan QR.</td>
+                    <td>Presensi siswa tercatat secara sah di database atas nama Guru Mapel asli, dikerjakan oleh Guru Pengganti.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 5. WALI KELAS -->
+        <h3 class="section-title">5. Pengujian Modul Aktor: Wali Kelas</h3>
+        <p class="notes">Fokus: Pemantauan rekapan absensi siswa khusus pada kelas perwaliannya.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 20%;">Fungsi yang Diuji</th>
+                    <th style="width: 30%;">Skenario Input</th>
+                    <th style="width: 25%;">Hasil yang Diharapkan (*Expected Result*)</th>
+                    <th style="width: 10%;">Hasil Pengujian</th>
+                    <th style="width: 10%;">Kesimpulan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">5.1</td>
+                    <td>Akses Rekapitulasi Kelas</td>
+                    <td>Mengakses halaman Laporan/Rekapitulasi Absensi dari Dashboard Wali Kelas.</td>
+                    <td>Sistem hanya menampilkan data absensi siswa yang tergabung di dalam kelas yang dibina oleh Wali Kelas tersebut.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">5.2</td>
+                    <td>Filter Periode Laporan</td>
+                    <td>Menentukan rentang tanggal laporan (misal: 1 Juli - 31 Juli) dan mengeklik "Tampilkan".</td>
+                    <td>Tabel rekapitulasi memperbarui akumulasi jumlah Hadir, Sakit, Izin, dan Alpa sesuai rentang tanggal.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">5.3</td>
+                    <td>Cetak Laporan Kelas (PDF)</td>
+                    <td>Mengeklik tombol "Cetak PDF" pada halaman rekapitulasi.</td>
+                    <td>Sistem mengunduh dokumen PDF berisi tabel rekap absensi yang rapi dan siap cetak untuk diserahkan ke siswa/wali murid.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 6. KEPALA SEKOLAH -->
+        <h3 class="section-title">6. Pengujian Modul Aktor: Kepala Sekolah</h3>
+        <p class="notes">Fokus: Pemantauan secara makro atas seluruh tingkat kehadiran sekolah.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 20%;">Fungsi yang Diuji</th>
+                    <th style="width: 30%;">Skenario Input</th>
+                    <th style="width: 25%;">Hasil yang Diharapkan (*Expected Result*)</th>
+                    <th style="width: 10%;">Hasil Pengujian</th>
+                    <th style="width: 10%;">Kesimpulan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">6.1</td>
+                    <td>Lihat Dashboard Statistik</td>
+                    <td>Kepala Sekolah login dan mengakses halaman Dashboard utama.</td>
+                    <td>Sistem menampilkan ringkasan/grafik tingkat persentase kehadiran siswa dari seluruh kelas di sekolah.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">6.2</td>
+                    <td>Filter Laporan Global</td>
+                    <td>Memilih spesifik nama "Kelas" dan rentang "Tanggal" untuk melihat detail rekap.</td>
+                    <td>Tabel laporan memfilter data secara global sesuai kriteria rentang tanggal dan kelas yang dipilih, menampilkan total ketidakhadiran dengan akurat.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+                <tr>
+                    <td class="text-center">6.3</td>
+                    <td>Validasi Keamanan Akses</td>
+                    <td>Mencoba mengakses halaman URL yang ditujukan untuk Admin (misal: <code>/admin/kelola-siswa</code>).</td>
+                    <td>Sistem mencegah akses Kepala Sekolah (<em>Access Denied</em> / 403) dan mengembalikannya ke Dashboard, menjaga keamanan data.</td>
+                    <td>Sesuai</td>
+                    <td class="text-center status-valid">Valid</td>
+                </tr>
+            </tbody>
+    <!-- BAB KESIMPULAN DAN SARAN -->
+        <h3 class="section-title">Kesimpulan Pengujian</h3>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 15px;">
+            Berdasarkan hasil pengujian yang telah dilakukan, Sistem Informasi Presensi Siswa berbasis <em>Web</em> ini telah berhasil memenuhi kebutuhan fungsional dan non-fungsional sesuai dengan perancangan awal. Seluruh fitur utama pada setiap tingkatan hak akses pengguna (<em>role</em>) telah diuji menggunakan metode <em>Blackbox Testing</em> dan menunjukkan hasil yang memuaskan.
+        </p>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 15px;">
+            Dari sisi operasional harian (Guru Mata Pelajaran dan Guru Pengganti), sistem mampu menjalankan proses pencatatan presensi siswa di kelas dengan akurat secara <em>real-time</em>. Penerapan inovasi pendelegasian kelas menggunakan <em>Generate</em> dan <em>Scan</em> QR Code terbukti mempermudah serah terima jam pelajaran kepada Guru Pengganti ketika Guru Utama berhalangan hadir, meminimalisir kekosongan kelas. Antarmuka yang dirancang sederhana dan responsif juga dinilai sangat memudahkan guru dalam menginput data di tengah kegiatan belajar mengajar.
+        </p>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 15px;">
+            Sementara dari sisi manajemen (Admin, Wali Kelas, dan Kepala Sekolah), sistem mampu memproses dan mengelola rekapitulasi data presensi siswa dengan sangat baik. Wali Kelas dapat dengan mudah memantau grafik tingkat kehadiran anak didiknya dan mencetak laporan (PDF). Kepala Sekolah juga dimudahkan dengan adanya <em>Dashboard</em> pemantauan global yang menyajikan persentase tingkat absensi seluruh sekolah sebagai bahan evaluasi. Fitur autentikasi dan validasi multi-level berjalan sesuai fungsinya, memastikan bahwa pengguna hanya bisa mengakses menu yang sesuai dengan porsinya.
+        </p>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 15px;">
+            Dari segi pengujian keamanan dan kinerja, sistem menunjukkan respons yang stabil meskipun data diakses oleh beberapa <em>user</em> pada waktu yang bersamaan. Pengujian validasi <em>input</em> menunjukkan bahwa <em>database</em> terlindungi dari masuknya data kosong atau duplikasi data (seperti NIS ganda), sehingga integritas data sekolah tetap terjaga. 
+        </p>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 15px;">
+            Berdasarkan uji pengguna (<em>User Acceptance Testing</em>), para pengajar dan staf tata usaha memberikan tanggapan positif terhadap alur sistem yang jelas, kecepatan pembuatan rekap bulanan yang sebelumnya dilakukan secara manual, serta tampilan antarmuka yang rapi. Secara keseluruhan, sistem presensi ini telah berhasil diimplementasikan dengan baik dan layak untuk diterapkan secara penuh sebagai solusi digitalisasi akademik di lingkungan sekolah.
+        </p>
+
+        <h3 class="section-title">Saran Pengembangan Lanjutan</h3>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 15px;">
+            Meskipun sistem telah berjalan dengan baik, evaluasi menunjukkan bahwa sistem ini masih memiliki ruang untuk dikembangkan lebih lanjut guna memaksimalkan fungsinya. Beberapa saran untuk pengembangan sistem di masa mendatang antara lain:
+        </p>
+        <ol style="text-align: justify; font-size: 11pt; margin-bottom: 40px; padding-left: 20px;">
+            <li style="margin-bottom: 5px;"><strong>Integrasi Notifikasi <em>Gateway</em>:</strong> Mengembangkan fitur pengiriman pesan otomatis (misalnya melalui WhatsApp atau Email) kepada orang tua/wali murid secara <em>real-time</em> apabila anak mereka tercatat dengan status Alpa (Tanpa Keterangan) di sekolah.</li>
+            <li style="margin-bottom: 5px;"><strong>Pengembangan ke Platform <em>Mobile</em> (Android/iOS):</strong> Untuk ke depannya, sistem berbasis <em>web</em> ini dapat di-<em>upgrade</em> menjadi aplikasi <em>mobile</em> (<em>Native/Hybrid</em>) agar proses <em>Scan</em> QR Code oleh Guru Pengganti dan pemantauan oleh Kepala Sekolah bisa dilakukan lebih praktis melalui aplikasi khusus.</li>
+            <li style="margin-bottom: 5px;"><strong>Integrasi dengan Sistem E-Rapor:</strong> Membuka API (<em>Application Programming Interface</em>) agar hasil persentase kehadiran akhir semester yang direkap dari aplikasi presensi ini dapat langsung ditarik secara otomatis ke dalam sistem penilaian E-Rapor nasional sekolah.</li>
+        </ol>
+
+    </div>
+</body>
+</html>

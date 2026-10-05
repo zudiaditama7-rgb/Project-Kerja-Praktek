@@ -1,0 +1,14 @@
+flowchart TD
+    A([Admin]) --> B[Menu Kelas]
+    B --> C[Daftar Kelas Semester Aktif + Jumlah Siswa]
+    C --> D{Aksi}
+    D -->|Tambah| E[Input Nama Kelas + Pilih Wali]
+    E --> F[Validasi Unik per Semester] --> G[Simpan ke DB]
+    D -->|Edit| H[Update Nama + Wali Kelas]
+    H --> I{Nama Berubah?}
+    I -->|Ya| J[Sync: Update tugas_pengganti & pengajuan]
+    I -->|Tidak| K{Wali Berubah?}
+    K -->|Ya| L[Cabut Wali Lama, Assign Baru]
+    D -->|Hapus| M{Ada Siswa Aktif?}
+    M -->|Ya| N[Tolak Hapus + Error]
+    M -->|Tidak| O[Hapus Kelas]

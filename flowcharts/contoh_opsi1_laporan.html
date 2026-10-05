@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Opsi 1 - Bab Pembahasan</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        h3, h4 {
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        .detail-table td:first-child {
+            width: 25%;
+            font-weight: bold;
+        }
+        .table-title {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        p {
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>3.x.x Skenario Use Case Sistem</h3>
+    <p>
+        Berdasarkan rancangan <i>Use Case Diagram</i> yang telah diuraikan, interaksi aktor dengan sistem dibagi menjadi dua kategori, yaitu <b>Use Case Pendukung</b> (bersifat standar administratif) dan <b>Use Case Utama</b> (bersifat inti dari logika bisnis sistem presensi).
+    </p>
+
+    <h4>A. Deskripsi Use Case Pendukung (Ringkasan)</h4>
+    <p>
+        Use case pendukung meliputi aktivitas dasar yang dilakukan oleh hampir seluruh aktor (Admin, Wali Kelas, Guru Mapel, Guru Pengganti, dan Kepala Sekolah) dalam menggunakan sistem. Rangkuman aktivitas tersebut dapat dilihat pada Tabel 1 di bawah ini:
+    </p>
+
+    <div class="table-title">Tabel 1. Rangkuman Use Case Pendukung (Standar Sistem)</div>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">No</th>
+                <th style="width: 25%;">Nama Use Case</th>
+                <th style="width: 20%;">Aktor Terlibat</th>
+                <th style="width: 50%;">Deskripsi Singkat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center;">1</td>
+                <td>Melakukan Login</td>
+                <td>Semua Aktor</td>
+                <td>Proses autentikasi dengan memasukkan username dan password untuk memvalidasi hak akses masuk ke dalam sistem.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">2</td>
+                <td>Melihat Dashboard</td>
+                <td>Semua Aktor</td>
+                <td>Menampilkan halaman utama yang berisi ringkasan data dan notifikasi sesuai dengan otorisasi masing-masing peran.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">3</td>
+                <td>Mengelola Profil</td>
+                <td>Semua Aktor</td>
+                <td>Fasilitas bagi pengguna untuk memperbarui data pribadi dan mengubah kata sandi akun mereka demi keamanan.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">4</td>
+                <td>Melihat Riwayat Presensi</td>
+                <td>Wali Kelas, Guru Pengganti</td>
+                <td>Fasilitas untuk memantau log atau catatan riwayat kehadiran yang sudah pernah diinput sebelumnya.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">5</td>
+                <td>Melihat Data Siswa Kelas</td>
+                <td>Wali Kelas, Guru Mapel, Guru Pengganti</td>
+                <td>Melihat daftar identitas detail dari siswa-siswa yang berada di bawah pengawasan atau kelas pengajaran aktor tersebut.</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">6</td>
+                <td>Melakukan Logout</td>
+                <td>Semua Aktor</td>
+                <td>Proses mengakhiri sesi aktif secara aman dan keluar dari aplikasi.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <h4>B. Deskripsi Use Case Utama (Detail)</h4>
+    <p>
+        Use case utama merupakan interaksi spesifik yang mewakili fitur inti dari Sistem Informasi Presensi Siswa. Berikut adalah penjabaran detail arus kerja dari proses-proses utama tersebut:
+    </p>
+
+    <!-- CONTOH 1 TABEL INTI -->
+    <div class="table-title">Tabel 2. Deskripsi Use Case Input Presensi Harian (Wali Kelas)</div>
+    <table class="detail-table">
+        <tr>
+            <td>Nama use case</td>
+            <td>Input Presensi Harian</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Wali Kelas dapat mencatat daftar kehadiran siswa di kelasnya setiap hari</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Merekam data presensi (kehadiran, sakit, izin, alpa) ke dalam sistem</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Wali Kelas sudah berada di menu Presensi dan memilih jadwal</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Gagal menyimpan data presensi ke dalam database</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Wali kelas membuka form/menu Input Presensi Harian<br>
+                2. Menentukan metode input (melalui Scan atau Manual)<br>
+                3. Menyelesaikan proses pencatatan<br>
+                4. Sistem menyimpan data kehadiran ke database
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Data presensi harian siswa berhasil direkam dan berstatus tersimpan</td>
+        </tr>
+    </table>
+
+    <!-- CONTOH 2 TABEL INTI -->
+    <div class="table-title">Tabel 3. Deskripsi Use Case Presensi via QR Code (Scan)</div>
+    <table class="detail-table">
+        <tr>
+            <td>Nama use case</td>
+            <td>Presensi via QR Code (Scan)</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Guru/Wali Kelas dapat memindai QR Code siswa menggunakan kamera untuk presensi</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Mempercepat proses pencatatan presensi menggunakan pemindai QR secara otomatis</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Kamera perangkat aktif dan berada di form presensi</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>QR Code rusak/tidak terbaca, kamera error, atau QR Code tidak valid</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Wali Kelas / Guru Mapel / Guru Pengganti</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Guru memilih opsi "Scan QR"<br>
+                2. Mengarahkan kamera pemindai ke kartu QR Code milik siswa<br>
+                3. Sistem mendeteksi dan memvalidasi identitas siswa dari QR<br>
+                4. Sistem mencatat siswa tersebut hadir
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Kehadiran siswa tercatat otomatis berdasarkan scan QR Code</td>
+        </tr>
+    </table>
+
+    <!-- CONTOH 3 TABEL INTI -->
+    <div class="table-title">Tabel 4. Deskripsi Use Case Approval Laporan Rekap (Kepala Sekolah)</div>
+    <table class="detail-table">
+        <tr>
+            <td>Nama use case</td>
+            <td>Approval Laporan Rekap</td>
+        </tr>
+        <tr>
+            <td>Kebutuhan</td>
+            <td>Kepala Sekolah memeriksa dan menyetujui laporan presensi bulanan</td>
+        </tr>
+        <tr>
+            <td>Tujuan</td>
+            <td>Sebagai legalisasi bahwa laporan absensi bulan tersebut sah dan valid</td>
+        </tr>
+        <tr>
+            <td>Prekondisi</td>
+            <td>Ada laporan berstatus "Menunggu Persetujuan" dari wali kelas</td>
+        </tr>
+        <tr>
+            <td>Kondisi Gagal</td>
+            <td>Gagal memuat dokumen laporan atau gagal mengubah status di database</td>
+        </tr>
+        <tr>
+            <td>Aktor Utama</td>
+            <td>Kepala Sekolah</td>
+        </tr>
+        <tr>
+            <td>Arus Utama</td>
+            <td>
+                1. Kepala Sekolah membuka notifikasi pengajuan Approval Laporan<br>
+                2. Memeriksa ringkasan dan detail laporan absensi bulanan tersebut<br>
+                3. Memutuskan untuk menyetujui (Approve) atau menolak (Reject) laporan
+            </td>
+        </tr>
+        <tr>
+            <td>Post Kondisi</td>
+            <td>Laporan rekapitulasi berpindah status dari proses peninjauan</td>
+        </tr>
+    </table>
+
+    <p style="text-align: center; color: gray; font-style: italic;">
+        (Catatan: Lanjutkan menyalin tabel-tabel fitur inti lainnya ke sini, seperti Mengajukan Tugas Pengganti, Memproses Kenaikan Kelas, dsb. Tabel-tabel tersebut bisa Anda ambil dari file HTML yang sudah saya buatkan sebelumnya).
+    </p>
+
+</body>
+</html>

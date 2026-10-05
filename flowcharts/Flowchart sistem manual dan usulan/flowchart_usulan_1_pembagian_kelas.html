@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Flowchart Sistem Usulan - Pembagian Kelas</title>
+<style>
+  body { font-family: 'Times New Roman', Times, serif; background: #fff; padding: 20px; }
+  .caption { text-align: center; font-size: 14px; margin-top: 15px; font-weight: bold; }
+  svg { display: block; margin: 0 auto; background: #fff; }
+  .box { fill: #fff; stroke: #000; stroke-width: 1.5; }
+  .box-bold { fill: #fff; stroke: #000; stroke-width: 1.8; }
+  .lbl { font-family: 'Times New Roman', Times, serif; text-anchor: middle; dominant-baseline: middle; fill: #000; }
+  .lbl-bold { font-weight: bold; }
+  .edge { fill: none; stroke: #000; stroke-width: 1.4; marker-end: url(#arrow); }
+</style>
+</head>
+<body>
+ 
+<svg viewBox="0 0 640 500" width="640" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+ 
+  <ellipse cx="320" cy="40" rx="90" ry="20" class="box"/>
+  <text x="320" y="42" class="lbl" font-size="12">Mulai Persiapan</text>
+  <path d="M320,60 L320,96" class="edge"/>
+ 
+  <rect x="170" y="100" width="300" height="35" rx="4" class="box"/>
+  <text x="320" y="118" class="lbl" font-size="11">Admin Login ke Dashboard Sistem Berbasis Web</text>
+  <path d="M320,135 L320,176" class="edge"/>
+ 
+  <rect x="140" y="180" width="360" height="35" rx="4" class="box"/>
+  <text x="320" y="198" class="lbl" font-size="11">Admin Input/Import Data Master (Tahun Ajaran, Guru, Siswa)</text>
+  <path d="M320,215 L320,256" class="edge"/>
+ 
+  <rect x="140" y="260" width="360" height="35" rx="4" class="box"/>
+  <text x="320" y="278" class="lbl" font-size="11">Admin Menetapkan Data Kelas, Siswa &amp; Wali Kelas di Sistem</text>
+  <path d="M320,295 L320,336" class="edge"/>
+ 
+  <!-- Database Symbol (Cylinder-like) -->
+  <path d="M140,340 C140,330 500,330 500,340 L500,375 C500,385 140,385 140,375 Z" class="box"/>
+  <path d="M140,340 C140,350 500,350 500,340" fill="none" stroke="#000" stroke-width="1.5"/>
+  <text x="320" y="362" class="lbl" font-size="11">Sistem Menyimpan Relasi Kelas ke Database MySQL</text>
+  <path d="M320,380 L320,416" class="edge"/>
+ 
+  <ellipse cx="320" cy="436" rx="90" ry="20" class="box"/>
+  <text x="320" y="438" class="lbl" font-size="12">Selesai</text>
+</svg>
+ 
+<p class="caption">Flowchart 1: Sistem Usulan (Terkomputerisasi) - Pembagian Kelas</p>
+ 
+</body>
+</html>

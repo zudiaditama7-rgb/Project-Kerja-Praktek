@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant WK as Wali Kelas
+    participant SYS as Sistem
+    participant KS as Kepala Sekolah
+
+    WK->>SYS: Ajukan rekap bulanan/semester
+    SYS->>SYS: Cek duplikat periode
+    alt Duplikat
+        SYS->>WK: Error duplikat
+    else Baru
+        SYS->>SYS: Simpan status pending
+        KS->>SYS: Buka menu approval
+        alt Disetujui
+            KS->>SYS: Approve + acc_by + acc_date
+            WK->>SYS: Download PDF Rekap
+            SYS->>WK: File PDF
+        else Ditolak
+            KS->>SYS: Tolak + keterangan
+        end
+    end

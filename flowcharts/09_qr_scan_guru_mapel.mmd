@@ -1,0 +1,15 @@
+flowchart TD
+    A([Guru Mapel]) --> B[Pilih Kelas]
+    B --> C[Isi Nama Lengkap + Mata Pelajaran]
+    C --> D{Nama dan Mapel Terisi?}
+    D -->|Tidak| E[Redirect + Error]
+    D -->|Ya| F[Buka Scanner QR]
+    F --> G[Scan QR Siswa]
+    G --> H[POST: qr_data + nama_mapel + nama_pengganti]
+    H --> I{Siswa Ditemukan?}
+    I -->|Tidak| J[404 Error]
+    I -->|Ya| K{Siswa di Kelas Ini?}
+    K -->|Tidak| L[403 Error]
+    K -->|Ya| M{Sudah Presensi Mapel?}
+    M -->|Ya| N[Sudah Tercatat]
+    M -->|Belum| O[Simpan: hadir + mapel]

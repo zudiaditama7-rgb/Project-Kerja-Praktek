@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowchart Sistem Presensi — Modul Wali Kelas</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafb; color: #1a1a2e; }
+        .header {
+            background: linear-gradient(135deg, #065F46 0%, #047857 50%, #059669 100%);
+            color: white; padding: 40px 60px; text-align: center;
+        }
+        .header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+        .header p { font-size: 1rem; opacity: 0.9; }
+        .legend {
+            max-width: 900px; margin: 30px auto; background: white; border-radius: 12px;
+            padding: 24px 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .legend h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #065F46; }
+        .legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+        .legend-item .shape {
+            width: 48px; height: 28px; display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 600; color: white; flex-shrink: 0;
+        }
+        .shape.terminator { background: #6d28d9; border-radius: 14px; }
+        .shape.process { background: #2563eb; border-radius: 4px; }
+        .shape.decision { background: #d97706; transform: rotate(45deg); width: 24px; height: 24px; border-radius: 3px; }
+        .shape.io { background: #0891b2; transform: skewX(-12deg); border-radius: 3px; }
+        .shape.database { background: #059669; border-radius: 4px 4px 50% 50%; }
+        .section {
+            max-width: 1100px; margin: 30px auto; background: white; border-radius: 16px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.06); overflow: hidden;
+        }
+        .section-header {
+            background: linear-gradient(90deg, #065F46, #047857);
+            color: white; padding: 16px 28px; display: flex; align-items: center; gap: 12px;
+        }
+        .section-header .num {
+            background: rgba(255,255,255,0.2); border-radius: 50%; width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem;
+        }
+        .section-header h2 { font-size: 1.1rem; font-weight: 700; }
+        .section-body { padding: 28px; }
+        .section-body p { font-size: 0.88rem; color: #555; margin-bottom: 16px; line-height: 1.6; }
+        .mermaid { display: flex; justify-content: center; overflow-x: auto; }
+        .mermaid svg { max-width: 100%; }
+        .print-btn {
+            position: fixed; bottom: 24px; right: 24px; background: #065F46; color: white;
+            border: none; padding: 14px 24px; border-radius: 12px; cursor: pointer;
+            font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 20px rgba(6,95,70,0.4);
+            z-index: 999;
+        }
+        .print-btn:hover { background: #047857; }
+        @media print {
+            .print-btn { display: none; }
+            .section { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📋 Flowchart Modul Wali Kelas</h1>
+    <p>Sistem Informasi Presensi Siswa — Dokumentasi Alur Proses Lengkap</p>
+</div>
+
+<div class="legend">
+    <h3>Keterangan Simbol Flowchart</h3>
+    <div class="legend-grid">
+        <div class="legend-item"><div class="shape terminator"></div><span><b>Terminator</b> — Mulai / Selesai</span></div>
+        <div class="legend-item"><div class="shape process"></div><span><b>Process</b> — Proses / Aksi</span></div>
+        <div class="legend-item"><div class="shape decision"></div><span><b>Decision</b> — Keputusan / Kondisi</span></div>
+        <div class="legend-item"><div class="shape io"></div><span><b>Input/Output</b> — Data masuk/keluar</span></div>
+        <div class="legend-item"><div class="shape database"></div><span><b>Database</b> — Simpan ke DB</span></div>
+    </div>
+</div>
+
+<!-- 1. LOGIN & AKSES DASHBOARD -->
+<div class="section">
+    <div class="section-header"><div class="num">1</div><h2>Login & Akses Dashboard Wali Kelas</h2></div>
+    <div class="section-body">
+        <p>Wali Kelas login ke sistem, sistem memvalidasi kredensial dan mengecek role. Jika valid, diarahkan ke dashboard yang menampilkan statistik presensi hari ini (Hadir, Izin, Sakit, Alpha, Belum Presensi).</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Mulai]) --> B[/📥 Input Username & Password/]
+    B --> C{🔷 Validasi Kredensial}
+    C -->|Gagal| D[⚠️ Tampilkan Pesan Error]
+    D --> B
+    C -->|Berhasil| E{🔷 Cek Role User}
+    E -->|Bukan Wali Kelas| F[🔀 Redirect ke Dashboard Lain]
+    E -->|Wali Kelas| G[📊 Ambil Tahun Ajaran Aktif]
+    G --> H[📊 Hitung Siswa Aktif via Rombel & Kelas]
+    H --> I[📊 Query Presensi Hari Ini]
+    I --> J[📊 Hitung Statistik: Hadir, Izin, Sakit, Alpha, Belum]
+    J --> K[/📤 Tampilkan Dashboard + Statistik/]
+    K --> L([🟣 Selesai])
+        </pre>
+    </div>
+</div>
+
+<!-- 2. PRESENSI MANUAL -->
+<div class="section">
+    <div class="section-header"><div class="num">2</div><h2>Input Presensi Manual Harian</h2></div>
+    <div class="section-body">
+        <p>Wali Kelas membuka halaman presensi, sistem menampilkan daftar siswa aktif di kelasnya. Jika sudah dipresensi oleh Guru Pengganti/Guru Mapel, form terkunci. Jika belum, Wali Kelas mengisi status setiap siswa, upload dokumen jika Izin/Sakit, lalu simpan.</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Mulai]) --> B[📊 Ambil Periode Semester Aktif]
+    B --> C[📊 Ambil Daftar Siswa Aktif di Kelas Wali]
+    C --> D[📊 Cek Presensi Hari Ini untuk Semua Siswa]
+    D --> E{🔷 Sudah Ada Presensi?}
+    E -->|Ya, oleh Guru Pengganti| F[/📤 Tampil Info Guru Pengganti - TERKUNCI/]
+    F --> Z([🟣 Selesai])
+    E -->|Ya, oleh Guru Mapel| G[/📤 Tampil Info Guru Mapel + Mata Pelajaran - TERKUNCI/]
+    G --> Z
+    E -->|Belum Ada| H[/📤 Tampilkan Form Presensi/]
+    H --> I[/📥 Set Status Tiap Siswa: Hadir / Izin / Sakit / Alpha/]
+    I --> J{🔷 Status = Izin atau Sakit?}
+    J -->|Ya| K[/📥 Upload Dokumen Pendukung - opsional/]
+    K --> L
+    J -->|Tidak| L{🔷 Semua Siswa Sudah Terisi?}
+    L -->|Tidak| M[⚠️ Error: Status Semua Siswa Harus Diisi]
+    M --> I
+    L -->|Ya| N[📊 Loop Setiap Siswa]
+    N --> O{🔷 Ada File Dokumen?}
+    O -->|Ya & Izin/Sakit| P[💾 Simpan File ke Storage]
+    P --> Q
+    O -->|Tidak atau Hadir/Alpha| Q[💾 updateOrCreate Presensi ke Database]
+    Q --> R[/📤 Tampilkan Pesan Sukses/]
+    R --> Z
+        </pre>
+    </div>
+</div>
+
+<!-- 3. PRESENSI QR CODE -->
+<div class="section">
+    <div class="section-header"><div class="num">3</div><h2>Presensi via Scan QR Code</h2></div>
+    <div class="section-body">
+        <p>Wali Kelas membuka halaman scan QR, kamera diinisialisasi menggunakan Html5QrcodeScanner. Setiap QR siswa yang di-scan dikirim ke server untuk divalidasi dan disimpan otomatis sebagai "Hadir".</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Mulai]) --> B[📊 Buka Halaman Scan QR]
+    B --> C[📊 Inisialisasi Kamera + Html5QrcodeScanner]
+    C --> D[/📥 Scan QR Code Kartu Siswa/]
+    D --> E[📊 Kirim POST Request: qr_data]
+    E --> F{🔷 Cari Siswa by NIS}
+    F -->|Tidak Ditemukan| G{🔷 Cari by ID Siswa}
+    G -->|Tidak Ada| H[/📤 Response Error 404: Siswa Tidak Ditemukan/]
+    H --> D
+    F -->|Ditemukan| I{🔷 Cek Permission: Siswa di Kelas Wali?}
+    G -->|Ditemukan| I
+    I -->|Beda Kelas| J[/📤 Response Error 403: Bukan Kelas Anda/]
+    J --> D
+    I -->|Kelas Sesuai| K{🔷 Sudah Absen Hari Ini?}
+    K -->|Ya| L[/📤 Response: Siswa Sudah Presensi/]
+    L --> D
+    K -->|Belum| M[💾 Simpan Presensi: Status Hadir]
+    M --> N[/📤 Response Sukses + Nama Siswa/]
+    N --> O{🔷 Lanjut Scan?}
+    O -->|Ya| D
+    O -->|Tidak| P([🟣 Selesai])
+        </pre>
+    </div>
+</div>
+
+<!-- 4. RIWAYAT PRESENSI -->
+<div class="section">
+    <div class="section-header"><div class="num">4</div><h2>Lihat Riwayat Presensi</h2></div>
+    <div class="section-body">
+        <p>Wali Kelas dapat melihat riwayat presensi siswa di kelasnya dengan filter berdasarkan tanggal, rentang tanggal, dan status kehadiran. Data ditampilkan dengan pagination.</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Mulai]) --> B[📊 Buka Menu Riwayat Presensi]
+    B --> C[/📤 Tampilkan Halaman dengan Filter Kosong/]
+    C --> D{🔷 User Mengisi Filter?}
+    D -->|Tidak| E[/📤 Tampilkan Tabel Kosong - Belum Ada Pencarian/]
+    E --> Z([🟣 Selesai])
+    D -->|Ya| F[/📥 Input Filter: Tanggal atau Rentang Tanggal/]
+    F --> G[/📥 Input Filter Status: Hadir, Izin, Sakit, Alpha - opsional/]
+    G --> H[📊 Query Presensi + Join Siswa via Rombel & Kelas]
+    H --> I{🔷 Ada Filter Tanggal Tunggal?}
+    I -->|Ya| J[📊 whereDate tanggal]
+    I -->|Tidak| K{🔷 Ada Filter Rentang?}
+    K -->|Ya| L[📊 whereBetween tanggal_mulai - tanggal_selesai]
+    K -->|Tidak| M[📊 Tanpa Filter Tanggal]
+    J --> N
+    L --> N
+    M --> N
+    N{🔷 Ada Filter Status?} -->|Ya| O[📊 where status = filter]
+    N -->|Tidak| P[📊 Ambil Semua Status]
+    O --> Q[📊 Paginate 20 per Halaman]
+    P --> Q
+    Q --> R[/📤 Tampilkan Tabel Riwayat + Pagination/]
+    R --> Z
+        </pre>
+    </div>
+</div>
+
+<!-- 5. PENGAJUAN GURU PENGGANTI -->
+<div class="section">
+    <div class="section-header"><div class="num">5</div><h2>Pengajuan Guru Pengganti</h2></div>
+    <div class="section-body">
+        <p>Ketika Wali Kelas berhalangan hadir, ia dapat mengajukan permintaan Guru Pengganti ke Admin. Pengajuan memerlukan tanggal (minimal hari ini), alasan, dan dokumen pendukung wajib. Admin kemudian memproses pengajuan.</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Mulai]) --> B[📊 Buka Menu Tugas Pengganti]
+    B --> C[/📤 Tampilkan Daftar Pengajuan Sebelumnya/]
+    C --> D[/📥 Klik Buat Pengajuan Baru/]
+    D --> E[/📥 Input Tanggal Penggantian/]
+    E --> F[/📥 Input Alasan Ketidakhadiran/]
+    F --> G[/📥 Upload Dokumen Pendukung - WAJIB/]
+    G --> H{🔷 Validasi Input}
+    H -->|Tanggal di Masa Lalu| I[⚠️ Error: Tanggal Harus >= Hari Ini]
+    I --> E
+    H -->|Dokumen Tidak Ada| J[⚠️ Error: Dokumen Wajib Diupload]
+    J --> G
+    H -->|Valid| K[💾 Simpan File Dokumen ke Storage]
+    K --> L[💾 Simpan Pengajuan ke DB: Status = Pending]
+    L --> M[/📤 Tampilkan Pesan Sukses/]
+    M --> N[📊 Pengajuan Masuk ke Daftar Admin]
+    N --> O{🔷 Keputusan Admin}
+    O -->|Disetujui| P[📊 Admin Assign Guru Pengganti + Status Disetujui]
+    P --> Q[📊 Guru Pengganti Melihat Tugas di Dashboard]
+    O -->|Ditolak| R[📊 Admin Input Keterangan Penolakan]
+    R --> S[/📤 Status Ditolak + Alasan Tampil di Daftar Wali/]
+    Q --> T([🟣 Selesai])
+    S --> T
+        </pre>
+    </div>
+</div>
+
+<!-- 6. PENGAJUAN REKAP -->
+<div class="section">
+    <div class="section-header"><div class="num">6</div><h2>Pengajuan Rekap Presensi (Bulanan/Semester)</h2></div>
+    <div class="section-body">
+        <p>Wali Kelas mengajukan rekap presensi ke Kepala Sekolah untuk periode bulanan atau semester. Setelah disetujui, Wali Kelas dapat mengunduh rekap dalam format PDF yang berisi statistik lengkap per siswa.</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Mulai]) --> B[📊 Buka Menu Pengajuan Rekap]
+    B --> C[/📤 Tampilkan Daftar Pengajuan Sebelumnya/]
+    C --> D[/📥 Pilih Tipe: Bulanan atau Semester/]
+    D --> E[/📥 Pilih Bulan dan Tahun/]
+    E --> F{🔷 Cek Duplikat Pengajuan}
+    F -->|Sudah Ada| G[⚠️ Error: Pengajuan Periode Ini Sudah Ada]
+    G --> D
+    F -->|Belum Ada| H[💾 Simpan Pengajuan: Status = Pending]
+    H --> I[/📤 Tampilkan Pesan Sukses/]
+    I --> J[📊 Pengajuan Masuk ke Kepala Sekolah]
+    J --> K{🔷 Keputusan Kepala Sekolah}
+    K -->|Ditolak| L[📊 Keterangan Penolakan]
+    L --> M[/📤 Status Ditolak Tampil di Daftar/]
+    K -->|Disetujui| N[📊 Set acc_by + acc_date]
+    N --> O{🔷 Wali Kelas Klik Download PDF?}
+    O -->|Ya| P[📊 Ambil Data Siswa via Rombel + Kelas]
+    P --> Q[📊 Query Presensi Sesuai Periode]
+    Q --> R[📊 Hitung Statistik per Siswa: H, I, S, A]
+    R --> S[📊 Generate PDF via DomPDF]
+    S --> T[/📤 Download File PDF Rekap/]
+    T --> U([🟣 Selesai])
+    M --> U
+    O -->|Tidak| U
+        </pre>
+    </div>
+</div>
+
+<!-- 7. DATA SISWA -->
+<div class="section">
+    <div class="section-header"><div class="num">7</div><h2>Lihat Data Siswa & Kartu Siswa QR</h2></div>
+    <div class="section-body">
+        <p>Wali Kelas dapat melihat daftar siswa aktif di kelasnya, mencari berdasarkan nama, dan mencetak Kartu Siswa yang berisi QR Code untuk scan presensi.</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Mulai]) --> B[📊 Buka Menu Data Siswa]
+    B --> C[📊 Ambil Periode Semester Aktif]
+    C --> D[📊 Query Siswa via Rombel dimana Kelas = Kelas Wali]
+    D --> E{🔷 Ada Keyword Pencarian?}
+    E -->|Ya| F[📊 Filter: nama_siswa LIKE keyword]
+    E -->|Tidak| G[📊 Ambil Semua Siswa]
+    F --> H[📊 Paginate 15 per Halaman]
+    G --> H
+    H --> I[/📤 Tampilkan Tabel Daftar Siswa/]
+    I --> J{🔷 Aksi per Siswa}
+    J -->|Lihat Kartu| K{🔷 Cek: Siswa di Kelas Wali?}
+    K -->|Tidak| L[⚠️ Error 403: Akses Ditolak]
+    K -->|Ya| M[/📤 Tampilkan Kartu Siswa + QR Code NIS/]
+    M --> N{🔷 Cetak Kartu?}
+    N -->|Ya| O[🖨️ Print Kartu Siswa]
+    N -->|Tidak| P([🟣 Selesai])
+    J -->|Kembali| P
+    L --> P
+    O --> P
+        </pre>
+    </div>
+</div>
+
+<!-- 8. OVERVIEW -->
+<div class="section">
+    <div class="section-header"><div class="num">8</div><h2>Gambaran Umum Seluruh Fitur Wali Kelas</h2></div>
+    <div class="section-body">
+        <p>Diagram ringkasan yang menunjukkan seluruh fitur yang dapat diakses oleh role Wali Kelas beserta alur antar modul.</p>
+        <pre class="mermaid">
+flowchart TD
+    A([🟣 Login sebagai Wali Kelas]) --> B[📊 Dashboard]
+    B --> C{🔷 Pilih Menu}
+    C -->|Presensi| D{🔷 Pilih Metode}
+    D -->|Manual| E[📋 Form Input Status per Siswa]
+    D -->|Scan QR| F[📷 Scan QR Code Kartu Siswa]
+    E --> G[💾 Simpan ke Database]
+    F --> G
+    C -->|Riwayat| H[📊 Filter Tanggal & Status]
+    H --> I[/📤 Tabel Riwayat + Pagination/]
+    C -->|Pengajuan Rekap| J[/📥 Pilih Tipe & Periode/]
+    J --> K[💾 Kirim ke Kepala Sekolah]
+    K --> L{🔷 Disetujui?}
+    L -->|Ya| M[📄 Download PDF]
+    L -->|Tidak| N[❌ Ditolak]
+    C -->|Guru Pengganti| O[/📥 Input Tanggal + Alasan + Dokumen/]
+    O --> P[💾 Kirim ke Admin]
+    P --> Q{🔷 Disetujui?}
+    Q -->|Ya| R[👨‍🏫 Guru Pengganti Ditugaskan]
+    Q -->|Tidak| S[❌ Ditolak]
+    C -->|Data Siswa| T[📊 Lihat Daftar Siswa]
+    T --> U[🪪 Cetak Kartu + QR Code]
+    C -->|Profil| V[📊 Edit Profil + Avatar]
+        </pre>
+    </div>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#dbeafe',
+            primaryBorderColor: '#2563eb',
+            primaryTextColor: '#1e3a5f',
+            secondaryColor: '#fef3c7',
+            tertiaryColor: '#f3e8ff',
+            lineColor: '#6b7280',
+            fontSize: '14px'
+        },
+        flowchart: {
+            htmlLabels: true,
+            curve: 'basis',
+            padding: 16,
+            nodeSpacing: 30,
+            rankSpacing: 40,
+            useMaxWidth: true
+        }
+    });
+</script>
+
+</body>
+</html>

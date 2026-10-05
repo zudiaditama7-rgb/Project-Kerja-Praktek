@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Halaman Utama PPDB</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Format laporan akademik */
+            background-color: #fff;
+            color: #000;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .document-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Layout Wireframe */
+        .wireframe-wrapper {
+            border: 2px solid #000;
+            padding: 0;
+            margin-bottom: 10px;
+            background-color: #fcfcfc;
+            /* Simulasi window browser */
+            border-radius: 4px 4px 0 0;
+        }
+        .browser-header {
+            border-bottom: 2px solid #000;
+            padding: 5px 10px;
+            display: flex;
+            gap: 5px;
+            background-color: #e0e0e0;
+        }
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        .wireframe-content {
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+        }
+        .logo-text {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            align-items: center;
+        }
+        .btn-wireframe {
+            border: 1px solid #000;
+            background-color: #e0e0e0;
+            padding: 5px 15px;
+            text-align: center;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            gap: 20px;
+        }
+        .hero-text {
+            flex: 1;
+        }
+        .hero-badge {
+            border: 1px solid #000;
+            display: inline-block;
+            padding: 3px 12px;
+            font-size: 10px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+        .hero-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        .hero-subtitle {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .hero-image {
+            flex: 1;
+            border: 1px solid #000;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 250px;
+            border-radius: 10px;
+        }
+
+        /* Schedule Section */
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .section-subtitle {
+            font-size: 12px;
+        }
+        .cards-container {
+            display: flex;
+            gap: 15px;
+        }
+        .card {
+            border: 1px solid #000;
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+            background-color: #fff;
+            box-shadow: 3px 3px 0px #e0e0e0;
+        }
+        .card-icon {
+            width: 35px;
+            height: 35px;
+            border: 1px solid #000;
+            border-radius: 6px;
+            background-color: #eee;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .card-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .card-desc {
+            font-size: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+        .card-date {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .card-footer {
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border: 1px solid #000;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            font-size: 14px;
+        }
+        .faq-icon {
+            font-weight: bold;
+        }
+
+        /* Laporan text styling */
+        h2.report-heading {
+            font-size: 14pt;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .figure-caption {
+            text-align: center;
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .wireframe-description {
+            font-size: 11pt;
+            text-align: justify;
+            margin-bottom: 60px; /* Jarak antar wireframe */
+            padding: 0 10px;
+        }
+        .wireframe-description p {
+            margin-bottom: 5px;
+        }
+        .wireframe-description ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        
+        <h2 class="report-heading">Lampiran: Desain Antarmuka (Wireframe)</h2>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 30px;">
+            Berikut adalah rancangan antarmuka pengguna (User Interface Wireframe) untuk Halaman Utama (Landing Page) Sistem Penerimaan Peserta Didik Baru (PPDB), yang dibagi menjadi tiga bagian representasi layar utama.
+        </p>
+
+        <!-- BAGIAN 1: HERO SECTION -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Navbar -->
+                <div class="navbar">
+                    <div class="logo-area">
+                        <div class="logo-box">Logo<br>Sekolah</div>
+                        <div class="logo-text">SMP Muhammadiyah<br>Kaliwiro</div>
+                    </div>
+                    <div class="nav-links">
+                        <span>BERANDA</span>
+                        <span>PROFIL</span>
+                        <span>KEGIATAN</span>
+                        <span>PRESTASI</span>
+                        <span>INFO PENDAFTARAN</span>
+                        <span>Login</span>
+                        <div class="btn-wireframe">Daftar Sekarang</div>
+                    </div>
+                </div>
+
+                <!-- Hero -->
+                <div class="hero-section">
+                    <div class="hero-text">
+                        <div class="hero-badge">Penerimaan Siswa Baru T.A 2026/2027</div>
+                        <div class="hero-title">
+                            Selamat Datang di<br>
+                            PPDB SMP<br>
+                            Muhammadiyah<br>
+                            Kaliwiro
+                        </div>
+                        <div class="hero-subtitle">
+                            Wujudkan impian putra-putri Anda menjadi generasi Islami<br>
+                            yang cerdas, berprestasi, dan berakhlak mulia.
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        [ Gambar / Foto Area Sekolah ]
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 1. Wireframe Bagian Beranda (Hero Section) PPDB
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Bilah Navigasi (Header):</strong> Berada di bagian teratas layar, berisi logo institusi di sebelah kiri, tautan menuju halaman informasi, tombol <em>Login</em>, dan sebuah tombol Call-to-Action (CTA) berlabel "Daftar Sekarang" yang disorot.</li>
+                <li><strong>Area Utama (Hero):</strong> Memuat judul sapaan utama untuk menyambut pendaftar, informasi tahun ajaran, dan deskripsi singkat terkait nilai-nilai sekolah. Di sebelah kanan, disediakan area untuk menampilkan foto gerbang atau lingkungan sekolah.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 2: JADWAL PENTING SECTION -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Jadwal Section -->
+                <div class="section-header">
+                    <div class="section-title">Jadwal Penting PPDB</div>
+                    <div class="section-subtitle">Catat tanggal-tanggal penting agar tidak terlewatkan proses pendaftaran putra-putri Anda.</div>
+                </div>
+                
+                <div class="cards-container">
+                    <div class="card">
+                        <div class="card-icon">1</div>
+                        <div class="card-title">Gelombang 1</div>
+                        <div class="card-desc">Pendaftaran Awal</div>
+                        <div class="card-date">01 Mei 2026<br><span style="font-size:10px; font-weight:normal;">s.d</span><br>31 Mei 2026</div>
+                        <div class="card-footer">
+                            <span>KUOTA</span>
+                            <span style="font-weight:bold;">100 Siswa</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">2</div>
+                        <div class="card-title">Gelombang 2</div>
+                        <div class="card-desc">Pendaftaran Lanjutan</div>
+                        <div class="card-date">01 Jun 2026<br><span style="font-size:10px; font-weight:normal;">s.d</span><br>30 Jun 2026</div>
+                        <div class="card-footer">
+                            <span>KUOTA</span>
+                            <span style="font-weight:bold;">100 Siswa</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="border-radius:50%;">✓</div>
+                        <div class="card-title">Verifikasi</div>
+                        <div class="card-desc">Cek Berkas & Data</div>
+                        <div class="card-date" style="font-size:13px; font-style:italic;">Oleh Panitia</div>
+                        <div class="card-footer" style="justify-content: flex-start;">
+                            <span>Secara berkala</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="border-radius:50%;">🔔</div>
+                        <div class="card-title">Pengumuman</div>
+                        <div class="card-desc">Hasil Akhir Seleksi</div>
+                        <div class="card-date">05 Juli 2026</div>
+                        <div class="card-footer" style="justify-content: flex-start;">
+                            <span>Melalui Portal Siswa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 2. Wireframe Bagian Jadwal Penting PPDB
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Judul Bagian:</strong> Terdiri dari teks judul "Jadwal Penting PPDB" beserta sub-judul yang berfungsi sebagai petunjuk.</li>
+                <li><strong>Kartu Jadwal (Timeline Cards):</strong> Merupakan 4 buah kotak (kartu) yang memvisualisasikan linimasa pendaftaran. Setiap kartu mencakup penanda nomor/ikon, judul fase (seperti Gelombang 1 atau Verifikasi), deskripsi singkat, rincian rentang waktu, serta informasi terkait seperti kuota atau pelaksana tugas.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 3: FAQ SECTION -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- FAQ Section -->
+                <div class="section-header">
+                    <div class="section-title">Tanya Jawab (FAQ)</div>
+                    <div class="section-subtitle">Punya pertanyaan? Mungkin jawabannya sudah ada di sini.</div>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <span>bagaimana cara mendaftarnya</span>
+                        <span class="faq-icon">v</span>
+                    </div>
+                    <div class="faq-item" style="opacity: 0.5;">
+                        <span>Kapan pengumuman hasil seleksi?</span>
+                        <span class="faq-icon">v</span>
+                    </div>
+                    <div class="faq-item" style="opacity: 0.5;">
+                        <span>Apakah ada biaya pendaftaran?</span>
+                        <span class="faq-icon">v</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 3. Wireframe Bagian Tanya Jawab (FAQ)
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Judul Bagian:</strong> Bagian ini diberi judul "Tanya Jawab (FAQ)" dengan teks pendukung untuk mengajak pengguna mencari jawaban atas pertanyaannya.</li>
+                <li><strong>Daftar Akordion:</strong> Menampilkan beberapa baris pertanyaan umum yang sering ditanyakan. Komponen ini dirancang agar dapat diklik oleh pengguna untuk menampilkan teks jawaban yang disembunyikan di dalamnya (ditandai dengan indikator panah atau huruf v di sebelah kanan).</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

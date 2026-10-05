@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perancangan Basis Data - Sistem Presensi</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.5;
+            margin: 40px auto;
+            max-width: 800px;
+            color: #000;
+            font-size: 12pt;
+        }
+        h3, h4 {
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 12pt;
+        }
+        p {
+            text-align: justify;
+            margin-bottom: 12px;
+        }
+        table {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px 8px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #d9d9d9;
+            font-weight: bold;
+            text-align: center;
+        }
+        .table-title {
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 11pt;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>4.9. Perancangan Basis Data</h3>
+    <p>
+        Perancangan basis data dilakukan untuk mendukung kebutuhan sistem dalam mencatat dan mengelola data absensi harian, manajemen siswa, penugasan guru, serta laporan rekapitulasi pada Sistem Informasi Presensi Sekolah. Basis data dirancang menggunakan MySQL, dan mencakup entitas utama seperti users, siswa, kelas, presensi, dan entitas pendukung lainnya.
+    </p>
+
+    <h4>a. Tabel users</h4>
+    <div class="table-title">Tabel 4.19 Tabel users</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>VARCHAR</td>
+            <td>100</td>
+            <td>Nama lengkap pengguna</td>
+        </tr>
+        <tr>
+            <td>username</td>
+            <td>VARCHAR</td>
+            <td>50</td>
+            <td>Username untuk login sistem</td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td>VARCHAR</td>
+            <td>255</td>
+            <td>Kata sandi pengguna (terenkripsi)</td>
+        </tr>
+        <tr>
+            <td>role</td>
+            <td>ENUM</td>
+            <td>-</td>
+            <td>Hak akses (admin, wali_kelas, guru_mapel, dll)</td>
+        </tr>
+        <tr>
+            <td>avatar</td>
+            <td>VARCHAR</td>
+            <td>255</td>
+            <td>Direktori/URL foto profil pengguna (opsional)</td>
+        </tr>
+    </table>
+
+    <h4>b. Tabel tahun_ajaran</h4>
+    <div class="table-title">Tabel 4.20 Tabel tahun_ajaran</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel users (Admin pembuat)</td>
+        </tr>
+        <tr>
+            <td>nama_tahun</td>
+            <td>VARCHAR</td>
+            <td>50</td>
+            <td>Contoh: "2023/2024 Genap"</td>
+        </tr>
+        <tr>
+            <td>is_active</td>
+            <td>TINYINT</td>
+            <td>1</td>
+            <td>Status aktif (1 = Aktif, 0 = Non-aktif)</td>
+        </tr>
+    </table>
+
+    <h4>c. Tabel kelas</h4>
+    <div class="table-title">Tabel 4.21 Tabel kelas</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>wali_kelas_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel users (Wali Kelas)</td>
+        </tr>
+        <tr>
+            <td>nama_kelas</td>
+            <td>VARCHAR</td>
+            <td>50</td>
+            <td>Nama identitas kelas (contoh: 1-A, 2-B)</td>
+        </tr>
+        <tr>
+            <td>semester</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Angka penunjuk tingkat semester</td>
+        </tr>
+    </table>
+
+    <h4>d. Tabel siswa</h4>
+    <div class="table-title">Tabel 4.22 Tabel siswa</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>nis</td>
+            <td>VARCHAR</td>
+            <td>20</td>
+            <td>Nomor Induk Siswa (Unique)</td>
+        </tr>
+        <tr>
+            <td>nama_siswa</td>
+            <td>VARCHAR</td>
+            <td>100</td>
+            <td>Nama lengkap peserta didik</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>ENUM</td>
+            <td>-</td>
+            <td>Status siswa ('Aktif', 'Lulus', 'Pindah', dll)</td>
+        </tr>
+    </table>
+
+    <h4>e. Tabel rombel (Rombongan Belajar)</h4>
+    <div class="table-title">Tabel 4.23 Tabel rombel</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>siswa_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel siswa</td>
+        </tr>
+        <tr>
+            <td>kelas_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel kelas</td>
+        </tr>
+        <tr>
+            <td>tahun_ajaran_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel tahun_ajaran</td>
+        </tr>
+    </table>
+
+    <h4>f. Tabel presensi</h4>
+    <div class="table-title">Tabel 4.24 Tabel presensi</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>siswa_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel siswa</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel users (Guru pencatat)</td>
+        </tr>
+        <tr>
+            <td>tanggal</td>
+            <td>DATE</td>
+            <td>-</td>
+            <td>Tanggal rekam presensi (YYYY-MM-DD)</td>
+        </tr>
+        <tr>
+            <td>nama_mapel</td>
+            <td>VARCHAR</td>
+            <td>100</td>
+            <td>Nama mata pelajaran yang sedang diajarkan</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>ENUM</td>
+            <td>-</td>
+            <td>Keterangan kehadiran ('Hadir', 'Izin', 'Sakit', 'Alpa')</td>
+        </tr>
+        <tr>
+            <td>document_path</td>
+            <td>VARCHAR</td>
+            <td>255</td>
+            <td>Path file/foto bukti keterangan (jika sakit/izin)</td>
+        </tr>
+    </table>
+
+    <h4>g. Tabel pengajuan_presensi</h4>
+    <div class="table-title">Tabel 4.25 Tabel pengajuan_presensi</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel users (Guru Pengaju)</td>
+        </tr>
+        <tr>
+            <td>tipe</td>
+            <td>VARCHAR</td>
+            <td>50</td>
+            <td>Jenis rekapitulasi pengajuan</td>
+        </tr>
+        <tr>
+            <td>bulan</td>
+            <td>INT</td>
+            <td>2</td>
+            <td>Bulan terjadinya pengajuan (1-12)</td>
+        </tr>
+        <tr>
+            <td>tahun</td>
+            <td>INT</td>
+            <td>4</td>
+            <td>Tahun pengajuan (contoh: 2024)</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>ENUM</td>
+            <td>-</td>
+            <td>Kondisi pengajuan ('Pending', 'Disetujui', 'Ditolak')</td>
+        </tr>
+    </table>
+
+    <h4>h. Tabel tugas_pengganti</h4>
+    <div class="table-title">Tabel 4.26 Tabel tugas_pengganti</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel users (Pemberi Tugas Utama)</td>
+        </tr>
+        <tr>
+            <td>guru_mapel_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel users (Guru Pengganti)</td>
+        </tr>
+        <tr>
+            <td>tanggal</td>
+            <td>DATE</td>
+            <td>-</td>
+            <td>Tanggal tugas dilaksanakan</td>
+        </tr>
+        <tr>
+            <td>waktu_mulai</td>
+            <td>TIME</td>
+            <td>-</td>
+            <td>Jam mulai pelajaran</td>
+        </tr>
+        <tr>
+            <td>waktu_selesai</td>
+            <td>TIME</td>
+            <td>-</td>
+            <td>Jam selesai pelajaran</td>
+        </tr>
+        <tr>
+            <td>alasan</td>
+            <td>TEXT</td>
+            <td>-</td>
+            <td>Deskripsi/alasan ketidakhadiran guru utama</td>
+        </tr>
+        <tr>
+            <td>document_path</td>
+            <td>VARCHAR</td>
+            <td>255</td>
+            <td>Lampiran tugas/surat izin (opsional)</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>ENUM</td>
+            <td>-</td>
+            <td>Status instruksi ('Menunggu', 'Aktif', 'Ditolak', 'Selesai')</td>
+        </tr>
+        <tr>
+            <td>keterangan_ditolak</td>
+            <td>TEXT</td>
+            <td>-</td>
+            <td>Alasan penolakan (jika tugas ditolak)</td>
+        </tr>
+    </table>
+
+    <h4>i. Tabel riwayat_siswa</h4>
+    <div class="table-title">Tabel 4.27 Tabel riwayat_siswa</div>
+    <table>
+        <tr>
+            <th style="width: 25%;">Nama Field</th>
+            <th style="width: 20%;">Tipe Field</th>
+            <th style="width: 15%;">Lebar</th>
+            <th style="width: 40%;">Keterangan</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Primary key, auto increment</td>
+        </tr>
+        <tr>
+            <td>siswa_id</td>
+            <td>INT</td>
+            <td>11</td>
+            <td>Foreign key ke tabel siswa</td>
+        </tr>
+        <tr>
+            <td>tanggal</td>
+            <td>DATE</td>
+            <td>-</td>
+            <td>Tanggal pencatatan riwayat</td>
+        </tr>
+        <tr>
+            <td>keterangan</td>
+            <td>TEXT</td>
+            <td>-</td>
+            <td>Detail narasi (contoh: Naik ke Kelas 2-A)</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>VARCHAR</td>
+            <td>50</td>
+            <td>Label status riwayat saat itu</td>
+        </tr>
+    </table>
+
+</body>
+</html>

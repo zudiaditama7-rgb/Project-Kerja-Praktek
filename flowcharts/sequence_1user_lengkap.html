@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh 1 Sequence Diagram 1 User Lengkap</title>
+    <!-- Load Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default'
+        });
+    </script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        .mermaid { display: flex; justify-content: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2>Contoh Sequence Diagram Gabungan (Semua Aktivitas Guru Pengganti)</h2>
+    <p>Ini adalah contoh jika SEMUA Use Case milik 1 aktor (Guru Pengganti) digabung menjadi 1 Sequence Diagram yang sangat panjang menggunakan blok percabangan (ALT).</p>
+
+    <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor GuruP as Guru Pengganti
+    participant View as Interface (Web)
+    participant Controller as System Controller
+    participant Database as Database
+
+    %% Proses Login
+    GuruP->>View: 1. Input Username & Password
+    View->>Controller: 2. Request Login
+    Controller->>Database: 3. Validasi Akun
+    Database-->>Controller: 4. Data Valid (Role: Guru Pengganti)
+    Controller-->>View: 5. Tampilkan Dashboard Guru Pengganti
+    
+    %% Percabangan Menu Utama
+    alt Memilih Menu Tugas Kelas
+        GuruP->>View: 6. Klik Menu "Tugas Kelas Titipan"
+        View->>Controller: 7. Request Data Penugasan
+        Controller->>Database: 8. Ambil Data Tugas & Modul
+        Database-->>Controller: 9. Kembalikan Data
+        Controller-->>View: 10. Tampilkan Daftar Kelas & Tombol Unduh Modul
+        
+        opt Mengunduh Modul
+            GuruP->>View: 11. Klik "Download Modul"
+            View->>Controller: 12. Request File PDF Modul
+            Controller-->>GuruP: 13. File Diunduh ke Perangkat
+        end
+        
+    else Memilih Menu Presensi QR
+        GuruP->>View: 14. Buka Kamera Scanner QR
+        GuruP->>View: 15. Scan Kartu QR Siswa
+        View->>Controller: 16. Kirim Data NIS
+        Controller->>Database: 17. Validasi & Insert Presensi (Hadir)
+        Database-->>Controller: 18. Sukses Disimpan
+        Controller-->>View: 19. Tampilkan Notifikasi "Presensi Berhasil"
+        
+    else Memilih Menu Presensi Manual
+        GuruP->>View: 20. Klik "Presensi Manual"
+        View->>Controller: 21. Request Daftar Siswa
+        Controller->>Database: 22. Ambil Data Siswa Kelas Tersebut
+        Database-->>Controller: 23. Return Data
+        Controller-->>View: 24. Tampilkan Tabel Form Presensi
+        GuruP->>View: 25. Ubah Status (Sakit/Izin/Alpa)
+        GuruP->>View: 26. Klik Simpan
+        View->>Controller: 27. Update Data Presensi
+        Controller->>Database: 28. Simpan Perubahan
+        Database-->>Controller: 29. Sukses
+        Controller-->>View: 30. Tampilkan Notifikasi Sukses
+        
+    else Memilih Menu Profil
+        GuruP->>View: 31. Buka Pengaturan Profil / Password
+        GuruP->>View: 32. Input Password Baru & Simpan
+        View->>Controller: 33. Request Update Password
+        Controller->>Database: 34. Update Hash Password
+        Database-->>Controller: 35. Sukses
+        Controller-->>View: 36. Notifikasi "Profil Diperbarui"
+    end
+    
+    %% Proses Logout
+    GuruP->>View: 37. Klik Logout
+    View->>Controller: 38. Hapus Session Login
+    Controller-->>View: 39. Redirect ke Halaman Login
+    </div>
+
+</body>
+</html>

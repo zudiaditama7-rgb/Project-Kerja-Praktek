@@ -1,0 +1,15 @@
+flowchart TD
+    A([Wali Kelas / Guru Pengganti]) --> B[Buka Halaman Scan QR]
+    B --> C[Inisialisasi Kamera + Html5QrcodeScanner]
+    C --> D[Scan QR Code Siswa]
+    D --> E[Kirim POST: qr_data]
+    E --> F{Cari Siswa by NIS}
+    F -->|Tidak Ditemukan| G[Cari by ID]
+    G -->|Tidak Ada| H[Response 404]
+    F -->|Ditemukan| I{Cek Permission}
+    G -->|Ditemukan| I
+    I -->|Wali + Beda Kelas| J[Response 403]
+    I -->|OK| K{Sudah Absen?}
+    K -->|Ya| L[Response: Sudah Presensi]
+    K -->|Belum| M[Simpan: status hadir]
+    M --> N[Response Sukses]

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERD Database (Notasi Chen)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js"></script>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif; 
+            background-color: white;
+            color: black;
+            padding: 20px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1 { text-align: center; }
+        .diagram-container { margin-bottom: 60px; }
+        .diagram-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        #graph {
+            display: flex;
+            justify-content: center;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        #graph svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .description {
+            margin-top: 25px;
+            text-align: justify;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-success {
+            background-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        .keterangan-erd {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .keterangan-erd h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .keterangan-erd h4 {
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .keterangan-erd ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .keterangan-erd li {
+            margin-bottom: 10px;
+        }
+        .keterangan-erd code {
+            background-color: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Entity Relationship Diagram (ERD)</h1>
+    <p style="text-align: center; margin-bottom: 40px; font-size: 18px;">
+        Dokumentasi struktur ERD sistem menggunakan Notasi Klasik (Chen).
+    </p>
+
+    <div class="diagram-container">
+        <div class="diagram-title">Gambar 4.13 Entity Relationship Diagram (Notasi Chen)</div>
+        <div id="graph"></div>
+    </div>
+    
+    <div class="action-buttons">
+        <button id="btn-png" class="btn btn-success">Download PNG (Transparan)</button>
+        <button id="btn-jpg" class="btn">Download JPG (Background Putih)</button>
+    </div>
+
+    <div class="keterangan-erd">
+        <h3>Keterangan Entity Relationship Diagram (ERD)</h3>
+        <p>Entity Relationship Diagram (ERD) di atas menggambarkan struktur data konseptual dari sistem presensi yang dibangun, menggunakan Notasi Klasik (Chen). Diagram ini memetakan 9 entitas utama beserta atribut dan hubungan (kardinalitas) antar entitasnya.</p>
+        
+        <h4>1. Definisi Entitas dan Atribut</h4>
+        <p>Berikut adalah penjelasan entitas yang terlibat beserta atribut-atribut yang menyertainya (Atribut yang digarisbawahi merupakan <em>Primary Key</em>):</p>
+        <ul>
+            <li><strong>USER</strong>: Entitas yang mewakili pengguna sistem (seperti Admin, Wali Kelas, Guru Mapel, dll). <em>Atribut</em>: <u>id</u> (PK), name, username, role, avatar.</li>
+            <li><strong>SISWA</strong>: Entitas yang menyimpan data induk siswa. <em>Atribut</em>: <u>id</u> (PK), nis, nama_siswa, status.</li>
+            <li><strong>KELAS</strong>: Entitas yang menyimpan data master kelas yang ada di sekolah. <em>Atribut</em>: <u>id</u> (PK), nama_kelas, semester.</li>
+            <li><strong>PRESENSI</strong>: Entitas transaksi yang menyimpan data kehadiran harian siswa. <em>Atribut</em>: <u>id</u> (PK), tanggal, status, nama_mapel.</li>
+            <li><strong>PENGAJUAN_PRESENSI</strong>: Entitas transaksi untuk menyimpan riwayat permohonan rekapitulasi/pengajuan presensi oleh guru kepada Kepala Sekolah. <em>Atribut</em>: <u>id</u> (PK), tipe, bulan, tahun, status.</li>
+            <li><strong>TUGAS_PENGGANTI</strong>: Entitas yang menyimpan informasi instruksi tugas dari guru yang berhalangan hadir. <em>Atribut</em>: <u>id</u> (PK), tanggal, alasan, status.</li>
+            <li><strong>TAHUN_AJARAN</strong>: Entitas master pengatur siklus waktu kalender akademik. <em>Atribut</em>: <u>id</u> (PK), nama_tahun, is_active.</li>
+            <li><strong>ROMBEL (Rombongan Belajar)</strong>: Entitas relasional historis yang menampung daftar siswa per kelas pada semester atau tahun tertentu.</li>
+            <li><strong>RIWAYAT_SISWA</strong>: Entitas riwayat yang mencatat mutasi, status kenaikan, atau rekam jejak siswa selama bersekolah.</li>
+        </ul>
+
+        <h4>2. Definisi Relasi dan Kardinalitas</h4>
+        <p>Kardinalitas pada diagram ini menggunakan format <code>(Minimum, Maksimum)</code>. Berikut adalah pemetaan hubungan antar entitas di dalam sistem:</p>
+        <ul>
+            <li><strong>USER — (mencatat) — PRESENSI</strong>: Kardinalitas <code>1,1</code> ke <code>0,N</code> (One-to-Many). Satu entitas User (Guru/Admin) dapat mencatat nol hingga banyak data Presensi. Namun, satu data Presensi mutlak harus dicatat oleh tepat satu User.</li>
+            <li><strong>USER — (membina) — KELAS</strong>: Kardinalitas <code>1,1</code> ke <code>1,1</code> (One-to-One). Satu entitas User (sebagai Wali Kelas) membina tepat satu Kelas, dan satu Kelas pasti memiliki tepat satu Wali Kelas.</li>
+            <li><strong>USER — (mengajukan) — PENGAJUAN_PRESENSI</strong>: Kardinalitas <code>1,1</code> ke <code>0,N</code> (One-to-Many). Satu User dapat mengajukan banyak Pengajuan Presensi, sedangkan satu Pengajuan Presensi pasti diajukan oleh tepat satu User.</li>
+            <li><strong>USER — (menugaskan) — TUGAS_PENGGANTI</strong>: Kardinalitas <code>1,1</code> ke <code>0,N</code> (One-to-Many). Satu User (Guru) dapat memberikan banyak Tugas Pengganti, namun satu Tugas Pengganti dibuat oleh tepat satu User.</li>
+            <li><strong>USER — (mengatur) — TAHUN_AJARAN</strong>: Kardinalitas <code>1,1</code> ke <code>1,N</code> (One-to-Many). Satu User (Admin) dapat mengatur banyak data Tahun Ajaran, sementara satu Tahun Ajaran terikat pada pengelolaan satu User utama.</li>
+            <li><strong>PRESENSI — (memiliki) — SISWA</strong>: Kardinalitas <code>0,N</code> ke <code>1,1</code> (Many-to-One). Satu Siswa dapat memiliki banyak catatan Presensi harian. Sebaliknya, setiap satu entri Presensi hanya mengikat pada tepat satu Siswa.</li>
+            <li><strong>KELAS — (berisi) — ROMBEL</strong>: Kardinalitas <code>1,1</code> ke <code>1,N</code> (One-to-Many). Satu Kelas (misal: Kelas 1-A) menampung banyak data detail Rombel (historis/kursi), dan setiap detail Rombel bermuara pada satu entitas Kelas.</li>
+            <li><strong>SISWA — (terdaftar) — ROMBEL</strong>: Kardinalitas <code>1,1</code> ke <code>1,N</code> (One-to-Many). Satu Rombel dapat memuat banyak Siswa, sementara setiap Siswa (pada satu waktu) hanya terdaftar di satu detail Rombel utama.</li>
+            <li><strong>SISWA — (riwayat) — RIWAYAT_SISWA</strong>: Kardinalitas <code>1,1</code> ke <code>1,N</code> (One-to-Many). Satu Siswa dapat memiliki banyak Riwayat Siswa (kenaikan kelas/mutasi), namun satu data riwayat historis mutlak adalah milik satu Siswa.</li>
+        </ul>
+    </div>
+
+    <script>
+        const dotString = `
+graph ERD {
+    graph [rankdir=TB, splines=false, nodesep=0.7, ranksep=0.9];
+    node [fontname="Arial", fontsize=16, margin=0.1, color="black", penwidth=2, style="filled,solid", fillcolor="white"];
+    edge [fontname="Arial", fontsize=14, labelfontsize=14, labelfontname="Arial", color="black", penwidth=2];
+
+    // ENTITIES
+    node [shape=box, width=1.8, height=0.6, fixedsize=true];
+    ENT_USER [label="USER"];
+    SISWA; KELAS; ROMBEL; PRESENSI;
+    PENGAJUAN_PRESENSI [label="PENGAJUAN\nPRESENSI"];
+    TUGAS_PENGGANTI [label="TUGAS\nPENGGANTI"];
+    RIWAYAT_SISWA [label="RIWAYAT\nSISWA"];
+    TAHUN_AJARAN [label="TAHUN\nAJARAN"];
+
+    // RELATIONSHIPS
+    node [shape=diamond, width=1.6, height=0.7, fixedsize=true];
+    mencatat; mengajukan; membina; menugaskan; memiliki; terdaftar; riwayat; berisi; mengatur;
+
+    // ATTRIBUTES
+    node [shape=ellipse, width=1.4, height=0.6, fixedsize=true];
+    
+    U_id [label=<<U>id</U>>]; U_name [label="name"]; U_username [label="username"]; U_role [label="role"]; U_avatar [label="avatar"];
+    ENT_USER -- U_id; ENT_USER -- U_name; ENT_USER -- U_username; ENT_USER -- U_role; ENT_USER -- U_avatar;
+
+    PJ_id [label=<<U>id</U>>]; PJ_tipe [label="tipe"]; PJ_bln [label="bulan"]; PJ_thn [label="tahun"]; PJ_sts [label="status"];
+    PENGAJUAN_PRESENSI -- PJ_id; PENGAJUAN_PRESENSI -- PJ_tipe; PENGAJUAN_PRESENSI -- PJ_bln; PENGAJUAN_PRESENSI -- PJ_thn; PENGAJUAN_PRESENSI -- PJ_sts;
+
+    T_id [label=<<U>id</U>>]; T_tgl [label="tanggal"]; T_alasan [label="alasan"]; T_sts [label="status"];
+    TUGAS_PENGGANTI -- T_id; TUGAS_PENGGANTI -- T_tgl; TUGAS_PENGGANTI -- T_alasan; TUGAS_PENGGANTI -- T_sts;
+
+    TA_id [label=<<U>id</U>>]; TA_nama [label="nama\ntahun"]; TA_aktif [label="is_active"];
+    TAHUN_AJARAN -- TA_id; TAHUN_AJARAN -- TA_nama; TAHUN_AJARAN -- TA_aktif;
+
+    P_id [label=<<U>id</U>>]; P_tgl [label="tanggal"]; P_sts [label="status"]; P_mapel [label="nama\nmapel"];
+    PRESENSI -- P_id; PRESENSI -- P_tgl; PRESENSI -- P_sts; PRESENSI -- P_mapel;
+
+    K_id [label=<<U>id</U>>]; K_nama [label="nama\nkelas"]; K_sem [label="semester"];
+    KELAS -- K_id; KELAS -- K_nama; KELAS -- K_sem;
+
+    S_id [label=<<U>id</U>>]; S_nis [label="nis"]; S_nama [label="nama\nsiswa"]; S_status [label="status"];
+    SISWA -- S_id; SISWA -- S_nis; SISWA -- S_nama; SISWA -- S_status;
+
+    // --- GRID SCAFFOLDING (PORTRAIT 3x3) ---
+    // ROW 1
+    { rank=same; PENGAJUAN_PRESENSI; TUGAS_PENGGANTI; TAHUN_AJARAN; }
+    PENGAJUAN_PRESENSI -- TUGAS_PENGGANTI [style=invis];
+    TUGAS_PENGGANTI -- TAHUN_AJARAN [style=invis];
+
+    // ROW 2 (With relationships)
+    { rank=same; PRESENSI; mencatat; ENT_USER; membina; KELAS; }
+    
+    // ROW 3 (With relationships)
+    { rank=same; RIWAYAT_SISWA; riwayat; SISWA; terdaftar; ROMBEL; }
+
+    // COLUMNS (Invisible vertical alignment)
+    PENGAJUAN_PRESENSI -- PRESENSI [style=invis, weight=100];
+    PRESENSI -- RIWAYAT_SISWA [style=invis, weight=100];
+    
+    TUGAS_PENGGANTI -- ENT_USER [style=invis, weight=100];
+    ENT_USER -- SISWA [style=invis, weight=100];
+    
+    TAHUN_AJARAN -- KELAS [style=invis, weight=100];
+    KELAS -- ROMBEL [style=invis, weight=100];
+
+    // --- VISIBLE CONNECTIONS WITH CARDINALITY ---
+
+    // Horizontal Connections (Row 2)
+    PRESENSI -- mencatat [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>0,N</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+    mencatat -- ENT_USER [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+    
+    ENT_USER -- membina [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+    membina -- KELAS [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+
+    // Horizontal Connections (Row 3)
+    RIWAYAT_SISWA -- riwayat [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,N</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+    riwayat -- SISWA [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+    
+    SISWA -- terdaftar [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+    terdaftar -- ROMBEL [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,N</B></TD></TR></TABLE>>, labeldistance=2.5, weight=100];
+
+    // Vertical Connections
+    TUGAS_PENGGANTI -- menugaskan [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>0,N</B></TD></TR></TABLE>>, labeldistance=2.5, weight=50];
+    menugaskan -- ENT_USER [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5, weight=50];
+    
+    KELAS -- berisi [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5, weight=50];
+    berisi -- ROMBEL [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,N</B></TD></TR></TABLE>>, labeldistance=2.5, weight=50];
+
+    // Diagonal Connections
+    PENGAJUAN_PRESENSI -- mengajukan [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>0,N</B></TD></TR></TABLE>>, labeldistance=2.5];
+    mengajukan -- ENT_USER [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5];
+    
+    TAHUN_AJARAN -- mengatur [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,N</B></TD></TR></TABLE>>, labeldistance=2.5];
+    mengatur -- ENT_USER [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5];
+    
+    PRESENSI -- memiliki [taillabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>0,N</B></TD></TR></TABLE>>, labeldistance=2.5];
+    memiliki -- SISWA [headlabel=<<TABLE BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="white"><TR><TD><B>1,1</B></TD></TR></TABLE>>, labeldistance=2.5];
+}
+        `;
+
+        var viz = new Viz();
+        let renderedSvg = null;
+
+        viz.renderSVGElement(dotString, { engine: 'dot' })
+            .then(function(element) {
+                element.style.width = "100%";
+                element.style.height = "auto";
+                document.getElementById('graph').appendChild(element);
+                renderedSvg = element;
+            })
+            .catch(error => {
+                console.error(error);
+                document.getElementById('graph').innerText = "Gagal memuat diagram: " + error;
+            });
+
+        // Fungsi untuk convert SVG ke Image
+        function downloadGraph(format) {
+            if (!renderedSvg) {
+                alert("Diagram belum selesai dimuat!");
+                return;
+            }
+
+            // Ambil ukuran asli dari atribut viewBox
+            const viewBox = renderedSvg.getAttribute('viewBox').split(' ');
+            const width = parseFloat(viewBox[2]);
+            const height = parseFloat(viewBox[3]);
+
+            const canvas = document.createElement("canvas");
+            // Buat resolusi 2x lipat agar sangat tajam (High-Res) saat dicetak
+            const scale = 2; 
+            canvas.width = width * scale;
+            canvas.height = height * scale;
+            
+            const ctx = canvas.getContext("2d");
+            
+            // Jika JPG, beri background putih (karena JPG tidak support transparan)
+            if (format === 'jpeg') {
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            const svgData = new XMLSerializer().serializeToString(renderedSvg);
+            const DOMURL = window.URL || window.webkitURL || window;
+            const img = new Image();
+            
+            // Konversi SVG string ke base64 agar aman dirender canvas
+            const svgBlob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
+            const url = DOMURL.createObjectURL(svgBlob);
+
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                DOMURL.revokeObjectURL(url);
+                
+                // Mulai proses download
+                const imgURI = canvas.toDataURL("image/" + format, 1.0);
+                const triggerDownload = document.createElement("a");
+                triggerDownload.download = "ERD_Sistem_Presensi." + (format === 'jpeg' ? 'jpg' : 'png');
+                triggerDownload.href = imgURI;
+                document.body.appendChild(triggerDownload);
+                triggerDownload.click();
+                document.body.removeChild(triggerDownload);
+            };
+            img.src = url;
+        }
+
+        document.getElementById('btn-png').addEventListener('click', () => downloadGraph('png'));
+        document.getElementById('btn-jpg').addEventListener('click', () => downloadGraph('jpeg'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Dashboard Bendahara</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #fff;
+            color: #000;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .document-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Layout Wireframe */
+        .wireframe-wrapper {
+            border: 2px solid #000;
+            padding: 0;
+            margin-bottom: 10px;
+            background-color: #fcfcfc;
+            border-radius: 4px 4px 0 0;
+        }
+        .browser-header {
+            border-bottom: 2px solid #000;
+            padding: 5px 10px;
+            display: flex;
+            gap: 5px;
+            background-color: #e0e0e0;
+        }
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+        .wireframe-content {
+            display: flex;
+            min-height: 400px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            border-right: 2px solid #000;
+            padding: 15px;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-item {
+            font-size: 12px;
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .menu-item.active {
+            border: 1px solid #000;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .menu-item.sub-menu {
+            padding-left: 30px;
+            font-size: 11px;
+            color: #555;
+        }
+        .menu-item.sub-menu.active {
+            font-weight: bold;
+            color: #000;
+            border: none;
+            background: transparent;
+            border-left: 2px solid #000;
+            border-radius: 0;
+        }
+        .menu-icon {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+        }
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px dashed #000;
+            padding-top: 15px;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .user-info {
+            font-size: 11px;
+        }
+        .user-name {
+            font-weight: bold;
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #000;
+            background-color: #fff;
+            text-align: center;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .page-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .date-info {
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Banner */
+        .banner {
+            border: 2px solid #000;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #eee;
+            margin-bottom: 20px;
+        }
+        .banner-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .banner-subtitle {
+            font-size: 12px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stats-grid.five-cols {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .stats-grid.three-cols {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .stat-card {
+            border: 1px solid #000;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 2px 2px 0px #ccc;
+            text-align: center;
+        }
+        .stat-card.dark {
+            background-color: #333;
+            color: #fff;
+        }
+        .stat-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+        .chart-card {
+            border: 1px solid #000;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 150px;
+        }
+        .chart-header {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .chart-badge {
+            font-size: 9px;
+            padding: 2px 8px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            font-weight: normal;
+        }
+
+        /* Form / Inputs */
+        .input-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .input-label {
+            font-size: 12px;
+            font-weight: bold;
+            width: 150px;
+        }
+        .input-field {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* List / Table Items */
+        .list-item {
+            border: 1px solid #000;
+            border-radius: 6px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .badge {
+            font-size: 9px;
+            padding: 2px 6px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .btn {
+            border: 1px solid #000;
+            padding: 5px 15px;
+            font-size: 12px;
+            border-radius: 4px;
+            background-color: #eee;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* Dual Column */
+        .dual-columns {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        /* Laporan text styling */
+        h2.report-heading {
+            font-size: 14pt;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .figure-caption {
+            text-align: center;
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .wireframe-description {
+            font-size: 11pt;
+            text-align: justify;
+            margin-bottom: 60px;
+            padding: 0 10px;
+        }
+        .wireframe-description p {
+            margin-bottom: 5px;
+        }
+        .wireframe-description ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        
+        <h2 class="report-heading">Lampiran: Desain Antarmuka (Wireframe) Bendahara</h2>
+        <p style="text-align: justify; font-size: 11pt; margin-bottom: 30px;">
+            Berikut adalah rancangan antarmuka pengguna (User Interface Wireframe) untuk peran Bendahara pada Sistem Penerimaan Peserta Didik Baru (PPDB). Modul ini difokuskan pada pemantauan arus kas, verifikasi bukti pembayaran daftar ulang, dan pengaturan komponen rincian biaya.
+        </p>
+
+        <!-- BAGIAN 1: DASHBOARD KEUANGAN -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-box">Logo</div>
+                        SMP Muhammadiyah<br>Kaliwiro
+                    </div>
+                    <div class="menu-item active">
+                        <div class="menu-icon"></div> Dashboard Keuangan
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon"></div> Verifikasi Pembayaran
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon"></div> Pengaturan (v)
+                    </div>
+                    
+                    <div class="sidebar-bottom">
+                        <div class="user-profile">
+                            <div class="avatar">B</div>
+                            <div class="user-info">
+                                <div class="user-name">Bendahara PPDB</div>
+                                <div>Bendahara</div>
+                            </div>
+                        </div>
+                        <div class="btn-logout">Logout</div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Dashboard Keuangan</div>
+                        <div class="date-info">Minggu, 19 Juli 2026</div>
+                    </div>
+                    
+                    <div class="banner">
+                        <div class="banner-title">Selamat Datang, Bendahara PPDB!</div>
+                        <div class="banner-subtitle">Kelola uang pendaftaran, SPP, seragam, dan verifikasi bukti pembayaran dengan mudah di sini.</div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card" style="border: 2px solid #000;">
+                            <div class="stat-title">Total Dana Masuk</div>
+                            <div class="stat-value">Rp 2.100.000</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Menunggu Verifikasi</div>
+                            <div class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Lunas Daftar Ulang</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Belum Bayar</div>
+                            <div class="stat-value">1</div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                Tren Dana Masuk
+                                <span class="chart-badge">7 HARI TERAKHIR</span>
+                            </div>
+                            <div style="border-left:1px solid #000; border-bottom:1px solid #000; height:80px; margin-top:20px; position:relative;">
+                                <div style="position:absolute; bottom:20px; left:20px; width:150px; border-bottom:2px dashed #666; transform: rotate(-15deg);"></div>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                Metode Pembayaran
+                            </div>
+                            <div style="width:80px; height:80px; border:1px solid #000; border-radius:50%; margin: 0 auto; display:flex; align-items:center; justify-content:center; font-size:10px;">Pie Chart</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 1. Wireframe Dashboard Keuangan Bendahara
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Bilah Samping (Sidebar):</strong> Menu spesifik untuk peran Bendahara meliputi Dashboard Keuangan, Verifikasi Pembayaran, dan submenu Pengaturan.</li>
+                <li><strong>Statistik Keuangan:</strong> Terdapat empat kotak ringkasan utama yang menampilkan Total Dana Masuk (terakumulasi), jumlah siswa yang menunggu verifikasi, jumlah siswa lunas, dan siswa yang belum membayar.</li>
+                <li><strong>Grafik Laporan:</strong> Area untuk grafik garis yang merepresentasikan tren pemasukan dana harian dan grafik lingkaran untuk persentase metode pembayaran (contoh: Transfer vs Tunai).</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 2: VERIFIKASI PEMBAYARAN -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Simplified) -->
+                <div class="sidebar" style="width: 50px;">
+                    <div class="logo-box" style="margin: 0 auto;">L</div>
+                    <div class="sidebar-bottom" style="text-align: center;">...</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Verifikasi Pembayaran Daftar Ulang</div>
+                    </div>
+                    
+                    <div class="stats-grid five-cols">
+                        <div class="stat-card">
+                            <div class="stat-title">Siswa Diterima</div>
+                            <div class="stat-value">6</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Lunas (Aktif)</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Pending Verif</div>
+                            <div class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">Belum D.Ulang</div>
+                            <div class="stat-value">1</div>
+                        </div>
+                        <div class="stat-card dark">
+                            <div class="stat-title" style="font-size:9px;">Uang Terkumpul</div>
+                            <div class="stat-value" style="font-size:14px;">Rp 2.1 Jt</div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:15px;">
+                        <div style="display:flex; gap:10px;">
+                            <input type="text" placeholder="Cari nama siswa..." style="border:1px solid #000; padding:5px 10px; border-radius:4px; font-size:12px; width:200px;">
+                            <select style="border:1px solid #000; padding:5px 10px; border-radius:4px; font-size:12px;">
+                                <option>Semua Status</option>
+                            </select>
+                            <div class="btn">Filter</div>
+                        </div>
+                    </div>
+
+                    <div class="banner" style="display:flex; justify-content:space-between; align-items:center; background-color:#333; color:#fff; padding:15px;">
+                        <div class="banner-title" style="font-size:16px;">Data Pembayaran Daftar Ulang</div>
+                        <div style="display:flex; gap:10px;">
+                            <div class="btn" style="color:#000;">PDF</div>
+                            <div class="btn" style="color:#000;">CSV</div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:10px; margin-bottom:15px; font-size:12px;">
+                        <div style="padding:5px 15px; border:1px solid #000; border-radius:15px; background:#e0e0e0; font-weight:bold;">Semua Pendaftar (6)</div>
+                        <div style="padding:5px 15px; border:1px solid #000; border-radius:15px;">Jalur Reguler (4)</div>
+                        <div style="padding:5px 15px; border:1px solid #000; border-radius:15px;">Jalur Prestasi (2)</div>
+                    </div>
+
+                    <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                        <thead>
+                            <tr style="border-bottom:1px solid #ccc; text-align:left;">
+                                <th style="padding:10px;">No Registrasi</th>
+                                <th style="padding:10px;">Calon Siswa</th>
+                                <th style="padding:10px;">Jalur</th>
+                                <th style="padding:10px;">Status Pembayaran</th>
+                                <th style="padding:10px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid #eee;">
+                                <td style="padding:10px;">PPDB-2026-0006</td>
+                                <td style="padding:10px;"><strong>Nur Hikmah</strong></td>
+                                <td style="padding:10px;">Reguler</td>
+                                <td style="padding:10px;"><span class="badge">Lunas</span></td>
+                                <td style="padding:10px;"><div class="btn">Detail</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 2. Wireframe Halaman Verifikasi Pembayaran
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Kartu Metrik:</strong> Mirip dengan fitur keuangan Admin, Bendahara juga memonitor metrik siswa yang lunas dan yang tertunda (pending verifikasi).</li>
+                <li><strong>Filter & Pencarian:</strong> Form untuk mencari transaksi spesifik dengan filter status kelunasan dan jalur pendaftaran (Reguler, Prestasi, dll).</li>
+                <li><strong>Tabel Verifikasi:</strong> Daftar rinci riwayat pembayaran. Bendahara akan menggunakan tombol aksi (Detail) untuk membuka rincian transaksi dan mengesahkan bukti transfer yang diunggah siswa.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 3: KONFIGURASI KEUANGAN -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Expanded sub-menu) -->
+                <div class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-box">Logo</div>
+                        SMP Muhammadiyah
+                    </div>
+                    <div class="menu-item"><div class="menu-icon"></div> Dashboard Keuangan</div>
+                    <div class="menu-item"><div class="menu-icon"></div> Verifikasi Pembayaran</div>
+                    <div class="menu-item active"><div class="menu-icon"></div> Pengaturan (v)</div>
+                    <div class="menu-item sub-menu active">Konfigurasi Keuangan</div>
+                    <div class="menu-item sub-menu">Rincian Biaya Item</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Pengaturan Keuangan Sekolah</div>
+                    </div>
+                    
+                    <div class="banner">
+                        <div class="banner-title" style="font-size:16px;">Konfigurasi Keuangan</div>
+                        <div class="banner-subtitle">Atur rekening bank penerima dan QRIS resmi sekolah. Perubahan akan langsung tampil di halaman siswa.</div>
+                    </div>
+
+                    <div style="border-left: 2px solid #000; padding-left:20px; margin-top:30px;">
+                        <h3 style="font-size:14px; margin-bottom:20px; display:flex; align-items:center; gap:10px;">
+                            <span style="display:inline-block; width:24px; height:24px; background:#eee; border:1px solid #000; text-align:center; border-radius:4px;">1</span>
+                            Rekening Bank Utama
+                        </h3>
+
+                        <div class="input-group">
+                            <div class="input-label">Nama Bank</div>
+                            <input type="text" class="input-field" value="Bank Syariah Indonesia (BSI)">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-label">No. Rekening</div>
+                            <input type="text" class="input-field" value="7149028882">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-label">Atas Nama</div>
+                            <input type="text" class="input-field" value="Panitia PPDB SMP Muhammadiyah Kaliwiro">
+                        </div>
+                        
+                        <div style="margin-top:20px; text-align:right;">
+                            <div class="btn dark">Simpan Perubahan</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 3. Wireframe Halaman Konfigurasi Keuangan (Rekening)
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Navigasi Sub-menu:</strong> Menu "Pengaturan" di panel samping direntangkan (expand) untuk menampilkan akses ke Konfigurasi Keuangan dan Rincian Biaya.</li>
+                <li><strong>Form Pengaturan Rekening:</strong> Formulir pendaftaran informasi akun bank resmi milik sekolah yang akan digunakan oleh siswa untuk menyetor biaya daftar ulang. Field terdiri dari Nama Bank, Nomor Rekening, dan Atas Nama pemilik rekening.</li>
+            </ul>
+        </div>
+
+
+        <!-- BAGIAN 4: RINCIAN BIAYA ITEM -->
+        <div class="wireframe-wrapper">
+            <div class="browser-header">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+            </div>
+            <div class="wireframe-content">
+                <!-- Sidebar (Expanded sub-menu) -->
+                <div class="sidebar">
+                    <div class="sidebar-logo">
+                        <div class="logo-box">Logo</div>
+                        SMP Muhammadiyah
+                    </div>
+                    <div class="menu-item"><div class="menu-icon"></div> Dashboard Keuangan</div>
+                    <div class="menu-item"><div class="menu-icon"></div> Verifikasi Pembayaran</div>
+                    <div class="menu-item active"><div class="menu-icon"></div> Pengaturan (v)</div>
+                    <div class="menu-item sub-menu">Konfigurasi Keuangan</div>
+                    <div class="menu-item sub-menu active">Rincian Biaya Item</div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="page-header">
+                        <div class="page-title">Kelola Rincian Biaya</div>
+                    </div>
+                    
+                    <div class="banner" style="background-color:#333; color:#fff; text-align:center;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                            <div style="text-align:left;">
+                                <div class="banner-title" style="font-size:18px;">Total Biaya Daftar Ulang</div>
+                                <div class="banner-subtitle" style="color:#ccc;">Dihitung otomatis dari penjumlahan semua item yang aktif.</div>
+                            </div>
+                            <div style="font-size:28px; font-weight:bold;">Rp 525.000</div>
+                        </div>
+                        
+                        <div class="stats-grid three-cols">
+                            <div style="border:1px solid #555; padding:15px; border-radius:6px; background-color:#444;">
+                                <div style="font-size:10px; text-transform:uppercase; color:#ccc;">Jalur Reguler</div>
+                                <div style="font-size:16px; font-weight:bold;">Rp 450.000</div>
+                            </div>
+                            <div style="border:1px solid #555; padding:15px; border-radius:6px; background-color:#444;">
+                                <div style="font-size:10px; text-transform:uppercase; color:#ccc;">Jalur Prestasi</div>
+                                <div style="font-size:16px; font-weight:bold;">Rp 300.000</div>
+                            </div>
+                            <div style="border:1px solid #555; padding:15px; border-radius:6px; background-color:#444;">
+                                <div style="font-size:10px; text-transform:uppercase; color:#ccc;">Jalur Afirmasi/Beasiswa</div>
+                                <div style="font-size:16px; font-weight:bold;">Rp 375.000</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dual-columns">
+                        <!-- Left: Form Tambah -->
+                        <div style="border:1px solid #000; border-radius:8px; padding:15px;">
+                            <h3 style="font-size:14px; margin-top:0; margin-bottom:15px;">Tambah Rincian Baru</h3>
+                            <div style="margin-bottom:10px;">
+                                <div style="font-size:10px; font-weight:bold; margin-bottom:5px;">NAMA ITEM</div>
+                                <input type="text" class="input-field" placeholder="Misal: Seragam Olahraga" style="width:100%; box-sizing:border-box;">
+                            </div>
+                            <div style="margin-bottom:10px;">
+                                <div style="font-size:10px; font-weight:bold; margin-bottom:5px;">NOMINAL BIAYA</div>
+                                <input type="text" class="input-field" placeholder="Rp 0" style="width:100%; box-sizing:border-box;">
+                            </div>
+                            <div class="btn dark" style="width:100%; box-sizing:border-box; margin-top:10px;">Simpan Item</div>
+                        </div>
+
+                        <!-- Right: List Item -->
+                        <div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                                <h3 style="font-size:14px; margin:0;">Daftar Rincian Biaya</h3>
+                                <span class="badge" style="font-size:10px;">3 ITEM</span>
+                            </div>
+
+                            <div class="list-item">
+                                <div>
+                                    <div style="font-weight:bold; font-size:14px; margin-bottom:5px;">spp</div>
+                                    <div style="font-size:12px; color:#555;">Rp 75.000 <span class="badge" style="margin-left:5px;">Jalur Afirmasi</span> <span class="badge" style="background:#eee;">Aktif</span></div>
+                                </div>
+                                <div style="display:flex; gap:5px;">
+                                    <div class="btn" style="padding:4px 8px;">Edit</div>
+                                    <div class="btn" style="padding:4px 8px; color:#000;">Hapus</div>
+                                </div>
+                            </div>
+
+                            <div class="list-item">
+                                <div>
+                                    <div style="font-weight:bold; font-size:14px; margin-bottom:5px;">Seragam Batik</div>
+                                    <div style="font-size:12px; color:#555;">Rp 150.000 <span class="badge" style="margin-left:5px;">Semua Jalur</span> <span class="badge" style="background:#eee;">Aktif</span></div>
+                                </div>
+                                <div style="display:flex; gap:5px;">
+                                    <div class="btn" style="padding:4px 8px;">Edit</div>
+                                    <div class="btn" style="padding:4px 8px; color:#000;">Hapus</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="figure-caption">
+            Gambar 4. Wireframe Halaman Kelola Rincian Biaya Item
+        </div>
+        <div class="wireframe-description">
+            <p><strong>Deskripsi:</strong></p>
+            <ul>
+                <li><strong>Kartu Kalkulasi Biaya (Banner):</strong> Desain banner tingkat lanjut (gelap) yang secara dinamis menjumlahkan "Total Biaya Daftar Ulang" maksimal, dan membaginya ke dalam tiga varian rincian (Jalur Reguler, Prestasi, dan Afirmasi) berdasarkan item yang aktif.</li>
+                <li><strong>Kolom Ganda (Tambah & Daftar):</strong> Sebelah kiri merupakan formulir cepat untuk memasukkan item biaya baru (seperti nama item dan nominal), sedangkan sebelah kanan menampilkan senarai (<em>list</em>) komponen biaya yang telah tersimpan lengkap dengan tombol manajemen (Edit/Hapus).</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
